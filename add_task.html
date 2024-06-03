@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="assets/img/logo_dark.png"/>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+    <script src="js/add_task.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
@@ -17,9 +18,31 @@
     <div w3-include-html="assets/templates/menu_template.html"></div>
 
     <main>
-
-
         
+            <h1>Add Task</h1>
+            <form class="add-task-form">
+                <div class="addTaskColumn">
+                    <label for="title">Title</label>
+                    <input type="text" id="title">
+                    <label for="description">Description</label>
+                    <input type="textarea" id="description">
+                    <label for="assigned">Assigned to</label>
+                    <input type="select" id="assigned">
+                </div>
+                <div class="addTaskColumn">
+                    <label for="date">Due date</label>
+                    <input type="date" id="date">
+                    <label for="description">Prio</label>
+                    <input type="textarea" id="description">
+                    <label for="category">Category</label>
+                    <input type="select" id="category">
+                </div>
+
+            </form>
+        
+
+
     </main>
+
 </body>
 </html>
