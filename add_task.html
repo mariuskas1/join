@@ -12,54 +12,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body onload="includeHTML()">
 
-    <div class="sidebar">
-        <img class="sidebar-logo" src="assets/img/logo_light.png">
-        <div class="sidebar-menu">
-            <a href="#" class="sidebar-menu-div">
-                <img class="sidebar-icon" src="assets/img/vector1.png">
-                <span>Summary</span>
-            </a>
-            <a href="#" class="sidebar-menu-div">
-                <img class="sidebar-icon" src="assets/img/edit_square.png">
-                <span>Add Task</span>
-            </a>
-            <a href="#" class="sidebar-menu-div">
-                <img class="sidebar-icon" src="assets/img/Vector.png">
-                <span>Board</span>
-            </a>
-            <a href="#" class="sidebar-menu-div">
-                <img class="sidebar-icon" src="assets/img/perm_contact_calendar.png">
-                <span>Contacts</span>
-            </a>
-        </div> 
+    <div w3-include-html="assets/templates/menu_template.html"></div>
 
-        <div class="sidebar-menu-2">
-            <div class="sidebar-2-div">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Legal notices</a>
-            </div>
-        </div>
-    </div>
+    <main>
 
-    <header>
-        <span class="header-title">Kanban Project Management Tool</span>
-        <div class="header-icons">
-            <img class="help-icon" src="assets/img/help.png" onclick="redirectTo(help)">
-            <div class="user-initials" onclick="openUserMenu()">SM</div>
-        </div>
-    </header>
 
-    <div class="user-menu-bg d-none" id="user-menu" onclick="closeUserMenu()">
-        <div class="user-menu">
-            <a href="#">Legal Notice</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Log out</a>
-        </div>
-    </div>
-   
-
-    
+        
+    </main>
 </body>
 </html>
