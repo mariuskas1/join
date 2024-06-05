@@ -22,23 +22,113 @@
             <h1>Add Task</h1>
             <form class="add-task-form">
                 <div class="addTaskColumn">
-                    <label for="title">Title</label>
-                    <input type="text" id="title">
-                    <label for="description">Description</label>
-                    <input type="textarea" id="description">
-                    <label for="assigned">Assigned to</label>
-                    <input type="select" id="assigned">
-                </div>
-                <div class="addTaskColumn">
-                    <label for="date">Due date</label>
-                    <input type="date" id="date">
-                    <label for="description">Prio</label>
-                    <input type="textarea" id="description">
-                    <label for="category">Category</label>
-                    <input type="select" id="category">
+                    <div class="input">
+                        <label for="title">Title<span class="red">*</span></label>
+                        <input type="text" id="title" placeholder="Enter a title">
+                        <label for="title" class="second-label"><span class="required-label">This field is required</span></label>
+                    </div>
+                    <div class="input">
+                        <label for="description">Description</label>
+                        <textarea type="textarea" id="description" placeholder="Enter a description"></textarea>
+                        <label for="description" class="second-label"></label>
+                    </div>
+                    <div class="input">
+                        <label for="assigned">Assigned to</label>
+                        <select id="assigned">
+                            <option value="" disabled selected>Select contacts to assign</option>
+                            <option value="contact1">Contact 1</option>
+                            <option value="contact2">Contact 2</option>
+                            <option value="contact3">Contact 3</option>
+                        </select>
+                        <label for="assigned" class="second-label"></label>
+                    </div>                    
                 </div>
 
+                <div class="addTaskBorder"></div>
+
+                <div class="addTaskColumn">
+                    <div class="input">
+                        <label for="date">Due date<span class="red">*</span></label>
+                        <input type="date" id="date">
+                        <label for="title" class="second-label"><span class="required-label">This field is required</span></label>
+                    </div>
+                    <div class="input">
+                        <label for="prio">Prio</label>
+                        <div class="prio-btns">
+                            <div class="input-container">
+                                <input type="radio" id="urgent" name="prio" value="urgent">
+                                <div class="radio-tile" id="urgent-tile">
+                                    <label for="urgent">Urgent</label>
+                                    <img src="assets/img/urgent.png">
+                                </div>
+                            </div>
+                            <div class="input-container">
+                                <input type="radio" id="medium" name="prio" value="medium" checked>
+                                <div class="radio-tile" id="medium-tile">
+                                    <label for="urgent">Medium</label>
+                                    <img src="assets/img/medium.png" id="medium-img">
+                                </div>
+                            </div>
+                            <div class="input-container">
+                                <input type="radio" id="low" name="prio" value="low">
+                                <div class="radio-tile" id="low-tile">
+                                    <label for="urgent">Low</label>
+                                    <img src="assets/img/low.png">
+                                </div>
+                            </div>
+                        </div>
+                        <label for="title" class="second-label"></label>
+                    </div>
+                    <div class="input custom-select">
+                        <label for="category">Category<span class="red">*</span></label>
+                        <select id="category">
+                            <option value="" disabled selected>Select task category</option>
+                            <option value="technical-task">Technical Task</option>
+                            <option value="user-story">User Story</option>
+                        </select>
+                        <label for="title" class="second-label"><span class="required-label">This field is required</span></label>
+                    </div>
+                    <div class="input">
+                        <label for="subtasks">Subtasks</label>
+                        <div class="subtask-input-container">
+                            <input type="text" name="subtasks" id="subtasks" placeholder="Add new subtask">
+                            <img class="add-subtask-icon" src="assets/img/add.png" onclick="addSubtask()">
+                        </div>
+                        <ul id="subtasks-list">
+                            <li>
+                                <img class="bullet-point" src="assets/img/circle-solid.svg">
+                                <span class="subtask-content">Hallo</span> 
+                                <div class="subtask-icons">
+                                    <img class="subtask-icon" src="assets/img/edit.png">
+                                    <img class="subtask-icon" src="assets/img/delete.png">
+                                </div>
+                            </li>                        
+                            <li>
+                                <img class="bullet-point" src="assets/img/circle-solid.svg">
+                                <span class="subtask-content">Hallo</span> 
+                                <div class="subtask-icons">
+                                    <img class="subtask-icon" src="assets/img/edit.png">
+                                    <img class="subtask-icon" src="assets/img/delete.png">
+                                </div>
+                            </li>                        
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="form-bottom">
+                    <span><span class="red">*</span>This field is required</span>
+                    <div class="form-btns-div">
+                        <button class="clear-btn" onclick="clearForm()">Clear<img class="btn-icon" src="assets/img/close.png"></button>
+                        <button class="create-task-btn" onclick="createTask()">Create Task <img class="btn-icon" src="assets/img/check_white.png"></button>
+                    </div>
+    
+                </div>
+                
+
             </form>
+
+           
         
 
 

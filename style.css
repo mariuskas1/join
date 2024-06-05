@@ -8,10 +8,15 @@ main{
     position: fixed;
     top: 96px;
     left: 232px;
-    padding-top: 80px; 
-
+    padding-top: 110px; 
     padding-left: 96px;
-    
+    background-color: rgb(246, 247, 248);
+    width: 100vw;
+    height: 100vh;
+}
+
+main * {
+    border-radius: 10px;
 }
 
 .sidebar{
@@ -23,6 +28,7 @@ main{
     height: 100vh;
     width: 232px ;
     z-index: 10;
+    border-radius: unset;
 }
 
 .sidebar-logo{
@@ -45,6 +51,7 @@ main{
     align-items: center;
     width: 100%;
     gap: 15px;
+    margin-top: 64px;
 }
 
 .sidebar-menu-div{
@@ -76,7 +83,7 @@ a{
     align-items: flex-start;
     margin-top: 16px;
     gap: 4px;
-    margin-top: 140px;
+    margin-top: 283px;
 }
 
 .sidebar-menu-2 a{
@@ -111,6 +118,7 @@ header{
     padding: 20px 40px 20px 348px;
     gap: 0px;
     z-index: 5;
+    border-radius: unset;
 }
 
 .header-title{
@@ -299,13 +307,287 @@ header{
 h1{
     font-weight: 700;
     font-size: 61px;
-    line-height: 73.2px;
 }
+
 
 form label{
     display: block;
+    color: rgba(42, 54, 71, 1);
 }
 
 .add-task-form{
     display: flex;
+    margin-top: 32px;
+}
+
+form input{
+    width: 100%;
+    border: 1px solid rgba(209, 209, 209, 1);
+    padding: 12px 21px 12px 21px;
+    gap: 10px;
+    height: 48px;
+    font-size: 18px;
+    margin-top: 4px;
+}
+
+form select{
+    width: 100%;
+    border: 1px solid rgba(209, 209, 209, 1);
+    padding: 12px 16px 12px 16px;
+    gap: 10px;
+    height: 48px;
+    font-size: 18px;
+    margin-top: 4px;
+}
+
+
+
+input::placeholder, textarea::placeholder{
+    color: rgba(209, 209, 209, 1);
+}
+
+#description{
+    height: 120px; 
+    overflow: auto;
+    vertical-align: top;
+    box-sizing: border-box;
+    border: 1px solid rgba(209, 209, 209, 1);
+    padding: 18px 16px 18px 16px;
+    gap: 10px;
+    width: 100%;
+    font-size: 18px;
+    margin-top: 4px;
+}
+
+
+.addTaskColumn{
+    width: 440px;
+}
+
+.addTaskBorder{
+    background-color:  rgba(209, 209, 209, 1);
+    height: 424px;
+    width: 1px;
+    margin-left: 32px;
+    margin-right: 32px;
+}
+
+.input{
+    margin-bottom: 8px;
+}
+
+.second-label{
+    font-size: 12px;
+    color: rgba(255, 129, 144, 1);
+    height: 15px;
+}
+
+.required-label{
+    display: none;
+}
+
+.prio-btns{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 8px;
+    width: 100%;
+}
+
+.input-container{
+    position: relative;
+    height: 56px;
+    width: 136px;
+}
+
+.input-container input{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    z-index: 2;
+    opacity: 0;
+}
+
+
+.input-container .radio-tile{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    transition: all 125ms ease;
+    background-color: white;
+}
+
+
+input:checked + #urgent-tile{
+    background-color: rgb(255, 61, 0);
+}
+input:checked + #medium-tile{
+    background-color: rgb(255, 168, 0);
+}
+input:checked + #low-tile{
+    background-color: rgb(122, 226, 41);
+}
+
+#medium-img{
+    filter: brightness(0) saturate(100%) invert(65%) sepia(96%) saturate(1913%) hue-rotate(357deg) brightness(103%) contrast(108%);
+}
+
+input:checked + .radio-tile label, input:checked + .radio-tile img{
+    color: white;
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(3496%) hue-rotate(202deg) brightness(109%) contrast(94%) !important;
+    font-weight: bold;
+}
+
+.radio-tile img{
+    margin-left: 8px;
+}
+
+
+.subtask-input-container{
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(209, 209, 209, 1);
+    background-color: white;
+    height: 48px;
+    padding-bottom: 3px;
+
+}
+
+#subtasks{
+    width: 93%;
+    border: none;
+    height: 96%;
+}
+
+#subtasks:focus{
+    outline:none;
+}
+
+.subtask-input-container:focus-within{
+    outline: 1px solid black;
+}
+
+label{
+    margin-bottom: 4px;
+}
+
+.add-subtask-icon:hover{
+    cursor: pointer;
+    background: rgb(228, 228, 228);
+    border-radius: 50%;
+}
+
+#subtasks-list{
+    margin-top: 4px;
+    width: 100%;
+    padding: 0;
+}
+
+#subtasks-list li{
+    display: flex ;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 8px 2px 32px;
+    width: 100%;
+    transition: all 125ms ease;
+}
+
+.subtasks-icons{
+    display: flex;
+    gap: 8px;
+    padding-top: 4px;
+}
+
+.subtask-icon{
+    height: 20px;
+    width: 20px;
+    opacity: 0;
+}
+
+.subtask-content{
+    flex-grow: 1;
+}
+
+.bullet-point{
+    width: 3px;
+    height: 3px;
+    margin-right: 8px;
+}
+
+#subtasks-list li:hover{
+    background-color: rgb(228, 228, 228);
+    cursor: pointer;
+}
+
+#subtasks-list li:hover .subtask-icon {
+    opacity: 1;
+  }
+
+  .subtask-icon:hover{
+    transform: scale(1.1);
+  }
+
+  .form-bottom{
+    position: fixed;
+    bottom: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    width: 944px;
+  }
+
+.red{
+    color: rgb(255, 129, 144);
+}
+
+.form-btns-div{
+    width: 309px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-btns-div button{
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 100ms ease;
+}
+
+.clear-btn{
+    width: 110px;
+    color: rgba(42, 54, 71, 1);
+    font-size: 20px;
+    border: 1px solid rgba(42, 54, 71, 1);
+}
+
+.create-task-btn{
+    font-size: 21px;
+    font-weight: 700;
+    width: 183px;
+    color: white;
+    background-color: rgba(42, 54, 71, 1);
+    border: unset;
+}
+
+
+.btn-icon{
+    margin-left: 4px;
+}
+
+.clear-btn:hover{
+    cursor: pointer;
+    border: 2px solid rgba(41, 171, 226, 1);
+    color: rgba(41, 171, 226, 1);
+}
+
+.create-task-btn:hover{
+    cursor: pointer;
+    background-color: rgba(41, 171, 226, 1);
+}
+
+.clear-btn:hover .btn-icon{
+    filter: brightness(0) saturate(100%) invert(55%) sepia(74%) saturate(886%) hue-rotate(165deg) brightness(94%) contrast(87%);
 }
