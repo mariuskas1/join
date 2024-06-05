@@ -551,7 +551,7 @@ label{
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 100ms ease;
+    transition: all 75ms ease;
 }
 
 .clear-btn{
@@ -559,6 +559,7 @@ label{
     color: rgba(42, 54, 71, 1);
     font-size: 20px;
     border: 1px solid rgba(42, 54, 71, 1);
+    background-color: white;
 }
 
 .create-task-btn{
@@ -593,11 +594,16 @@ label{
 
 
 @media(max-height: 800px){
-    .sidebar {
-        width: 16vw;
+    header{
+        height: 88px;
+    }
+    .user-initials{
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
     }
     main{
-        left: 16vw;
+        top: 88px;
         padding-left: 80px;
         padding-top: 40px;
     }
