@@ -1,4 +1,3 @@
-
 async function includeHTML() {
     let includeElements = document.querySelectorAll('[w3-include-html]');
     for (let i = 0; i < includeElements.length; i++) {
@@ -14,9 +13,8 @@ async function includeHTML() {
 }
 
 
-
 function redirectTo(page){
-    window.location.href = "./help.html";
+    window.location.href = "./" + page;
 }
 
 
@@ -24,6 +22,12 @@ function openUserMenu(){
     document.getElementById('user-menu').classList.remove('d-none');
 }
 
+
 function closeUserMenu(){
     document.getElementById('user-menu').classList.add('d-none');
+}
+
+
+function addSubtask(){
+    asd
 }
