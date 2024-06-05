@@ -81,7 +81,6 @@ a{
 .sidebar-menu-2{
     width: 100%;
     align-items: flex-start;
-    margin-top: 16px;
     gap: 4px;
     margin-top: 283px;
 }
@@ -452,7 +451,6 @@ input:checked + .radio-tile label, input:checked + .radio-tile img{
     background-color: white;
     height: 48px;
     padding-bottom: 3px;
-
 }
 
 #subtasks{
@@ -590,4 +588,78 @@ label{
 
 .clear-btn:hover .btn-icon{
     filter: brightness(0) saturate(100%) invert(55%) sepia(74%) saturate(886%) hue-rotate(165deg) brightness(94%) contrast(87%);
+}
+
+
+
+@media(max-height: 800px){
+    .sidebar {
+        width: 16vw;
+    }
+    main{
+        left: 16vw;
+        padding-left: 80px;
+        padding-top: 40px;
+    }
+    .sidebar-menu{
+        margin-top: 20px;
+    }
+    .sidebar-menu-2{
+        margin-top: 18vh;
+    }
+    h1{
+        font-size: 48px;
+    }
+    .add-task-form{
+        margin-top: 32px;
+    }
+    form input{
+        height: 40px;
+        font-size: 16px;
+    }
+    form select{
+        height: 40px;
+        font-size: 16px;
+    }
+    #description{
+        height: 100px;
+        font-size: 16px;
+    }
+    .addTaskColumn{
+        width: 30vw;
+    }
+    .addTaskBorder{
+        height: 55vh;
+    }
+    .input-container{
+        height: 48px;
+    }
+    .subtask-input-container{
+        height: 40px;
+    }
+    #subtasks-list li{
+        font-size: 14px;
+    }
+    .form-bottom{
+        width: 64vw;
+        bottom: 32px;
+    }
+    .form-btns-div{
+        width: 23vw;
+    }
+    .form-btns-div button{
+        height: 44px;
+    }
+    .clear-btn{
+        width: 10vw;
+        font-size: 17px;
+    }
+    .create-task-btn{
+        font-size: 18px;
+        width: 12vw;
+    }
+    form select{
+        padding: 8px 16px 8px 16px;
+    }
+
 }
