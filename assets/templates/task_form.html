@@ -2,12 +2,12 @@
     <div class="addTaskColumn">
         <div class="input">
             <label for="title">Title<span class="red">*</span></label>
-            <input type="text" id="title" required placeholder="Enter a title">
+            <input type="text" id="title" required placeholder="Enter a title" spellcheck="false">
             <label for="title" class="second-label"><span class="required-label">This field is required</span></label>
         </div>
         <div class="input">
             <label for="description">Description</label>
-            <textarea type="textarea" id="description" placeholder="Enter a description"></textarea>
+            <textarea type="textarea" id="description" placeholder="Enter a description" spellcheck="false"></textarea>
             <label for="description" class="second-label"></label>
         </div>
         <div class="input">
@@ -31,7 +31,7 @@
             <label for="title" class="second-label"><span class="required-label">This field is required</span></label>
         </div>
         <div class="input">
-            <label for="prio">Prio</label>
+            <span>Prio</span>
             <div class="prio-btns">
                 <div class="input-container">
                     <input type="radio" id="urgent" name="prio" value="urgent">
@@ -69,10 +69,11 @@
         <div class="input">
             <label for="subtasks">Subtasks</label>
             <div class="subtask-input-container">
-                <input type="text" name="subtasks" id="subtasks" placeholder="Add new subtask">
+                <input type="text" name="subtasks" id="subtasks" placeholder="Add new subtask" spellcheck="false">
                 <img class="add-subtask-icon" src="assets/img/add.png" onclick="addSubtask()">
             </div>
-            <ul id="subtasks-list">                                 
+            <ul id="subtasks-list">  
+                                         
             </ul>
         </div>
 
@@ -82,7 +83,7 @@
         <span><span class="red">*</span>This field is required</span>
         <div class="form-btns-div">
             <button class="clear-btn" onclick="clearForm()">Clear<img class="btn-icon" src="assets/img/close.png"></button>
-            <button class="create-task-btn" onclick="createTask()">Create Task <img class="btn-icon" src="assets/img/check_white.png"></button>
+            <button class="create-task-btn" onclick="createTask(event)">Create Task <img class="btn-icon" src="assets/img/check_white.png"></button>
         </div>
 
     </div>
