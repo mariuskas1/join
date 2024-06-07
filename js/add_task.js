@@ -62,10 +62,22 @@ function editSubtask(element) {
 
 
 
-async function createTask(event){  
-    event.preventDefault();
-    
+async function uploadNewTask(event){  
     let form = document.getElementById("add-task-form");
+    event.preventDefault();
+    let newTask = createNewTask();
+    if (newTask){
+        await postData("/allTasks", newTask);
+        form.reset();
+        document.getElementById("subtasks-list").innerHTML = '';
+    } else {
+        console.log("Failed to create a new task. Please check the form inputs.");
+    }
+}     
+
+
+
+function createNewTask(){
     let date = document.getElementById("date");
     let category = document.getElementById("category");
     let description = document.getElementById("description");
@@ -74,9 +86,10 @@ async function createTask(event){
 
     let selectedPriority = getSelectedPriority();
     let subtaskValues = getSubtaskValues();
+    let newTask = null;
 
-    if (title.value.length > 0 && date.value.length > 0 && category.value.length > 0 ) {
-        const newTask = {
+    if (title.value && date.value && category.value) {
+        newTask = {
             "title": title.value,
             "date": date.value,
             "category": category.value,
@@ -85,11 +98,26 @@ async function createTask(event){
             "assignedTo": assignedTo.value,
             "subtasks": subtaskValues
         }
+        hideRequiredLabels();
+        return newTask;
+    } else {
+        if (!title.value) {
+            document.getElementById("title-label-2").style.opacity = 1;
+        }
+        if (!date.value) {
+            document.getElementById("date-label-2").style.opacity = 1;
+        }
+        if (!category.value) {
+            document.getElementById("category-label-2").style.opacity = 1;
+        }
+    }
+}
 
-        await postData("/allTasks", newTask);
-        form.reset();
-        document.getElementById("subtasks-list").innerHTML = '';
-    }     
+
+function hideRequiredLabels(){
+    document.querySelectorAll(".required-label").forEach(label => {
+        label.style.opacity = 0;
+    });
 }
 
 
