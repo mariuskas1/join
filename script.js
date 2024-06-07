@@ -28,3 +28,6 @@ function closeUserMenu(){
 }
 
 
+function returnToPreviousPage(){
+    window.history.back();
+}
