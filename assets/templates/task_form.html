@@ -2,13 +2,13 @@
     <div class="addTaskColumn">
         <div class="input">
             <label for="title">Title<span class="red">*</span></label>
-            <input type="text" id="title" required placeholder="Enter a title" spellcheck="false">
-            <label for="title" class="second-label"><span class="required-label">This field is required</span></label>
+            <input type="text" id="title" placeholder="Enter a title" spellcheck="false">
+            <span class="required-label" id="title-label-2">This field is required</span>
         </div>
         <div class="input">
             <label for="description">Description</label>
             <textarea type="textarea" id="description" placeholder="Enter a description" spellcheck="false"></textarea>
-            <label for="description" class="second-label"></label>
+            <span class="required-label"></span>
         </div>
         <div class="input">
             <label for="assigned">Assigned to</label>
@@ -18,7 +18,7 @@
                 <option value="contact2">Contact 2</option>
                 <option value="contact3">Contact 3</option>
             </select>
-            <label for="assigned" class="second-label"></label>
+            <span class="required-label"></span>
         </div>                    
     </div>
 
@@ -27,8 +27,8 @@
     <div class="addTaskColumn">
         <div class="input">
             <label for="date">Due date<span class="red">*</span></label>
-            <input type="date" id="date" required>
-            <label for="title" class="second-label"><span class="required-label">This field is required</span></label>
+            <input type="date" id="date">
+            <span class="required-label" id="date-label-2">This field is required</span>
         </div>
         <div class="input">
             <span>Prio</span>
@@ -55,16 +55,16 @@
                     </div>
                 </div>
             </div>
-            <label for="title" class="second-label"></label>
+            <span class="required-label"></span>
         </div>
         <div class="input custom-select">
             <label for="category">Category<span class="red">*</span></label>
-            <select id="category" required>
+            <select id="category">
                 <option value="" disabled selected>Select task category</option>
                 <option value="technical-task">Technical Task</option>
                 <option value="user-story">User Story</option>
             </select>
-            <label for="title" class="second-label"><span class="required-label">This field is required</span></label>
+            <span class="required-label" id="category-label-2">This field is required</span>
         </div>
         <div class="input">
             <label for="subtasks">Subtasks</label>
@@ -83,7 +83,7 @@
         <span><span class="red">*</span>This field is required</span>
         <div class="form-btns-div">
             <button class="clear-btn" onclick="clearForm()">Clear<img class="btn-icon" src="assets/img/close.png"></button>
-            <button class="create-task-btn" onclick="createTask(event)">Create Task <img class="btn-icon" src="assets/img/check_white.png"></button>
+            <button class="create-task-btn" onclick="uploadNewTask(event)">Create Task <img class="btn-icon" src="assets/img/check_white.png"></button>
         </div>
 
     </div>
