@@ -616,6 +616,7 @@ label{
     justify-content: space-between;
     align-items: center;
     width: 95%;
+    margin-bottom: 24px;
 }
 
 .return-img{
@@ -737,4 +738,45 @@ h2{
 }
 
 
+::-webkit-scrollbar {
+    width: 0.6vw;
+    color: rgb(7, 7, 31);
+    
+  }
 
+  ::-webkit-scrollbar-track {
+    background: rgb(246, 247, 248);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: grey;
+    border-radius: 16px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+
+.help-table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+}
+
+.help-table td{
+    vertical-align: top;
+    padding: 10px;
+}
+
+.help-table td:first-child {
+    padding-right: 20px;
+}
+
+.help-table h2, .help-table h3, .help-table span {
+    margin: 0;
+}
+
+.help-table h2 {
+    margin-bottom: 10px;
+}
