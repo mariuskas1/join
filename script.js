@@ -14,7 +14,7 @@ async function includeHTML() {
 
 
 function redirectTo(page){
-    window.location.href = "./" + page;
+    window.location.href = page;
 }
 
 
