@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="assets/img/logo_dark.png"/>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
-    <script src="js/add_task.js"></script>
+    <script src="js/index.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
@@ -15,10 +15,48 @@
 
 <body>
 
-    <main>
+   <div class="index-main">
+    <div class="index-header">
+        <img src="assets/img/logo_dark.png" class="index-header-logo">
+        <div class="index-header-div">
+            <span class="index-header-text">Not a Join user?</span>
+            <button class="sign-up-btn">Sign up</button>
+        </div>
+    </div>
 
+    <div class="log-in">
+        <h2>Log in</h2>
+        <div class="log-in-underline"></div>
+        <form>
+            <div class="index-input-container">
+                <img src="assets/img/mail.png" class="index-input-icon" id="mail-icon">
+                <input type="text" placeholder="Email" class="index-input">
+            </div>
+            <div class="index-input-container">
+                <img src="assets/img/lock.png" class="index-input-icon" id="lock-icon">
+                <input type="password" placeholder="Password" class="index-input">
+            </div>
 
-    </main>
+            <div class="log-in-row">
+                <div class="checkbox-container">
+                    <input type="checkbox" id="remember" name="remember" class="remember-checkbox">
+                    <label for="remember" class="checkbox-label">Remember me</label>
+                </div>
+                <button class="forgot-btn">I forgot my password</button>
+
+            </div>
+           
+
+            <div class="log-in-buttons-div">
+                <button class="log-in-btn">Log in</button>
+                <button class="guest-log-in-btn">Guest Log in</button>
+            </div>
+            
+           
+        </form>
+    </div>
+    
+   </div>
 
 </body>
 </html>

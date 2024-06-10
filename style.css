@@ -780,3 +780,206 @@ h2{
 .help-table h2 {
     margin-bottom: 10px;
 }
+
+
+.index-main{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(246, 247, 248);
+}
+
+.index-header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 77px;
+    padding-right: 77px;
+    margin-top: 56px;
+}
+
+.index-header-logo{
+    height: 121.97px;
+    width: 100.03px;
+}
+
+.index-header-div{
+    display: flex;
+    align-items: center;
+    height: 49px;
+    width: 279px;
+}
+
+.index-header-text{
+    font-size: 20px;
+    margin-right: 24px;
+}
+
+.sign-up-btn{
+    height: 49px;
+    width: 91px;
+    color: white;
+    background-color: rgba(42, 54, 71, 1);
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 10px;
+    border: unset;
+    transition: all 125ms ease;
+}
+
+.sign-up-btn:hover{
+    cursor: pointer;
+    background-color: rgba(41, 171, 226, 1);
+}
+
+.log-in{
+    width: 652px;
+    height: 493px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 24px;
+    margin-top: 64px;
+    box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
+
+
+}
+
+.log-in h2{
+    font-size: 61px;
+    margin-top: 32px;
+}
+
+.index-input-container{
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.index-input-icon{
+    border-radius: 0;
+    position: absolute;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+#mail-icon{
+    width: 21px;
+    height: 16px;
+}
+
+#lock-icon{
+    width: 16px;
+    height: 21px;
+}
+
+.index-input{
+    border-radius: 10px;
+    width: 100%;
+    margin-bottom: 24px;
+    height: 48px;
+}
+
+.log-in form{
+    width: 422px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.log-in-underline{
+    background-color: rgba(41, 171, 226, 1);
+    height: 3px;
+    width: 150px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.checkbox-container{
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    width: 142px;
+    height: 24px;
+}
+
+.checkbox-label{
+    margin: 0;
+}
+
+
+input[type=checkbox] {
+    transform: scale(0.5);
+    margin: 0;
+}
+
+.log-in-buttons-div{
+    margin-top: 32px;
+    display: flex;
+    width: 322px;
+    height: 48px;
+    justify-content: space-between;
+}
+
+.log-in-btn{
+    height: 100%;
+    width: 110px;
+    color: white;
+    background-color: rgba(42, 54, 71, 1);
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 21px;
+    border: unset;
+    transition: all 125ms ease;
+}
+
+.checkbox-label:hover{
+    cursor: pointer;
+}
+
+.remember-checkbox:hover{
+    cursor: pointer;
+}
+
+.log-in-btn:hover{
+    cursor: pointer;
+    background-color: rgba(41, 171, 226, 1);
+}
+
+
+.guest-log-in-btn{
+    height: 100%;
+    width: 177px;
+    color: rgba(42, 54, 71, 1);
+    border: 2px solid rgba(42, 54, 71, 1);
+    background-color: white;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 21px;
+    transition: all 125ms ease;
+}
+
+.guest-log-in-btn:hover{
+    cursor: pointer;
+    color: rgba(41, 171, 226, 1);
+    border: 2px solid rgba(41, 171, 226, 1);
+}
+
+.log-in-row{
+    display: flex;
+    margin-bottom: 8px;
+}
+
+.forgot-btn{
+    background: transparent;
+    border: none;
+    color: rgba(41, 171, 226, 1);
+    font-size: 16px;
+    margin-left: 32px;
+    opacity: 0;
+}
