@@ -844,8 +844,6 @@ h2{
     border-radius: 24px;
     margin-top: 64px;
     box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
-
-
 }
 
 .log-in h2{
@@ -983,3 +981,204 @@ input[type=checkbox] {
     margin-left: 32px;
     opacity: 0;
 }
+
+.index-link-div{
+    display: flex;
+    justify-content: space-between;
+    width: 246px;
+    height: 35px;   
+    position: fixed;
+    bottom: 32px;
+}
+
+.index-link-div a{
+    text-decoration: none;
+    color: rgba(168, 168, 168, 1);
+    font-size: 16px;
+    transition: all 100ms ease;
+}
+
+.index-link-div a:hover{
+    color: rgba(41, 171, 226, 1);
+    font-weight: bold;
+}
+
+.sign-up{
+    position: relative;
+    width: 598px;
+    height: 630px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 24px;
+    margin-top: 16px;
+    box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
+}
+
+.index-header-2{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 77px;
+    padding-right: 77px;
+    margin-top: 32px;
+}
+
+.sign-up h2{
+    font-size: 61px;
+    font-weight: 700;
+}
+
+.sign-up form{
+    width: 422px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.sign-up form input[type=checkbox] {
+    transform: scale(1);
+    margin-right: 16px;
+}
+
+.sign-up-row{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.sign-up-btn-2{
+    height: 55px;
+    width: 110px;
+    color: white;
+    background-color: rgba(42, 54, 71, 1);
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 21px;
+    border: unset;
+    transition: all 125ms ease;
+    margin-top: 32px;
+}
+
+.sign-up-btn-2:hover{
+    cursor: pointer;
+    background-color: rgba(41, 171, 226, 1);
+}
+
+.sign-up-btn-2:disabled:hover {
+    background-color: rgba(42, 54, 71, 1); 
+    cursor: default; 
+}
+
+.checkbox-container-2{
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    width: 231px;
+    height: 24px;
+    margin-top: 8px;
+}
+
+.checkbox-container-2 a{
+    text-decoration: none;
+    color: rgba(41, 171, 226, 1);
+}
+
+.return-img-sign-up{
+    position: absolute;
+    left: 48px;
+    top: 44px;
+    transition: all 100ms ease;
+}
+
+.return-img-sign-up:hover{
+    cursor: pointer;
+    transform: scale(1.1)
+
+}
+
+
+
+#msg-div{
+    width: 312px;
+    height: 56px;
+    color: white;
+    background-color: rgba(42, 54, 71, 1);
+    font-size: 20px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+
+@media (max-height:800px){
+    .index-header, .index-header-2{
+        margin-top: 24px;
+    }
+    .index-header-logo{
+        height: 100px;
+        width: 80px;
+    }
+    .index-header-div{
+        height: 40px;
+    }
+    .index-header-text{
+        font-size: 18px;
+    }
+    .sign-up-btn{
+        height: 40px;
+    }
+    .log-in{
+        height: 420px;
+        width: 520px;
+        margin-top: 56px;
+    }
+    .log-in h2, .sign-up h2{
+        font-size: 48px;
+        margin-top: 32px;
+    }
+    .index-input{
+        height: 40px;
+        margin-bottom: 24px;
+    }
+    .sign-up .index-input{
+        margin-bottom: 12px;
+    }
+    .sign-up .index-input-icon{
+        margin-top: 12px;
+    }
+    .log-in form{
+        margin-top: 16px;
+        width: 400px;
+    }
+    .checkbox-container{
+        height: 16px;
+    }
+    .log-in-buttons-div{
+        margin-top: 24px;
+        height: 40px;
+    }
+    .index-link-div{
+        bottom: 8px;
+    }
+    .index-link-div a{
+        font-size: 14px;
+    }
+
+    .sign-up{
+        width: 550px;
+        height: 510px;
+    }
+    .sign-up form{
+        margin-top: 8px;
+    }
+    .sign-up-btn-2{
+        margin-top: 24px;
+    }
+}
+
+
