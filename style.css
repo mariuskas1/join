@@ -1012,7 +1012,7 @@ input[type=checkbox] {
     flex-direction: column;
     align-items: center;
     border-radius: 24px;
-    margin-top: 16px;
+    margin-top: 32px;
     box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
 }
 
@@ -1182,3 +1182,85 @@ input[type=checkbox] {
 }
 
 
+#sign-up-div-mobile{
+    display: none;
+}
+
+@media(max-width:600px){
+    #signed-up-div{
+        display: none;
+    }
+    #sign-up-div-mobile{
+        display: block;
+        margin-top: 32px;
+    }
+    .index-header-logo{
+        width:64px;
+        height: 78px;
+    }
+    .index-header{
+        padding-left: 40px;
+    }
+    .log-in, .sign-up{
+        width: 100%;
+    }
+    .sign-up{
+        height: 540px;
+    }
+    .index-input{
+        height: 48px;
+    }
+    .log-in form, .sign-up form{
+        width: 80%;
+    }
+    .log-in-buttons-div{
+        width: 75%;
+    }
+}
+
+@media(max-width: 500px){
+    .log-in{
+        height: 460px;
+        margin-top: 40px;
+    }
+    .log-in h2, .sign-up h2{
+        font-size: 47px;
+        margin-top: 24px;
+    }
+    .sign-up{
+        height: 500px;
+    }
+
+    .log-in-buttons-div{
+       flex-direction: column;
+       width: 100%;
+       height: 100px;
+       align-items: center;
+    }
+    .log-in-btn{
+        width: 180px;
+        margin-bottom: 8px;
+        height: 51px;
+    }
+    .guest-log-in-btn{
+        width: 180px;
+        height: 51px;
+    }
+    .log-in-underline{
+        margin-top: 16px;
+        margin-bottom: 8px;
+    }
+    .index-header-text{
+        font-size: 16px;
+    }
+   
+}
+
+@media(max-width: 400px){
+    .log-in-buttons-div{
+        margin-top: 8px;
+     }
+     .return-img-sign-up{
+        left: 32px;
+     }
+}
