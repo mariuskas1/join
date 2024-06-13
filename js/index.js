@@ -3,8 +3,39 @@ const BASE_URL = "https://join-4544d-default-rtdb.europe-west1.firebasedatabase.
 
 
 document.addEventListener("DOMContentLoaded", function() {
-    displayRegisteredMessage();
+    let screenWidth = window.innerWidth;
+
+    if (screenWidth < 480){
+        document.getElementById("initial-index-logo").src = "assets/img/logo_light.png";
+        hideInitialIndexLogo();
+    } else {
+        setTimeout(() => {
+            startLogoAnimation();
+        }, 2000);
+        displayRegisteredMessage();
+    }
 });
+    
+
+function startLogoAnimation(){
+    let largeLogo =  document.getElementById("initial-index-logo");
+    let headerLogo = document.getElementById("index-header-logo");
+    let headerLogoPosition = headerLogo.getBoundingClientRect();
+   
+    largeLogo.style.top = headerLogoPosition.top + 'px';
+    largeLogo.style.left = headerLogoPosition.left + 'px';
+    largeLogo.className = "index-header-logo-size";
+
+    hideInitialIndexLogo();
+}
+
+
+function hideInitialIndexLogo(){
+    setTimeout(() => {
+        document.getElementById("main-content").classList.remove("hidden");
+        document.getElementById("initial-logo-div").style.display = "none";
+    }, 2000);
+}
 
 
 async function logIn(){

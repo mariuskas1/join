@@ -19,6 +19,7 @@ main * {
     border-radius: 10px;
 }
 
+
 .sidebar{
     position: fixed;
     display: flex;
@@ -789,6 +790,11 @@ h2{
     flex-direction: column;
     align-items: center;
     background-color: rgb(246, 247, 248);
+    transition: all 125ms ease;
+}
+
+#main-content{
+    transition: all 125ms ease;
 }
 
 .index-header{
@@ -803,6 +809,14 @@ h2{
 .index-header-logo{
     height: 121.97px;
     width: 100.03px;
+    transition: all 2s ease;
+}
+
+.index-header-logo-size{
+    height: 121.97px;
+    width: 100.03px;
+    position: absolute;
+    transition: all 2s ease;
 }
 
 .index-header-div{
@@ -1263,4 +1277,39 @@ input[type=checkbox] {
      .return-img-sign-up{
         left: 32px;
      }
+}
+
+
+.hidden{
+    opacity: 0;
+    transition: all 125ms ease;
+}
+
+.initial-logo-div{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+}
+
+.initial-index-logo{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 274px;
+    height: 334px;
+    transition: all 2s ease;
+}
+
+@media(max-width:480px){
+    .initial-logo-div{
+        background-color: rgba(42, 54, 71, 1);
+    }
+    .initial-index-logo{
+        height: 121.97px;
+        width: 100.03px;
+    }
 }
