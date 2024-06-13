@@ -226,7 +226,7 @@ header{
     left: 0;
     width: 100vw;
     height: 80px;
-
+    z-index: 10;
 }
 
 
@@ -1229,6 +1229,19 @@ input[type=checkbox] {
     }
     .log-in-buttons-div{
         width: 75%;
+    }
+
+    .info-main{
+        position: fixed;
+        top: 88px;
+        left: 0px;
+        padding-top: 32px; 
+        padding-left: 24px;
+        padding-right: 24px;
+        width: 100%;
+        height: calc(100vh - 88px);
+        overflow: auto;
+        padding-bottom: 96px;
     }
 }
 
