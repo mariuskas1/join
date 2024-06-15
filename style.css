@@ -387,7 +387,6 @@ input::placeholder, textarea::placeholder{
 .prio-btns{
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
     margin-top: 8px;
     width: 100%;
 }
@@ -1200,7 +1199,107 @@ input[type=checkbox] {
     display: none;
 }
 
+@media(max-width: 1300px){
+    main{
+        padding-left: 40px;
+    }
+}
+
+@media(max-width: 1250px){
+    .addTaskColumn{
+        width: 32%;
+    }
+    .form-bottom{
+        width: 67%;
+    }
+}
+
+@media(max-width: 1000px){
+    main{
+        padding-left: 32px;
+    }
+}
+
+@media(max-width: 850px) {
+    .add-task-form{
+        flex-direction: column;
+        margin-top: 16px;
+    }
+    .addTaskBorder{
+        display: none;
+    }
+    h1{
+        font-size: 47px;
+    }
+    #description{
+        height: 88px;
+        margin-top: 0px;
+        margin-bottom: 4px;
+    }
+    .addTaskColumn{
+        width: 60%;
+    }
+    main{
+        padding-left: 40px;
+    }
+    #category-input{
+        display: none;
+    }
+    #subtasks-input{
+        display: none;
+    }
+
+    main{
+        padding-top: 32px;
+    }
+    form input {
+        margin-top: 4px;
+    }
+    form select {
+        margin-top: 4px;
+    }
+    .input{
+        margin-bottom: 4px;
+    }
+    .prio-btns{
+        margin-top: 4px;
+    }
+    label {
+        margin-bottom: 4px;
+    }
+    .form-bottom{
+        width: 57%;
+        align-items: center;
+    }
+
+}
+
+@media(max-width: 750px){
+    .clear-btn{
+        display: none !important;
+    }
+    .create-task-btn{
+        width: 183px;
+    
+    }
+    .form-btns-div{
+        width: 183px;
+    }
+    .addTaskColumn{
+        width: 55%;
+    }
+    .form-bottom{
+        width: 51%;
+        
+    }
+
+}
+
 @media(max-width:600px){
+    main{
+        left: 0;
+    }
+
     #signed-up-div{
         display: none;
     }
@@ -1242,6 +1341,13 @@ input[type=checkbox] {
         height: calc(100vh - 88px);
         overflow: auto;
         padding-bottom: 96px;
+    }
+    .addTaskColumn{
+        width: 90%;
+    }
+    .form-bottom{
+        width: 83%;
+        bottom: 104px;
     }
 }
 
@@ -1324,5 +1430,35 @@ input[type=checkbox] {
     .initial-index-logo{
         height: 121.97px;
         width: 100.03px;
+    }
+}
+
+
+@media(max-width: 600px) and (max-height: 800px){
+    header{
+        height: 80px;
+    }
+    main{
+        top: 80px;
+        padding-top: 16px;
+    }
+    .mobile-menu{
+        height: 72px;
+    }
+    .mobile-menu-div{
+        height: 68px;
+    }
+    #description{
+        height: 64px;
+        padding: 8px 16px 8px 16px;
+    }
+    .input-container{
+        height: 40px;
+    }
+    .input{
+        margin-bottom: 2px;
+    }
+    .form-bottom{
+        bottom: 88px;
     }
 }
