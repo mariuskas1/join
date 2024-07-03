@@ -18,7 +18,80 @@
     <div w3-include-html="assets/templates/menu_template.html"></div>
 
     <main>
-        <h1>Summary</h1>
+        <div class="summary-header">
+            <h1>Join 360</h1>
+            <div class="summary-header-bar"></div>
+            <span class="summary-subtitle">Key Metrics at a Glance</span>
+            <div class="summary-header-bar-mobile"></div>
+        </div>
+        
+        <div class="summary-main">
+            <div class="summary-infos">
+                <div class="summary-info-row">
+                    <div class="summary-info-box-row-1">
+                        <img src="assets/img/summary-edit.png" class="summary-icon">
+                        <div class="summary-row-info">
+                            <span class="summary-digit" id="tasks-to-do">1</span>
+                            <span class="summary-description">To-do</span>
+                        </div>
+                    </div>
+                    <div class="summary-info-box-row-1">
+                        <img src="assets/img/summary-check.png" class="summary-icon">
+                        <div class="summary-row-info">
+                            <span class="summary-digit" id="tasks-done">1</span>
+                            <span class="summary-description">Done</span>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="summary-info-row">
+                    <div class="summary-info-box-row-2">
+                        <img src="assets/img/summary-urgent.png" class="summary-icon-row-2">
+                        <div class="summary-row-info">
+                            <span class="summary-digit" id="tasks-urgent">5</span>
+                            <span class="summary-row-2-description">Urgent</span>
+                        </div>
+                        <div class="summary-row-2-bar"></div>
+                        <div class="summary-row-2-details">
+                            <span class="summary-row-2-date" id="urgent-task-date">October 1, 2022</span>
+                            <span class="summary-row-2-subtitle" id="urgent-task-subtitle">Upcoming Deadline</span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="summary-info-row">
+                    <div class="summary-info-box-row-3">
+                        <div class="summary-row-info">
+                            <span class="summary-digit" id="tasks-in-board">5</span>
+                            <span class="summary-description">Tasks in Board</span>
+                        </div>
+                    </div>
+                    <div class="summary-info-box-row-3">
+                        <div class="summary-row-info">
+                            <span class="summary-digit" id="tasks-in-progress">2</span>
+                            <span class="summary-description">Tasks in Progress</span>
+                        </div>
+                    </div>
+                    <div class="summary-info-box-row-3">
+                        <div class="summary-row-info">
+                            <span class="summary-digit" id="tasks-awaiting-feedback">2</span>
+                            <span class="summary-description">Awaiting Feedback</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="summary-greeting">
+                <span class="greeting-daytime" id="greeting-daytime">Good morning,</span>
+                <span class="greeting-name" id="greeting-name">Sofia Müller</span>
+            </div>
+        </div>
+
+        <div class="summary-greeting-mobile" id="mobile-summary-greeting">
+            <span class="greeting-daytime" id="greeting-daytime">Good morning,</span>
+            <span class="greeting-name" id="greeting-name">Sofia Müller</span>
+        </div>
 
     </main>
 

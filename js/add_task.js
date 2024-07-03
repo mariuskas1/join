@@ -1,10 +1,45 @@
+const BASE_URL = "https://join-4544d-default-rtdb.europe-west1.firebasedatabase.app";
+let currentUser;
+let contacts = [];
 
 
 
-
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", async function(){
     setTimeout(activateLink, 100);
+    await getCurrentUserData();
+    displayUserInitials();
 });
+
+
+
+async function getCurrentUserData(){
+    let response = await fetch(BASE_URL + "/allUsers/currentUser.json")
+    let responseToJson = await response.json();
+    let userData = Object.values(responseToJson)[0];
+    currentUser = userData.name;
+}
+
+
+function displayUserInitials(){
+    let initialsButton = document.getElementById("user-initials");
+    let currentUserInitials;
+
+    if (currentUser) {
+        let currentUserName = currentUser.trim().split(/\s+/);
+
+        if (currentUserName.length === 1) {
+            currentUserInitials = currentUserName[0];
+        } else if (currentUserName.length === 2) {
+            currentUserInitials = currentUserName[0][0] + currentUserName[1][0];
+        } else if (currentUserName.length > 2) {
+            currentUserInitials = currentUserName[0][0] + currentUserName[currentUserName.length - 1][0];
+        }
+    
+        initialsButton.innerHTML = currentUserInitials.toUpperCase();
+    } else {
+        initialsButton.innerHTML = "G";
+    }
+}
 
 
 function activateLink(){
@@ -19,6 +54,18 @@ function activateLink(){
         });
     });
 }
+
+
+// async function loadContacts(){
+//     let contactsResponse = await gettAllContacts("/allContacts");
+
+// }
+
+
+// async function getAllContacts(path){
+//     let response = await fetch(BASE_URL + path + ".json");
+//     return responseToJson = await response.json();
+// }
 
 
 function clearForm(){
@@ -60,14 +107,12 @@ function editSubtask(element) {
 }
 
 
-
-
 async function uploadNewTask(event){  
     let form = document.getElementById("add-task-form");
     event.preventDefault();
     let newTask = createNewTask();
     if (newTask){
-        await postData("/allTasks", newTask);
+        await postData("/allTasks/" + currentUser.trim(), newTask);
         form.reset();
         document.getElementById("subtasks-list").innerHTML = '';
     } else {
@@ -96,7 +141,8 @@ function createNewTask(){
             "prio": selectedPriority,
             "description": description.value,
             "assignedTo": assignedTo.value,
-            "subtasks": subtaskValues
+            "subtasks": subtaskValues,
+            "status" : "todo"
         }
         hideRequiredLabels();
         return newTask;
@@ -137,9 +183,6 @@ function getSubtaskValues(){
     }
     return subtaskValues;
 }
-
-
-const BASE_URL = "https://join-4544d-default-rtdb.europe-west1.firebasedatabase.app";
 
 
 async function postData(path="", data={}){
