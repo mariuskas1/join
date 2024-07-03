@@ -52,16 +52,29 @@ async function loadUserData(path=""){
 }
 
 
-function checkUserData(){
+async function checkUserData(){
     let mail = document.getElementById("mail");
     let password = document.getElementById("password");
     let user = users.find(u => u.email == mail.value && u.password == password.value);
 
     if(user){
+        await updateCurrentUser(user);
         window.location.href = "summary.html";
     } else {
         alert ("Password or username incorrect!")
     }
+}
+
+
+async function updateCurrentUser(user){
+    let response = await fetch(BASE_URL + "/allUsers/currentUser" + ".json", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user)
+    });
+    return await response.json();
 }
 
 
@@ -74,8 +87,8 @@ function displayRegisteredMessage(){
 
     if(msg){
         headerDiv.style.display = "none";
-        msgBox.style.display = "block";
+        msgBox.style.opacity = 1;
     } else {
-        msgBox.style.display = "none";
+        msgBox.style.display = 'none';
     }
 }
