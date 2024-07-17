@@ -95,16 +95,20 @@ function getClosestDeadline(){
 
 function displayGreeting(){
     let greetingTime = document.getElementById("greeting-daytime");
+    let greetingTimeMobile = document.getElementById("greeting-daytime-mobile")
     let currentHour = new Date().getHours();
 
     if (currentHour < 12) {
         greetingTime.innerHTML = "Good morning,";
+        greetingTimeMobile.innerHTML = "Good morning,";
     }
     else if (currentHour < 18) {
         greetingTime.innerHTML = "Good afternoon,";
+        greetingTimeMobile.innerHTML = "Good afternoon,";
     }
     else {
         greetingTime.innerHTML = "Good evening,";
+        greetingTimeMobile.innerHTML = "Good evening,";
     };
 
     displayUserName();
@@ -113,10 +117,12 @@ function displayGreeting(){
 
 function displayUserName(){
     let greetingName = document.getElementById("greeting-name");
+    let greetingNameMobile = document.getElementById("greeting-name-mobile");
     let greetingTime = document.getElementById("greeting-daytime");
 
     if(currentUser) {
         greetingName.innerHTML = currentUser;
+        greetingNameMobile.innerHTML = currentUser;
     } else {
         greetingTime.innerHTML.slice(0, -1) + '!';
     }

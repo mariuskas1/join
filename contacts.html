@@ -17,11 +17,91 @@
 
     <div w3-include-html="assets/templates/menu_template.html"></div>
 
-    <main>
-        <h1>Contacts</h1>
+
+        <div class="main-contacts">
+            <div class="contacts-display-div">
+                <button class="add-contact-btn" id="add-contact-btn" onclick="displayAddContactModal()">Add new contact <img src="assets/img/person_add.png" class="add-contact-icon"></button>
+                <div class="contacts-group">
+                    <div class="contacts-group-letter">A</div>
+                    <div class="contacts-display-small" onclick="activateContact(this)">
+                        <div class="initials-div">AM</div>
+                        <div class="contacts-display-info">
+                            <div class="contact-name-sm">Anton Mayer</div>
+                            <div class="contact-mail-sm">antom@gmail.com</div>
+                        </div>
+                    </div>
+                    <div class="contacts-display-small" onclick="activateContact(this)">
+                        <div class="initials-div">AM</div>
+                        <div class="contacts-display-info">
+                            <div class="contact-name-sm">Anton Mayer</div>
+                            <div class="contact-mail-sm">antom@gmail.com</div>
+                        </div>
+                    </div>
+                    <div class="contacts-display-small" onclick="activateContact(this)">
+                        <div class="initials-div">AM</div>
+                        <div class="contacts-display-info">
+                            <div class="contact-name-sm">Anton Mayer</div>
+                            <div class="contact-mail-sm">antom@gmail.com</div>
+                        </div>
+                    </div>
+
+                   
+                </div>
+            </div>
+            <div class="contact-display">
+                <div class="contacts-display-header">
+                    <h1>Contacts</h1>
+                    <div class="contacts-header-bar"></div>
+                    <span class="contacts-header-span">Better with a team</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="add-contact-modal-bg display-none" id="add-contact-modal" onclick="hideAddContactModal()">
+            <div class="add-contact-modal" onclick="event.stopPropagation()">
+                <div class="add-contact-modal-left">
+                    <img src="assets/img/Capa 2.png">
+                    <span class="add-contact-modal-title">Add contact</span>
+                    <span class="add-contact-team">Tasks are better with a team!</span>
+                    <div class="modal-bar"></div>
+                </div>
+                <div class="add-contact-modal-right">
+                    <div class="add-contact-modal-rh"><img src="assets/img/Close2.png" onclick="hideAddContactModal()" class="close-contact-modal-icon"></div>
+                    <div class="add-contact-form-div">
+                        <img src="assets/img/Group 144.png" class="new-contact-img">
+                        <form onsubmit="uploadNewContact(); return false" class="add-contact-form" id="add-contact-form">
+                            <div class="index-input-container">
+                                <img src="assets/img/person2.png" class="index-input-icon add-contact-icon" >
+                                <input type="text" placeholder="Name" id="new-contact-name"  class="index-input" required>
+                            </div>
+                            <div class="index-input-container">
+                                <img src="assets/img/mail.png" class="index-input-icon add-contact-icon" id="mail-icon">
+                                <input type="text" placeholder="Email" id="new-contact-mail"  class="index-input" required>
+                            </div>
+                            <div class="index-input-container">
+                                <img src="assets/img/call.png" class="index-input-icon add-contact-icon">
+                                <input type="text" placeholder="Phone" id="new-contact-phone"  class="index-input" required>
+                            </div>
+
+                            <div class="add-contact-form-btns">
+                                <button class="cancel-contact-btn" type="button" onclick="clearForm()">Cancel<img class="btn-icon" src="assets/img/close.png"></button>
+                                <button class="create-contact-btn" type="submit">Create Contact<img class="btn-icon" src="assets/img/check_white.png"></button>
+                            </div>
+
+                        </form>
+                
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+       
         
 
-    </main>
+
 
 </body>
 </html>
