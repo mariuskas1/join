@@ -33,3 +33,11 @@ function closeUserMenu(){
 function returnToPreviousPage(){
     window.history.back();
 }
+
+
+async function logOut(){
+    let response = await fetch ("https://join-4544d-default-rtdb.europe-west1.firebasedatabase.app/allUsers/currentUser.json", {
+        method: "DELETE",
+    });
+    return responseToJson = await response.json();
+}
