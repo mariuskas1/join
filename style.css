@@ -1840,18 +1840,24 @@ input[type=checkbox] {
     top: 96px;
     left: 232px;
     background-color: rgb(246, 247, 248);
-
 }
 
 .contacts-display-div{
     display: flex;
     flex-direction: column;
     width: 456px;
-    height: 100vh;
+    height: calc(100vh - 96px);
+    overflow-y: auto;
     background-color: white;
     box-shadow: 4px 0px 6px 0px rgba(0, 0, 0, 0.08);
-    overflow: auto;
     align-items: center;
+}
+
+#contacts-display-bar {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;    
 }
 
 .contact-display{
@@ -1895,6 +1901,7 @@ input[type=checkbox] {
     align-items: center;
     justify-content: center;
     margin-bottom: 16px;
+    flex-shrink: 0;
 
 }
 
@@ -1923,6 +1930,7 @@ input[type=checkbox] {
 }
 
 .contacts-display-small{
+    width: 100%;
     display: flex;
     transition: all 125ms;
     border-radius: 15px;
@@ -2129,4 +2137,97 @@ input[type=checkbox] {
 
 .close-contact-modal-icon{
     cursor: pointer;
+}
+
+
+.contact-display-body{
+    display: flex;
+    flex-direction: column;
+    margin-left: 80px;
+    margin-top: 32px;
+}
+
+.single-contact-display-header{
+    display: flex;
+    align-items: center;
+}
+
+.scd-initials{
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    border: 3px solid white;
+    background-color: orange;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 47px;
+    font-weight: 500;
+    margin-right: 48px;
+
+}
+
+.scd-name{
+    font-size: 47px;
+    font-weight: 500;
+}
+
+.scd-options-div{
+    display: flex;
+    margin-top: 8px;
+}
+
+.scd-option-btn{
+    height: 24px;
+    border: none;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    margin-right: 8px;
+}
+
+.scd-option-btn:hover{
+    cursor: pointer;
+    color: rgba(41, 171, 226, 1);
+    font-weight: bold;
+}
+
+.scd-option-btn:hover img{
+    filter: brightness(0) saturate(100%) invert(73%) sepia(29%) saturate(6474%) hue-rotate(165deg) brightness(92%) contrast(91%);
+}
+
+.scd-option-btn img{
+    width: 24px;
+    height: 24px;
+    margin-right: 2px;
+}
+
+.single-contact-display-body{
+    display: flex;
+    flex-direction: column;
+    margin-top: 24px;
+}
+
+.contact-info{
+    font-size: 20px;
+    margin-top: 24px;
+    margin-bottom: 16px;
+}
+
+.scd-info-title{
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    margin-top: 24px;
+}
+
+.contact-mail{
+    font-size: 16px;
+    color: rgba(41, 171, 226, 1);
+}
+
+.contact-phone{
+    font-size: 16px;
 }
