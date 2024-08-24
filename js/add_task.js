@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", async function(){
     setTimeout(activateLink, 100);
     await getCurrentUserData();
     displayUserInitials();
+    await loadContacts();
 });
 
 
@@ -56,16 +57,32 @@ function activateLink(){
 }
 
 
-// async function loadContacts(){
-//     let contactsResponse = await gettAllContacts("/allContacts");
 
-// }
+async function loadContacts(){
+    let contactsResponse = await getAllContacts("/allContacts/" + currentUser);
+    if(contactsResponse){
+        contacts = Object.values(contactsResponse);
+        console.log(contacts);
+        displayContactsInForm();
+    } 
+}
 
 
-// async function getAllContacts(path){
-//     let response = await fetch(BASE_URL + path + ".json");
-//     return responseToJson = await response.json();
-// }
+async function getAllContacts(path){
+    let response = await fetch(BASE_URL + path + ".json");
+    return responseToJson = await response.json();
+}
+
+
+function displayContactsInForm(){
+    let contactsList = document.getElementById("assigned");
+    
+    for (let i = 0; i < contacts.length; i++) {
+        const contact = contacts[i];
+        contactsList.innerHTML += `<option value="${contact.name}">${contact.name}</option>`;
+    }
+}
+
 
 
 function clearForm(){
