@@ -26,21 +26,33 @@
             <div class="contact-display">
                 <div class="contacts-display-header">
                     <h1>Contacts</h1>
-                    <div class="contacts-header-bar"></div>
+                    <div class="contacts-header-bar" id="c-header-bar-desktop"></div>
                     <span class="contacts-header-span">Better with a team</span>
+                    <div class="contacts-header-bar" id="c-header-bar-mobile"></div>
                 </div>
+
+                <img src="assets/img/arrow-left-line.png" class="return-arrow-contacts-mobile return-img" onclick="hideSingleContactDisplay()">
 
                 <div class="contact-display-body" id="single-contact-display-div">
-                    
                 </div>
 
+                <div class="user-menu-bg d-none" id="scd-options-menu" onclick="closeScdOptionsMobile()">
+                    <div class="scd-options-menu">
+                        <button class="scd-option-btn" onclick="displayEditContactModal()"><img src="assets/img/edit.png"> Edit</button>
+                        <button class="scd-option-btn" onclick="deleteContact()"><img src="assets/img/delete.png"> Delete</button>
+                    </div>
+                </div>
             </div>
+
+            <button class="add-contact-btn-mobile" id="addContactBtnMobile" onclick="displayAddContactModal()"><img src="assets/img/person_add.png"></button>
+            
         </div>
 
         <div class="add-contact-modal-bg display-none" id="add-contact-modal" onclick="hideAddContactModal()">
             <div class="add-contact-modal" onclick="event.stopPropagation()">
                 <div class="add-contact-modal-left">
-                    <img src="assets/img/Capa 2.png">
+                    <img src="assets/img/Capa 2.png" class="add-contact-modal-logo">
+                    <div class="add-contact-modal-lh"><img src="assets/img/Close_white.png" onclick="hideAddContactModal()" class="close-contact-modal-icon"></div>
                     <span class="add-contact-modal-title" id="add-contact-modal-title">Add contact</span>
                     <span class="add-contact-team" id="add-contact-team">Tasks are better with a team!</span>
                     <div class="modal-bar"></div>
@@ -50,17 +62,17 @@
                     <div class="add-contact-form-div">
                         <img src="assets/img/Group 144.png" class="new-contact-img" id="contact-initials-l">
                         <form onsubmit="uploadNewContact(); return false" class="add-contact-form" id="add-contact-form">
-                            <div class="index-input-container">
+                            <div class="index-input-container add-contact-input-container">
                                 <img src="assets/img/person2.png" class="index-input-icon add-contact-icon" >
-                                <input type="text" placeholder="Name" id="new-contact-name"  class="index-input" required>
+                                <input type="text" placeholder="Name" id="new-contact-name"  class="index-input add-contact-input" required>
                             </div>
                             <div class="index-input-container">
                                 <img src="assets/img/mail.png" class="index-input-icon add-contact-icon" id="mail-icon">
-                                <input type="text" placeholder="Email" id="new-contact-mail"  class="index-input" required>
+                                <input type="text" placeholder="Email" id="new-contact-mail"  class="index-input add-contact-input" required>
                             </div>
                             <div class="index-input-container">
                                 <img src="assets/img/call.png" class="index-input-icon add-contact-icon">
-                                <input type="text" placeholder="Phone" id="new-contact-phone"  class="index-input" required>
+                                <input type="text" placeholder="Phone" id="new-contact-phone"  class="index-input add-contact-input" required>
                             </div>
 
                             <div class="add-contact-form-btns">

@@ -1,8 +1,13 @@
 const BASE_URL = "https://join-4544d-default-rtdb.europe-west1.firebasedatabase.app";
 let currentUser;
+let currentUserData;
 let contacts = [];
 let groupedContacts = {};
 let activeContact;
+
+const colors = ["#FF7A00", "#9327FF", "#6E52FF", "#FC71FF", "#FFBB2B", "#1FD7C1", "#FF4646"];
+let colorIndex = 0;
+
 
 
 
@@ -12,6 +17,7 @@ document.addEventListener("DOMContentLoaded", async function(){
     setTimeout(displayUserInitials, 40);
     await loadContacts();
     displayContacts();
+    saveCurrentUserAsContact();
 });
 
 
@@ -20,6 +26,7 @@ async function getCurrentUserData(){
     let responseToJson = await response.json();
     let userData = Object.values(responseToJson)[0];
     currentUser = userData.name;
+    currentUserData = userData;
 }
 
 
@@ -59,6 +66,29 @@ function activateLink(){
 }
 
 
+async function saveCurrentUserAsContact(){
+    if (currentUser){
+        const trimmedUserName = currentUserData.name.trim().toLowerCase();
+        const contactExists = contacts.some(contact => contact.name.trim().toLowerCase() === trimmedUserName);
+
+        if(!contactExists){
+            newUserContact = {
+                "name": currentUserData.name,
+                "mail": currentUserData.email,
+                "phone": "",
+                "initials": getContactInitials(currentUserData.name),
+                "info": "Contact Information",
+                "color": "#29ABE2"
+            }
+           
+            await postData("/allContacts/" + currentUser.trim(), newUserContact);
+        }
+    }
+}
+
+
+
+
 function activateContact(div){
     document.querySelectorAll(".contacts-display-small").forEach(function(contact){
         contact.classList.remove("active-contact-sm");
@@ -73,13 +103,17 @@ function activateContact(div){
 
 
 function displayActiveContact(){
+    if (window.innerWidth < 1080){
+        displayActiveContactMobile();
+    }
+
     let scdDiv = document.getElementById("single-contact-display-div");
     scdDiv.innerHTML = '';
     
     if(activeContact){
         scdDiv.innerHTML += `
         <div class="single-contact-display-header">
-            <div class="scd-initials">${activeContact.initials}</div>
+            <div class="scd-initials" style="background-color: ${activeContact.color};">${activeContact.initials}</div>
             <div class="scd-name-div">
                 <span class="scd-name">${activeContact.name}</span>
                 <div class="scd-options-div">
@@ -95,15 +129,65 @@ function displayActiveContact(){
             <span class="scd-info-title">Phone</span>
             <span class="contact-phone">${activeContact.phone}</span>
         </div>
+        <div class="scd-options-mobile-div" onclick="openScdOptionsMobile();"><img src="/assets/img/three_dots.png" class="scd-options-mobile-img"></div>
         `;
     }
+}
+
+
+function openScdOptionsMobile(){
+    document.getElementById('scd-options-menu').classList.remove('d-none');
+}
+
+
+function closeScdOptionsMobile(){
+    document.getElementById('scd-options-menu').classList.add('d-none');
+}
+
+
+function displayActiveContactMobile(){
+    const contactsAllDiv = document.querySelector('.contacts-display-div');
+    const singleContactDisplay = document.querySelector('.contact-display');
+    const addContactBtnMobile = document.getElementById('addContactBtnMobile');
+
+    contactsAllDiv.style.display = 'none';
+    addContactBtnMobile.style.display = 'none';
+    singleContactDisplay.style.display = 'block';
+
+}
+
+function hideSingleContactDisplay(){
+    const contactsAllDiv = document.querySelector('.contacts-display-div');
+    const singleContactDisplay = document.querySelector('.contact-display');
+    const addContactBtnMobile = document.getElementById('addContactBtnMobile');
+
+    contactsAllDiv.style.display = 'block';
+    addContactBtnMobile.style.display = 'block';
+    singleContactDisplay.style.display = 'none';
+
+    document.querySelectorAll(".contacts-display-small").forEach(function(contact){
+        contact.classList.remove("active-contact-sm");
+        })
 }
 
 
 
 function displayAddContactModal(){
     document.getElementById("add-contact-modal").classList.remove("display-none");
+
+    document.getElementById("add-contact-modal-title").innerHTML = "Add contact";
+    document.getElementById("add-contact-team").innerHTML = "Tasks are better with a team!";
+    document.getElementById("new-contact-name").value = "";
+    document.getElementById("new-contact-mail").value = "";
+    document.getElementById("new-contact-phone").value = "";
+
+    document.getElementById("cancel-or-delete-btn").innerHTML = "Cancel" + `<img class="btn-icon" src="assets/img/close.png"></img>`;
+    document.getElementById("cancel-or-delete-btn").onclick = clearForm;
+
+    document.getElementById("create-or-save-btn").innerHTML = "Create contact" + `<img class="btn-icon" src="assets/img/check_white.png">`;
+    document.getElementById("create-or-save-btn").type = "submit";
 }
+
 
 
 function hideAddContactModal(){
@@ -152,13 +236,17 @@ function createNewContact(){
     let phone = document.getElementById("new-contact-phone");
 
     if (name.value && mail.value && phone.value){
-        newContact = {
+        const contactColor = colors[colorIndex];
+        colorIndex = (colorIndex + 1) % colors.length;
+
+        let newContact = {
             "name": name.value,
             "mail": mail.value,
             "phone": phone.value,
             "initials": getContactInitials(name.value),
-            "info": "Contact Information"
-        }
+            "info": "Contact Information",
+            "color": contactColor
+        };
         return newContact;
     }
 }
@@ -208,9 +296,10 @@ function displayContacts(){
     
             for (let i = 0; i < group.length; i++) {
                 const contact = group[i];
+
                 groupHTML += `
                     <div class="contacts-display-small" onclick="activateContact(this)">
-                        <div class="initials-div">${contact.initials}</div>
+                        <div class="initials-div" style="background-color: ${contact.color};">${contact.initials}</div>
                         <div class="contacts-display-info">
                             <div class="contact-name-sm">${contact.name}</div>
                             <div class="contact-mail-sm">${contact.mail}</div>
@@ -243,7 +332,7 @@ function sortContacts(){
 
 
 function displayEditContactModal(){
-    displayAddContactModal();
+    document.getElementById("add-contact-modal").classList.remove("display-none");
 
     document.getElementById("add-contact-modal-title").innerHTML = "Edit Contact";
     document.getElementById("add-contact-team").innerHTML = "";
@@ -260,9 +349,25 @@ function displayEditContactModal(){
  }
 
 
-function editContact(){
+
+async function editContact(){
+    editContactLocally();
+    displayContacts();
+    displayActiveContact();
+    await deleteContactsOnServer();
+    await uploadContactsOnServer();
+}
 
 
+function editContactLocally(){
+    const activeContactIndex = contacts.findIndex(contact => contact.name === activeContact.name);
+
+    activeContact.name = document.getElementById("new-contact-name").value;
+    activeContact.mail = document.getElementById("new-contact-mail").value;
+    activeContact.phone = document.getElementById("new-contact-phone").value;
+    activeContact.initials = getContactInitials(activeContact.name);
+
+    contacts[activeContactIndex] = activeContact;
 }
 
 
@@ -308,7 +413,8 @@ async function uploadContactsOnServer(){
             "mail": contact.mail,
             "phone": contact.phone,
             "initials": getContactInitials(contact.name),
-            "info": "Contact Information"
+            "info": "Contact Information",
+            "color": contact.color
         }
         await postData("/allContacts/" + currentUser.trim(), existingContact);
     }
