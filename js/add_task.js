@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", async function(){
     await getCurrentUserData();
     displayUserInitials();
     await loadContacts();
+    displayContactsInForm();
 });
 
 
@@ -62,7 +63,6 @@ async function loadContacts(){
     let contactsResponse = await getAllContacts("/allContacts/" + currentUser);
     if(contactsResponse){
         contacts = Object.values(contactsResponse);
-        console.log(contacts);
         displayContactsInForm();
     } 
 }
@@ -139,42 +139,7 @@ async function uploadNewTask(event){
 
 
 
-function createNewTask(){
-    let date = document.getElementById("date");
-    let category = document.getElementById("category");
-    let description = document.getElementById("description");
-    let assignedTo = document.getElementById("assigned");
-    let title = document.getElementById("title");
 
-    let selectedPriority = getSelectedPriority();
-    let subtaskValues = getSubtaskValues();
-    let newTask = null;
-
-    if (title.value && date.value && category.value) {
-        newTask = {
-            "title": title.value,
-            "date": date.value,
-            "category": category.value,
-            "prio": selectedPriority,
-            "description": description.value,
-            "assignedTo": assignedTo.value,
-            "subtasks": subtaskValues,
-            "status" : "todo"
-        }
-        hideRequiredLabels();
-        return newTask;
-    } else {
-        if (!title.value) {
-            document.getElementById("title-label-2").style.opacity = 1;
-        }
-        if (!date.value) {
-            document.getElementById("date-label-2").style.opacity = 1;
-        }
-        if (!category.value) {
-            document.getElementById("category-label-2").style.opacity = 1;
-        }
-    }
-}
 
 
 function hideRequiredLabels(){

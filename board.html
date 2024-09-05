@@ -6,6 +6,7 @@
     <title>Join</title>
     <link rel="icon" type="image/png" href="assets/img/logo_dark.png"/>
     <link rel="stylesheet" href="style.css">
+    <script src="js/templates.js"></script>
     <script src="script.js"></script>
     <script src="js/board.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,10 +19,77 @@
     <div w3-include-html="assets/templates/menu_template.html"></div>
 
     <main>
-        <h1>Board</h1>
+        <div class="board-main-header">
+            <h1>Board</h1>
+            <div class="board-main-header-right">
+                <div class="board-header-searchbar-container">
+                    <input type="text" placeholder="Find Task" class="board-header-input" oninput="performSearch(this.value)">
+                    <img src="assets/img/search.png" class="board-input-icon">
+                </div>
+                <button class="board-header-add-task-btn" onclick="openAddTaskModal()">Add Task<img src="assets/img/add_white.png" class="board-add-task-icon"></button>
+                <button class="board-header-btn-mobile" onclick="openAddTaskModal()"><img src="assets/img/add_white.png" class="board-add-task-icon"></button>
+            </div>
+        </div>
+
+        <div class="board-searchbar-container-mobile">
+            <input type="text" placeholder="Find Task " class="board-header-input">
+            <img src="assets/img/search.png" class="board-input-icon">
+        </div>
+
+        <div class="board-columns-div">
+            <div class="board-column">
+                <div class="board-column-header">
+                    <span class="board-column-title">To do</span>
+                    <button class="board-column-add-btn" onclick="addTaskWithStatus('todo')"><img src="assets/img/plus_blue.png" class="column-add-btn-icon"></button>
+                </div>
+                <div class="board-column-body" id="board-todo-column" ondrop="moveTo('todo')" ondragover="allowDrop(event); highlight('board-todo-column')" ondragleave="removeHighlight('board-todo-column')">
+                </div>
+            </div>
+            <div class="board-column">
+                <div class="board-column-header">
+                    <span class="board-column-title">In progress</span>
+                    <button class="board-column-add-btn" onclick="addTaskWithStatus('in progress')"><img src="assets/img/plus_blue.png" class="column-add-btn-icon"></button>
+                </div>
+                <div class="board-column-body" id="board-inprogress-column" ondrop="moveTo('in progress')" ondragover="allowDrop(event); highlight('board-inprogress-column')" ondragleave="removeHighlight('board-inprogress-column')">
+                </div>
+            </div>
+            <div class="board-column">
+                <div class="board-column-header">
+                    <span class="board-column-title">Await feedback</span>
+                    <button class="board-column-add-btn" onclick="addTaskWithStatus('await feedback')"><img src="assets/img/plus_blue.png" class="column-add-btn-icon"></button>
+                </div>
+                <div class="board-column-body" id="board-await-column" ondrop="moveTo('await feedback')" ondragover="allowDrop(event); highlight('board-await-column')" ondragleave="removeHighlight('board-await-column')">
+                </div>
+            </div>
+            <div class="board-column">
+                <div class="board-column-header">
+                    <span class="board-column-title">Done</span>
+                    <button class="board-column-add-btn" onclick="addTaskWithStatus('done')"><img src="assets/img/plus_blue.png" class="column-add-btn-icon"></button>
+                </div>
+                <div class="board-column-body" id="board-done-column" ondrop="moveTo('done')" ondragover="allowDrop(event); highlight('board-done-column')" ondragleave="removeHighlight('board-done-column')">
+                </div>
+            </div>
+        
+
+        </div>
 
 
     </main>
+
+    <div class="add-task-modal-bg display-none" id="add-task-modal" onclick="hideAddTaskModal()">
+        <div class="add-task-modal" onclick="event.stopPropagation()">
+            <div class="add-task-modal-header">
+                <h1>Add Task</h1>
+                <img src="assets/img/close.png" class="close-task-form-icon" onclick="hideAddTaskModal()">
+            </div>
+            <div w3-include-html="assets/templates/task_form.html"></div>
+
+        </div>
+    </div>
+
+    <div class="task-display-modal-bg display-none" id="task-display-modal" onclick="hideTaskDisplayModal()">
+    
+    </div>
 
 </body>
 </html>

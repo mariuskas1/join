@@ -26,7 +26,7 @@ async function getCurrentUserTasks(){
         let response = await fetch(BASE_URL + "/allTasks/" + currentUser.trim() + ".json")
 
         if (!response.ok) {
-            throw new Error("Network response was no ok")
+            throw new Error("Network response was not ok")
         }
 
         let data = await response.json();
@@ -57,7 +57,6 @@ function displayZeroTasks(){
 
 
 function displayTaskInfos(){
-    console.log(currentUserTasks);
     let numberOfTasks = Object.keys(currentUserTasks).length;
     let numberOfUrgentTasks = Object.values(currentUserTasks).filter(task => task.prio === "urgent").length;
     let numberOfTasksTodo = Object.values(currentUserTasks).filter(task => task.status === "todo").length;
@@ -80,6 +79,10 @@ function displayTaskInfos(){
 function getClosestDeadline(){
     let urgentTasks = Object.values(currentUserTasks).filter(task => task.prio === "urgent");
     let urgentTaskDates = urgentTasks.map(task => new Date(task.date));
+
+    if (urgentTaskDates.length === 0) {
+        return "-";  
+    }
 
     let currentDate = new Date();
     let closestDeadline = urgentTaskDates.reduce((closest, date) => {
