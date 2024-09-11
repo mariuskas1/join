@@ -1,5 +1,7 @@
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", async function(){
     setTimeout(deactivateLink, 100);
+    await getCurrentUserData();
+    setTimeout(displayUserInitials, 60);
 });
 
 

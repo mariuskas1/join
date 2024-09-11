@@ -12,7 +12,7 @@
         </div>
         <div class="input">
             <label for="assigned">Assigned to</label>
-            <select id="assigned">
+            <select id="assigned" class="select-contacts">
                 <option value="" disabled selected>Select contacts to assign</option>
             </select>
             <span class="required-label"></span>
@@ -66,8 +66,8 @@
         <div class="input" id="subtasks-input">
             <label for="subtasks">Subtasks</label>
             <div class="subtask-input-container">
-                <input type="text" name="subtasks" id="subtasks" placeholder="Add new subtask" spellcheck="false">
-                <img class="add-subtask-icon" src="assets/img/add.png" onclick="addSubtask()">
+                <input type="text" name="subtasks" id="subtasks" placeholder="Add new subtask" spellcheck="false" onkeydown="handleKeyDownSubtask(event)">
+                <img class="add-subtask-icon" src="assets/img/add.png" onclick="addSubtask()" >
             </div>
             <ul id="subtasks-list">  
                                          

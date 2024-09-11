@@ -1,3 +1,6 @@
+//Templates for the board-page:
+
+
 function getTaskTemplate(task){
     const taskCategoryHTML = renderTaskCategoryDisplay(task.category);
     const taskContactsHTML = renderTaskContacts(task.assignedTo);
@@ -50,7 +53,7 @@ function getLargeTaskTemplate(task) {
             <div class="large-task-contacts-display">
                 ${taskContactsHTML}
             </div>
-            <span class="large-task-info-description">Subtasks</span>
+            <span class="large-task-info-description" id="large-task-subtasks-header">Subtasks</span>
             <div class="large-task-subtasks-display" id="large-task-subtasks-display">
             </div>
             <div class="large-task-display-footer">
@@ -135,5 +138,149 @@ function getEditTaskTemplate(openedTask){
                 </div>
             </div>
         </div>
+    `;
+}
+
+
+function getSubtaskProgressTemplate(subtasksDoneInPercent, subtasksDone, allSubtasks) {
+    return `
+        <div class="board-task-subtasks-display">
+            <div class="board-subtasks-bar-container">
+                <div class="board-subtasks-bar" style="width: ${subtasksDoneInPercent}%"></div>
+            </div>
+            <span class="board-subtasks-display">${subtasksDone}/${allSubtasks} Subtasks</span>
+        </div>
+    `;
+}
+
+
+function getContactDisplayTemplate(contactData) {
+    if (contactData) {
+        return `
+            <div class="large-task-contact-div">
+                <div class="large-task-contact-initials" style="background-color: ${contactData.color}">${contactData.initials}</div>
+                <span class="large-task-contact-name">${contactData.name}</span>
+            </div>
+        `;
+    } else {
+        return `
+            <div class="large-task-contact-div">
+                <div class="large-task-contact-initials" style="opacity:0"> - </div>
+                <span class="large-task-contact-name">-</span>
+            </div>
+        `;
+    }
+}
+
+
+function getSubtaskTemplate(subtask) {
+    const checkboxImage = subtask.status === "done" ? "assets/img/checked.png" : "assets/img/notchecked.png";
+    return `
+        <div class="large-task-subtask-div">
+            <img src="${checkboxImage}" class="subtask-checkbox" onclick="switchSubtaskStatus(${subtask.id}); switchSubtaskCheckbox(this);">
+            <span class="large-task-subtaks-name">${subtask.name}</span>
+        </div>
+    `;
+}
+
+
+function getSubtaskListItemTemplate(subtask) {
+    return `
+        <li>
+            <img class="bullet-point" src="assets/img/circle-solid.svg">
+            <input type="text" class="subtask-input bg-white" name="subtask-input" value="${subtask.name}" disabled spellcheck="false">
+            <div class="subtask-icons">
+                <img class="subtask-icon" onclick="editSubtask(this)" src="assets/img/edit.png">
+                <img class="subtask-icon" onclick="deleteSubtask(this)" src="assets/img/delete.png">
+            </div>
+        </li>
+    `;
+}
+
+
+function getNewSubtaskTemplate(input) {
+    return `
+        <li>
+            <img class="bullet-point" src="assets/img/circle-solid.svg">
+            <input type="text" class="subtask-input" name="subtask-input" value="${input}" disabled spellcheck="false">
+            <div class="subtask-icons">
+                <img class="subtask-icon" onclick="editSubtask(this)" src="assets/img/edit.png">
+                <img class="subtask-icon" onclick="deleteSubtask(this)" src="assets/img/delete.png">
+            </div>
+        </li>             
+    `;
+}
+
+
+
+//Templates for the contact-page:
+
+
+function getActiveContactTemplate(contact) {
+    return `
+        <div class="single-contact-display-header">
+            <div class="scd-initials" style="background-color: ${contact.color};">${contact.initials}</div>
+            <div class="scd-name-div">
+                <span class="scd-name">${contact.name}</span>
+                <div class="scd-options-div">
+                    <button class="scd-option-btn" onclick="displayEditContactModal()"><img src="assets/img/edit.png"> Edit</button>
+                    <button class="scd-option-btn" onclick="deleteContact()"><img src="assets/img/delete.png"> Delete</button>
+                </div>
+            </div>
+        </div>
+        <div class="single-contact-display-body">
+            <span class="contact-info">Contact Information</span>
+            <span class="scd-info-title">Email</span>
+            <span class="contact-mail">${contact.mail}</span>
+            <span class="scd-info-title">Phone</span>
+            <span class="contact-phone">${contact.phone}</span>
+        </div>
+        <div class="scd-options-mobile-div" onclick="openScdOptionsMobile();">
+            <img src="/assets/img/three_dots.png" class="scd-options-mobile-img">
+        </div>
+    `;
+}
+
+
+function getContactGroupTemplate(letter, group) {
+    let contactsHTML = group.map(contact => getContactItemTemplate(contact)).join('');
+    
+    return `
+        <div class="contacts-group">
+            <div class="contacts-group-letter">${letter}</div>
+            <div class="contacts-display-bar">
+                ${contactsHTML}
+            </div>
+        </div>
+    `;
+}
+
+
+function getContactItemTemplate(contact) {
+    return `
+        <div class="contacts-display-small" onclick="activateContact(this)">
+            <div class="initials-div" style="background-color: ${contact.color};">${contact.initials}</div>
+            <div class="contacts-display-info">
+                <div class="contact-name-sm">${contact.name}</div>
+                <div class="contact-mail-sm">${contact.mail}</div>
+            </div>
+        </div>
+    `;
+}
+
+
+
+//Templates for the add-task-page:
+
+function createSubtaskHTML(input) {
+    return `
+        <li>
+            <img class="bullet-point" src="assets/img/circle-solid.svg">
+            <input type="text" class="subtask-input" name="subtask-input" value="${input}" disabled spellcheck="false">
+            <div class="subtask-icons">
+                <img class="subtask-icon" onclick="editSubtask(this)" src="assets/img/edit.png">
+                <img class="subtask-icon" onclick="deleteSubtask(this)" src="assets/img/delete.png">
+            </div>
+        </li>
     `;
 }
