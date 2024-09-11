@@ -9,49 +9,22 @@ const colors = ["#FF7A00", "#9327FF", "#6E52FF", "#FC71FF", "#FFBB2B", "#1FD7C1"
 let colorIndex = 0;
 
 
-
-
+/**
+ * This function is used to call several other functions from the script.js-file, after the DOM-content is loaded.
+ */
 document.addEventListener("DOMContentLoaded", async function(){
     setTimeout(activateLink, 100);
     await getCurrentUserData();
-    setTimeout(displayUserInitials, 40);
+    setTimeout(displayUserInitials, 60);
     await loadContacts();
     displayContacts();
     saveCurrentUserAsContact();
 });
 
 
-async function getCurrentUserData(){
-    let response = await fetch(BASE_URL + "/allUsers/currentUser.json")
-    let responseToJson = await response.json();
-    let userData = Object.values(responseToJson)[0];
-    currentUser = userData.name;
-    currentUserData = userData;
-}
-
-
-function displayUserInitials(){
-    let initialsButton = document.getElementById("user-initials");
-    let currentUserInitials;
-
-    if (currentUser) {
-        let currentUserName = currentUser.trim().split(/\s+/);
-
-        if (currentUserName.length === 1) {
-            currentUserInitials = currentUserName[0];
-        } else if (currentUserName.length === 2) {
-            currentUserInitials = currentUserName[0][0] + currentUserName[1][0];
-        } else if (currentUserName.length > 2) {
-            currentUserInitials = currentUserName[0][0] + currentUserName[currentUserName.length - 1][0];
-        }
-    
-        initialsButton.innerHTML = currentUserInitials.toUpperCase();
-    } else {
-        initialsButton.innerHTML = "G";
-    }
-}
-
-
+/**
+ * This function activates the link to the 'Contacs' page in the menu on the left side, so that it is clear to the user, that he or she already is on the 'Contacts' page.
+ */
 function activateLink(){
     let contactsDivs = document.querySelectorAll(".contacts-div");
     
@@ -66,6 +39,9 @@ function activateLink(){
 }
 
 
+/**
+ * This function creates a newUserContact-object, so that the user can be displayed in the contacts-list and also can be assigned to a task.
+ */
 async function saveCurrentUserAsContact(){
     if (currentUser){
         const trimmedUserName = currentUserData.name.trim().toLowerCase();
@@ -80,15 +56,18 @@ async function saveCurrentUserAsContact(){
                 "info": "Contact Information",
                 "color": "#29ABE2"
             }
-           
-            await postData("/allContacts/" + currentUser.trim(), newUserContact);
+            await postData("/allContacts/", newUserContact);
         }
     }
 }
 
 
 
-
+/**
+ * This functions activates the contact one clicked on in the contacts list, so that it can be displayed in a larger format.
+ * 
+ * @param {HTMLDivElement} div - It takes in the div-element the user clicks on as a parameter.
+ */
 function activateContact(div){
     document.querySelectorAll(".contacts-display-small").forEach(function(contact){
         contact.classList.remove("active-contact-sm");
@@ -102,49 +81,41 @@ function activateContact(div){
 }
 
 
-function displayActiveContact(){
-    if (window.innerWidth < 1080){
+/**
+ * This function displays the active contact in a larger format.
+ */
+function displayActiveContact() {
+    if (window.innerWidth < 1080) {
         displayActiveContactMobile();
     }
 
     let scdDiv = document.getElementById("single-contact-display-div");
     scdDiv.innerHTML = '';
-    
-    if(activeContact){
-        scdDiv.innerHTML += `
-        <div class="single-contact-display-header">
-            <div class="scd-initials" style="background-color: ${activeContact.color};">${activeContact.initials}</div>
-            <div class="scd-name-div">
-                <span class="scd-name">${activeContact.name}</span>
-                <div class="scd-options-div">
-                    <button class="scd-option-btn" onclick="displayEditContactModal()"><img src="assets/img/edit.png"> Edit</button>
-                    <button class="scd-option-btn" onclick="deleteContact()"><img src="assets/img/delete.png"> Delete</button>
-                </div>
-            </div>
-        </div>
-        <div class="single-contact-display-body">
-            <span class="contact-info">Contact Information</span>
-            <span class="scd-info-title">Email</span>
-            <span class="contact-mail">${activeContact.mail}</span>
-            <span class="scd-info-title">Phone</span>
-            <span class="contact-phone">${activeContact.phone}</span>
-        </div>
-        <div class="scd-options-mobile-div" onclick="openScdOptionsMobile();"><img src="/assets/img/three_dots.png" class="scd-options-mobile-img"></div>
-        `;
+    if (activeContact) {
+        scdDiv.innerHTML += getActiveContactTemplate(activeContact);
     }
 }
 
 
+/**
+ * This function displays the options on the single contact display for the mobile version.
+ */
 function openScdOptionsMobile(){
     document.getElementById('scd-options-menu').classList.remove('d-none');
 }
 
 
+/**
+ * This function hides the options on the single contact display for the mobile version.
+ */
 function closeScdOptionsMobile(){
     document.getElementById('scd-options-menu').classList.add('d-none');
 }
 
 
+/**
+ * This function displays the active contact for the mobile version.
+ */
 function displayActiveContactMobile(){
     const contactsAllDiv = document.querySelector('.contacts-display-div');
     const singleContactDisplay = document.querySelector('.contact-display');
@@ -153,9 +124,12 @@ function displayActiveContactMobile(){
     contactsAllDiv.style.display = 'none';
     addContactBtnMobile.style.display = 'none';
     singleContactDisplay.style.display = 'block';
-
 }
 
+
+/**
+ * This function hides the active contact for the mobile version.
+ */
 function hideSingleContactDisplay(){
     const contactsAllDiv = document.querySelector('.contacts-display-div');
     const singleContactDisplay = document.querySelector('.contact-display');
@@ -171,30 +145,35 @@ function hideSingleContactDisplay(){
 }
 
 
-
+/**
+ * This function displays the add-contact-modal. Because the edit-modal also uses the same html elements, the text and onclick-function needs
+ *  to be changed back, in case the displayEditContactModal-function was called before.
+ */
 function displayAddContactModal(){
     document.getElementById("add-contact-modal").classList.remove("display-none");
-
     document.getElementById("add-contact-modal-title").innerHTML = "Add contact";
     document.getElementById("add-contact-team").innerHTML = "Tasks are better with a team!";
     document.getElementById("new-contact-name").value = "";
     document.getElementById("new-contact-mail").value = "";
     document.getElementById("new-contact-phone").value = "";
-
     document.getElementById("cancel-or-delete-btn").innerHTML = "Cancel" + `<img class="btn-icon" src="assets/img/close.png"></img>`;
     document.getElementById("cancel-or-delete-btn").onclick = clearForm;
-
     document.getElementById("create-or-save-btn").innerHTML = "Create contact" + `<img class="btn-icon" src="assets/img/check_white.png">`;
     document.getElementById("create-or-save-btn").type = "submit";
 }
 
 
-
+/**
+ * This function hides the add-contact-modal.
+ */
 function hideAddContactModal(){
     document.getElementById("add-contact-modal").classList.add("display-none");
 }
 
 
+/**
+ * This function clears the add-contact-form.
+ */
 function clearForm(){
     const form = document.getElementById("add-contact-form");
     form.reset();
@@ -202,11 +181,14 @@ function clearForm(){
 }
 
 
+/**
+ * This function calls all other functions necessary to create a new contact and upload it to the api-server.
+ */
 async function uploadNewContact(){
     let form = document.getElementById("add-contact-form");
     let newContact = createNewContact();
     if (newContact){
-        await postData("/allContacts/" + currentUser.trim(), newContact);
+        await postData("/allContacts/", newContact);
         form.reset();
         hideAddContactModal();
         displayConfirmationMessage();
@@ -218,18 +200,12 @@ async function uploadNewContact(){
 }  
 
 
-async function postData(path="", data={}){
-    let response = await fetch(BASE_URL + path + ".json", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data)
-    });
-    return await response.json();
-}
 
-
+/**
+ * This function creates a new contact-object.
+ * 
+ * @returns - It returns the newly created contact-object.
+ */
 function createNewContact(){
     let name = document.getElementById("new-contact-name");
     let mail = document.getElementById("new-contact-mail");
@@ -252,12 +228,21 @@ function createNewContact(){
 }
 
 
+/**
+ * This function creates an initials-variable from the name of any given contact.
+ * 
+ * @param {string} name - It takes in a contact-name as a parameter.
+ * @returns - It returns the initials of the contact.
+ */
 function getContactInitials(name){
     let initials = name.split(/\s+/).map(part => part[0]).join('');
     return initials.toUpperCase();
 }
 
 
+/**
+ * This function displays a confirmation message, when a new contact is succesfully created.
+ */
 function displayConfirmationMessage(){
     let addContactBtn = document.getElementById("add-contact-btn");
 
@@ -268,8 +253,11 @@ function displayConfirmationMessage(){
 }
 
 
+/**
+ * This function loads all contacts that are saved in the current users account from the server and saves them into the local contacts-array.
+ */
 async function loadContacts(){
-    let response = await fetch(BASE_URL + "/allContacts/" + currentUser + ".json");
+    let response = await fetch(BASE_URL + "/allContacts/" + ".json");
     let responseToJson = await response.json();
     if( !responseToJson) {
         console.log("No existing contacts yet")
@@ -279,44 +267,29 @@ async function loadContacts(){
 }
 
 
-
-function displayContacts(){
+/**
+ * This function displays all contacts in the contacts-list on the contacts page in alphabetical order.
+ */
+function displayContacts() {
     let contactsContainer = document.getElementById("contacts-display-bar");
     contactsContainer.innerHTML = '';
-
     sortContacts();
 
     for (let letter in groupedContacts) {
         if (groupedContacts.hasOwnProperty(letter)) {
             const group = groupedContacts[letter];
-            let groupHTML = `
-                <div class="contacts-group">
-                    <div class="contacts-group-letter">${letter}</div>
-                    <div class="contacts-display-bar">`;
-    
-            for (let i = 0; i < group.length; i++) {
-                const contact = group[i];
-
-                groupHTML += `
-                    <div class="contacts-display-small" onclick="activateContact(this)">
-                        <div class="initials-div" style="background-color: ${contact.color};">${contact.initials}</div>
-                        <div class="contacts-display-info">
-                            <div class="contact-name-sm">${contact.name}</div>
-                            <div class="contact-mail-sm">${contact.mail}</div>
-                        </div>
-                    </div>`;
-            }
-
-            groupHTML += `</div></div>`;
-            contactsContainer.innerHTML += groupHTML;
+            contactsContainer.innerHTML += getContactGroupTemplate(letter, group);
         }
     }
 }
 
 
+/**
+ * This function sorts all contacts in alphabetical order. To achieve this it creates a groupedContacts-object that consists of several arrays for every letter
+ * in the alphabet. It loops over every contact in the contacts-array and pushes it into the respective array inside the groupedContacts-object.
+ */
 function sortContacts(){
     groupedContacts = {};
-    
     contacts.sort((a, b) => a.name.localeCompare(b.name));
 
     for (let i = 0; i < contacts.length; i++) {
@@ -327,38 +300,43 @@ function sortContacts(){
         }
         groupedContacts[firstLetter].push(contact);
     }
-
 }
 
 
+/**
+ * This function displays the edit contact modal. For that it uses the add-contact-modal and only changes some text and the onclick-function.
+ */
 function displayEditContactModal(){
     document.getElementById("add-contact-modal").classList.remove("display-none");
-
     document.getElementById("add-contact-modal-title").innerHTML = "Edit Contact";
     document.getElementById("add-contact-team").innerHTML = "";
     document.getElementById("new-contact-name").value = activeContact.name;
     document.getElementById("new-contact-mail").value = activeContact.mail;
     document.getElementById("new-contact-phone").value = activeContact.phone;
-
     document.getElementById("cancel-or-delete-btn").innerHTML = "Delete";
     document.getElementById("cancel-or-delete-btn").onclick = deleteContact;
-
     document.getElementById("create-or-save-btn").innerHTML = "Save" + `<img class="btn-icon" src="assets/img/check_white.png">`;
     document.getElementById("create-or-save-btn").type = "button";
     document.getElementById("create-or-save-btn").onclick = editContact;
  }
 
 
-
+/**
+ * This function calls all the necessary functions to edit a contact from the local contacts-array and than upload the changes to the server.
+ */
 async function editContact(){
     editContactLocally();
     displayContacts();
     displayActiveContact();
     await deleteContactsOnServer();
     await uploadContactsOnServer();
+    hideAddContactModal();
 }
 
 
+/**
+ * This function edits a contact locally. It first gets the index of the active contact in the contacts-array, so that it can than replace it with the modified activContact.
+ */
 function editContactLocally(){
     const activeContactIndex = contacts.findIndex(contact => contact.name === activeContact.name);
 
@@ -371,7 +349,9 @@ function editContactLocally(){
 }
 
 
-
+/**
+ * This function delete a contact from the local contacts-array and from the server.
+ */
 async function deleteContact(){
     deleteContactLocally();
     changeActiveContact();
@@ -383,7 +363,9 @@ async function deleteContact(){
 }
 
 
-
+/**
+ * This function changes the active contact, when a contact gets deleted to the next contact in the contacts-array.
+ */
 function changeActiveContact(){
     let currentIndex = contacts.findIndex(contact => contact.mail === activeContact.mail);
 
@@ -392,19 +374,32 @@ function changeActiveContact(){
 }
 
 
+/**
+ * This function deletes a contact from the local contacts-array based on the mail property of the activeContact. To achieve this it creates a new
+ * array with the filter method, that consists of all the contacts in the contacts-array, whose mail does not match the mail of the activeContact.
+ */
 function deleteContactLocally(){
     contacts = contacts.filter(contact => contact.mail !== activeContact.mail);
 }
 
 
+/**
+ * This function deletes all contacts of the current user from the server.
+ * 
+ * @returns - It returns the response converted to json-format.
+ */
 async function deleteContactsOnServer(){
-    let response = await fetch(BASE_URL + "/allContacts/" + currentUser + ".json",{
+    let response = await fetch(BASE_URL + "/allContacts/" + ".json",{
         method: "DELETE",
     });
     return responseToJson = await response.json();
 }
 
 
+/**
+ * This function uploads every contact from the contacts-array to the server. To achieve this it loops over every contact within the array
+ * and then creates a new contact-object, which then gets uploaded to the server.
+ */
 async function uploadContactsOnServer(){
     for (let i = 0; i < contacts.length; i++) {
         const contact = contacts[i];
@@ -416,11 +411,14 @@ async function uploadContactsOnServer(){
             "info": "Contact Information",
             "color": contact.color
         }
-        await postData("/allContacts/" + currentUser.trim(), existingContact);
+        await postData("/allContacts/", existingContact);
     }
 }
 
 
+/**
+ * This function changes the display of the active contact in the contacts-list, in case a contact gets deleted.
+ */
 function changeActiveContactDisplaySmall() {
     const contactDivs = document.querySelectorAll('.contacts-display-small');
     contactDivs.forEach(div => {

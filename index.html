@@ -31,7 +31,7 @@
         <div class="log-in">
             <h2>Log in</h2>
             <div class="log-in-underline"></div>
-            <form onsubmit="logIn(); return false">
+            <form onsubmit="checkUserData(); return false">
                 <div class="index-input-container">
                     <img src="assets/img/mail.png" class="index-input-icon" id="mail-icon">
                     <input type="text" placeholder="Email" id="mail"  class="index-input" required>
@@ -52,7 +52,7 @@
             
                 <div class="log-in-buttons-div" >
                     <button type="submit" class="log-in-btn">Log in</button>
-                    <button class="guest-log-in-btn">Guest Log in</button>
+                    <button type="button" onclick="guestLogIn()" class="guest-log-in-btn">Guest Log in</button>
                 </div>
                 
             </form>

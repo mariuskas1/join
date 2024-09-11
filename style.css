@@ -12,10 +12,14 @@ main{
     left: 232px;
     padding-top: 110px; 
     padding-left: 96px;
-    padding-bottom: 120px;
+    /* padding-bottom: 120px; */
     background-color: rgb(246, 247, 248);
-    width: 100vw;
-    height: 100vh;
+    width: calc(100vw - 232px);
+    height: calc(100vh - 96px);
+    /* overflow-y: auto; */
+}
+
+#board-main{
     overflow-y: auto;
 }
 
@@ -325,6 +329,8 @@ header{
     main{
         top: 80px;
         right: 0;
+        width: 100vw;
+        height: calc(100vh - 140px);
     }
 }
 
@@ -687,10 +693,12 @@ label{
     padding-top: 110px; 
     padding-left: 96px;
     padding-right: 40px;
+    padding-bottom: 64px;
     background-color: rgb(246, 247, 248);
     width: calc(100vw - 232px);
     height: calc(100vh - 96px);
-    overflow: auto;
+    overflow-y: auto;
+    
 }
 
 h2{
@@ -706,6 +714,9 @@ h2{
 @media(max-height: 800px){
     header{
         height: 88px;
+    }
+    main{
+        height: calc(100vh - 88px);
     }
     .user-menu{
         top: 88px;
@@ -1301,9 +1312,9 @@ input[type=checkbox] {
     main{
         padding-left: 40px;
     }
-    /* #category-input{
+    #category-input{
         display: none;
-    } */
+    }
     #subtasks-input{
         display: none;
     }
@@ -2951,15 +2962,11 @@ input[type=checkbox] {
     width: 525px;
     display: flex;
     flex-direction: column;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    max-height: 80vh;
     box-sizing: border-box;
     padding: 32px;
 }
 
 .edit-task-content{
-    
     padding-right: 24px;
     overflow: auto;
     height: 80%;
@@ -3080,8 +3087,7 @@ input[type=checkbox] {
 }
 
 .large-task-display-footer{
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin-top: 16px;
     display: flex;
     justify-content: flex-end;
 }
@@ -3307,8 +3313,15 @@ input[type=checkbox] {
 @media(max-height: 800px){
     .add-task-modal{
         height: 95vh;
-        
     }
+    .large-task-title{
+        font-size: 51px;
+        line-height: 54px;
+    }
+    .board-task-description{
+        padding-bottom: 0;
+    }
+    
 }
 
 
@@ -3509,3 +3522,21 @@ input[type=checkbox] {
 .task-display-large .subtask-input{
     background-color: white;
 }
+
+
+@media(max-width: 1200px){
+    .board-subtasks-bar-container{
+        width: 80px;
+    }
+}
+@media(max-width: 1000px){
+    .board-subtasks-bar-container{
+        width: 40px;
+    }
+}
+@media(max-width: 850px){
+    .board-subtasks-bar-container{
+        width: 200px;
+    }
+}
+

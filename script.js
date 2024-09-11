@@ -1,5 +1,7 @@
 
-
+/**
+ * This function includes the html-elements for the menu-template on the page.
+ */
 async function includeHTML() {
     let includeElements = document.querySelectorAll('[w3-include-html]');
     for (let i = 0; i < includeElements.length; i++) {
@@ -15,62 +17,78 @@ async function includeHTML() {
 }
 
 
+/**
+ * This function redirects the user to the page, which is given in as a parameter.
+ * 
+ * @param {string} page - The url of the page is given in as parameter.
+ */
 function redirectTo(page){
     window.location.href = page;
 }
 
 
+/**
+ * This function displays the user menu in the top right corner of the page.
+ */
 function openUserMenu(){
     document.getElementById('user-menu').classList.remove('d-none');
 }
 
 
+/**
+ * This function closes the user menu in the top right corner of the page.
+ */
 function closeUserMenu(){
     document.getElementById('user-menu').classList.add('d-none');
 }
 
 
+/**
+ * This function redirects the user back to the previous page.
+ */
 function returnToPreviousPage(){
     window.history.back();
 }
 
 
 async function logOut(){
-    let response = await fetch ("https://join-4544d-default-rtdb.europe-west1.firebasedatabase.app/allUsers/currentUser.json", {
-        method: "DELETE",
-    });
-    return responseToJson = await response.json();
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("rememberedUser");
+    window.location.href = "index.html";
 }
 
 
-async function getCurrentUserData(){
-    let response = await fetch(BASE_URL + "/allUsers/currentUser.json")
-    let responseToJson = await response.json();
-    let userData = Object.values(responseToJson)[0];
-    currentUser = userData.name;
-    currentUserData = userData;
+function getCurrentUserData(){
+    let currentUserLocalStorage = localStorage.getItem("currentUser");
+    if (currentUserLocalStorage) {
+        currentUserData = JSON.parse(currentUserLocalStorage);
+        currentUser = currentUserData.name;
+    } else {
+        currentUser = null; 
+    }
 }
+
 
 
 async function loadContacts(){
-    let response = await fetch(BASE_URL + "/allContacts/" + currentUser + ".json");
+    let response = await fetch(BASE_URL + "/allContacts/.json");
     let responseToJson = await response.json();
-    if( !responseToJson) {
-        console.log("No existing contacts yet")
-    } else {
+    if(responseToJson) {
         contacts = Object.values(responseToJson);
-        
     }
 }
 
 
 function displayContactsInForm(){
-        let contactsList = document.getElementById("assigned");
-        
+    let contactsLists = document.querySelectorAll(".select-contacts");
+    
+    contactsLists.forEach(selectElement => {
+        selectElement.innerHTML = `<option value="" disabled selected>Select contacts to assign</option>`;
         for (let i = 0; i < contacts.length; i++) {
             const contact = contacts[i];
-            contactsList.innerHTML += `<option value="${contact.name}">${contact.name}</option>`;
+            selectElement.innerHTML += `<option value="${contact.name}">${contact.name}</option>`;
         }
+    });
 }
 
 
@@ -99,6 +117,14 @@ function displayUserInitials(){
         initialsButton.innerHTML = currentUserInitials.toUpperCase();
     } else {
         initialsButton.innerHTML = "G";
+    }
+}
+
+
+function handleKeyDownSubtask(event){
+    if (event.key === "Enter") {
+        event.preventDefault(); 
+        addSubtask(); 
     }
 }
 
@@ -135,20 +161,38 @@ function editSubtask(element) {
     subtaskInput.removeAttribute('disabled');
     subtaskInput.focus();
 }
+  
 
 
+/**
+ * This function calls all the necessary functions to create a new task and then upload it to the server.
+ * 
+ * @param {Event} event - It takes in the click/submit-event as a parameter to prevent the default form-behaviour.
+ */
 async function uploadNewTask(event){  
     let form = document.getElementById("add-task-form");
     event.preventDefault();
     let newTask = createNewTask();
     if (newTask){
-        await postData("/allTasks/" + currentUser.trim(), newTask);
+        await postData("/allTasks/", newTask);
         form.reset();
         document.getElementById("subtasks-list").innerHTML = '';
-    } else {
-        console.log("Failed to create a new task. Please check the form inputs.");
-    }
-}     
+        addTaskStatus = null;
+
+        if (window.location.pathname.endsWith("board.html")){
+            hideAddTaskModal();
+            await getAllTasks();
+            sortTasks();
+            displayTasksInBoard();
+        }
+    } 
+
+    
+} 
+
+
+
+
 
 function createNewTask(){
     let date = document.getElementById("date");
@@ -253,3 +297,4 @@ async function postData(path="", data={}){
     });
     return await response.json();
 }
+

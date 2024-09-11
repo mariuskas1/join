@@ -1,30 +1,29 @@
 let currentUser;
-let currentUserTasks;
+let allTasks;
 const BASE_URL = "https://join-4544d-default-rtdb.europe-west1.firebasedatabase.app";
 
 
+/**
+ * This function is used to call several other functions after the DOM-content is loaded.
+ */
 document.addEventListener("DOMContentLoaded", async function(){
     await getCurrentUserData(); 
+    await getAllTasks();
     displayGreeting();
-    displayUserInitials();
+    setTimeout(displayUserInitials, 60);
     setTimeout(activateLink, 100);
     setTimeout(hideGreeting, 2000);
 });
 
 
-async function getCurrentUserData(){
-    let response = await fetch(BASE_URL + "/allUsers/currentUser.json")
-    let responseToJson = await response.json();
-    let userData = Object.values(responseToJson)[0];
-    currentUser = userData.name;
-    await getCurrentUserTasks();
-}
 
-
-async function getCurrentUserTasks(){
+/**
+ * This function loads all the tasks of the current user from the server and saves them in the local currenUserTasks-array. 
+ * It then calls the functions to display the basic infos for all tasks on the summary page.
+ */
+async function getAllTasks(){
     try {
-        let response = await fetch(BASE_URL + "/allTasks/" + currentUser.trim() + ".json")
-
+        let response = await fetch(BASE_URL + "/allTasks/" + ".json")
         if (!response.ok) {
             throw new Error("Network response was not ok")
         }
@@ -33,10 +32,9 @@ async function getCurrentUserTasks(){
         if (!data || data.length === 0) {
             displayZeroTasks();
         } else {
-            currentUserTasks = data;
+            allTasks = data;
             displayTaskInfos();
         }
-
     } catch (error) {
         console.error("Failed to fetch tasks:", error);
         displayZeroTasks();
@@ -44,6 +42,9 @@ async function getCurrentUserTasks(){
 }
 
 
+/**
+ * This function is called, when there are no tasks for the current user account. It displays the infor on the summary page, that there are no tasks, no upcoming deadlines etc.
+ */
 function displayZeroTasks(){
     document.getElementById("tasks-to-do").innerHTML = 0;
     document.getElementById("tasks-done").innerHTML = 0;
@@ -56,13 +57,22 @@ function displayZeroTasks(){
 }
 
 
+
+/**
+ * This function displays the basic task infos on the summary page, according to the data stored in the allTasks-array.
+ * To achieve this it creates new arrays for the number of tasks 'todo' etc and then checks their length.
+ */
 function displayTaskInfos(){
-    let numberOfTasks = Object.keys(currentUserTasks).length;
-    let numberOfUrgentTasks = Object.values(currentUserTasks).filter(task => task.prio === "urgent").length;
-    let numberOfTasksTodo = Object.values(currentUserTasks).filter(task => task.status === "todo").length;
-    let numberOfTasksDone = Object.values(currentUserTasks).filter(task => task.status === "done").length;
-    let numberOfTasksInProgress = Object.values(currentUserTasks).filter(task => task.status === "inprogress").length;
-    let numberOfTasksAwaitingFeedback = Object.values(currentUserTasks).filter(task => task.status === "awaiting").length;
+    let numberOfTasks = Object.keys(allTasks).length;
+    let numberOfUrgentTasks = Object.values(allTasks).filter(task => task.prio === "urgent").length;
+    let numberOfTasksTodo = Object.values(allTasks).filter(task => 
+        task.status === "todo" || 
+        task.status === "in progress" || 
+        task.status === "await feedback"
+    ).length;
+    let numberOfTasksDone = Object.values(allTasks).filter(task => task.status === "done").length;
+    let numberOfTasksInProgress = Object.values(allTasks).filter(task => task.status === "inprogress").length;
+    let numberOfTasksAwaitingFeedback = Object.values(allTasks).filter(task => task.status === "awaiting").length;
 
     document.getElementById("tasks-in-board").innerHTML = numberOfTasks;
     document.getElementById("tasks-urgent").innerHTML = numberOfUrgentTasks;
@@ -76,16 +86,16 @@ function displayTaskInfos(){
 }
 
 
+/**
+ * This function calculates the closest deadline from all tasks in the allTasks array.
+ * 
+ * @returns - It returns the closest deadline of all tasks, formatted like this 'September 12, 2024'.
+ */
 function getClosestDeadline(){
-    let urgentTasks = Object.values(currentUserTasks).filter(task => task.prio === "urgent");
-    let urgentTaskDates = urgentTasks.map(task => new Date(task.date));
-
-    if (urgentTaskDates.length === 0) {
-        return "-";  
-    }
+    let taskDates = Object.values(allTasks).map(task => new Date(task.date));
 
     let currentDate = new Date();
-    let closestDeadline = urgentTaskDates.reduce((closest, date) => {
+    let closestDeadline = taskDates.reduce((closest, date) => {
     return (Math.abs(date - currentDate) < Math.abs(closest - currentDate)) ? date : closest;
     });
 
@@ -96,6 +106,9 @@ function getClosestDeadline(){
 }
 
 
+/**
+ * This function displays a personal greeting for the user, depending on the time of the day.
+ */
 function displayGreeting(){
     let greetingTime = document.getElementById("greeting-daytime");
     let greetingTimeMobile = document.getElementById("greeting-daytime-mobile")
@@ -118,6 +131,10 @@ function displayGreeting(){
 }
 
 
+/**
+ * This function displays the name of the user for the personal greeting. It displays a simple exclamation mark instead if there is no current user
+ * data available, that is, if the current user is logged in with the guest account.
+ */
 function displayUserName(){
     let greetingName = document.getElementById("greeting-name");
     let greetingNameMobile = document.getElementById("greeting-name-mobile");
@@ -127,33 +144,14 @@ function displayUserName(){
         greetingName.innerHTML = currentUser;
         greetingNameMobile.innerHTML = currentUser;
     } else {
-        greetingTime.innerHTML.slice(0, -1) + '!';
+        greetingTime.innerHTML = greetingTime.innerHTML.slice(0, -1) + `!`;
     }
 }
 
 
-function displayUserInitials(){
-    let initialsButton = document.getElementById("user-initials");
-    let currentUserInitials;
-
-    if (currentUser) {
-        let currentUserName = currentUser.trim().split(/\s+/);
-
-        if (currentUserName.length === 1) {
-            currentUserInitials = currentUserName[0];
-        } else if (currentUserName.length === 2) {
-            currentUserInitials = currentUserName[0][0] + currentUserName[1][0];
-        } else if (currentUserName.length > 2) {
-            currentUserInitials = currentUserName[0][0] + currentUserName[currentUserName.length - 1][0];
-        }
-    
-        initialsButton.innerHTML = currentUserInitials.toUpperCase();
-    } else {
-        initialsButton.innerHTML = "G";
-    }
-}
-
-
+/**
+ * This function activates the link to the 'Summary' page in the menu on the left side, so that it is clear to the user, that he or she already is on the 'Summary' page.
+ */
 function activateLink(){
     let summaryDivs = document.querySelectorAll(".summary-div");
     
@@ -168,6 +166,9 @@ function activateLink(){
 }
 
 
+/**
+ * This function hides the greeting.
+ */
 function hideGreeting(){
     document.getElementById("mobile-summary-greeting").style.opacity = 0;
 }

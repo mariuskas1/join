@@ -1,21 +1,35 @@
 let users = [];
+let rememberedUser;
+let currentUser;
 const BASE_URL = "https://join-4544d-default-rtdb.europe-west1.firebasedatabase.app";
 
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
+    users = await loadUserData("/allUsers/");
     let screenWidth = window.innerWidth;
 
     if (screenWidth < 480){
         document.getElementById("initial-index-logo").src = "assets/img/logo_light.png";
         hideInitialIndexLogo();
     } else {
-        setTimeout(() => {
-            startLogoAnimation();
-        }, 2000);
+        setTimeout(startLogoAnimation, 2000);
         displayRegisteredMessage();
     }
-});
     
+    setTimeout(checkForRememberedUser, 3500);
+});
+
+
+function checkForRememberedUser(){
+    rememberedUser = JSON.parse(localStorage.getItem("rememberedUser"));
+    if(rememberedUser){
+        currentUser = rememberedUser;
+        saveCurrentUserToLocalStorage();
+        window.location.href = "summary.html";
+    } 
+}
+    
+
 
 function startLogoAnimation(){
     let largeLogo =  document.getElementById("initial-index-logo");
@@ -38,27 +52,31 @@ function hideInitialIndexLogo(){
 }
 
 
-async function logIn(){
-    users = await loadUserData("/allUsers");
-    checkUserData();
-}
-
-
 async function loadUserData(path=""){
     let response = await fetch(BASE_URL + path + ".json");
     let data = await response.json();
-    // Convert the JSON object to an array of user objects
-    return Object.keys(data).map(key => ({ email: key, ...data[key] }));
+
+    if(data){
+         // Convert the JSON object to an array of user objects
+        return Object.keys(data).map(key => ({ email: key, ...data[key] }));
+    }   
 }
 
 
 async function checkUserData(){
     let mail = document.getElementById("mail");
     let password = document.getElementById("password");
+    let rememberMeCheckbox = document.getElementById("remember");
     let user = users.find(u => u.email == mail.value && u.password == password.value);
 
     if(user){
-        await updateCurrentUser(user);
+        currentUser = user;
+        saveCurrentUserToLocalStorage();
+
+        if (rememberMeCheckbox.checked){
+            saveRememberedUserToLocalStorage(user);
+        }
+
         window.location.href = "summary.html";
     } else {
         alert ("Password or username incorrect!")
@@ -66,20 +84,29 @@ async function checkUserData(){
 }
 
 
-async function updateCurrentUser(user){
-    let response = await fetch(BASE_URL + "/allUsers/currentUser" + ".json", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user)
-    });
-    return await response.json();
+function guestLogIn(){
+    localStorage.removeItem("currentUser");
+    window.location.href = "summary.html";
 }
+
+
+function saveRememberedUserToLocalStorage(user){
+    localStorage.removeItem("rememberedUser");
+    rememberedUser = user;
+    localStorage.setItem("rememberedUser", JSON.stringify(user));
+}
+
+
+function saveCurrentUserToLocalStorage(){
+    localStorage.removeItem("currentUser");
+    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+}
+
 
 
 const urlParams = new URLSearchParams(window.location.search);
 const msg = urlParams.get("msg");
+
 
 function displayRegisteredMessage(){
     let headerDiv = document.getElementById("signed-up-div"); 

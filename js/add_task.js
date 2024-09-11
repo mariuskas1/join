@@ -1,49 +1,24 @@
 const BASE_URL = "https://join-4544d-default-rtdb.europe-west1.firebasedatabase.app";
 let currentUser;
 let contacts = [];
+let addTaskStatus;
 
 
-
+/**
+ * This function is used to call several other functions after the DOM-content is loaded.
+ */
 document.addEventListener("DOMContentLoaded", async function(){
     setTimeout(activateLink, 100);
     await getCurrentUserData();
-    displayUserInitials();
+    setTimeout(displayUserInitials, 60);
     await loadContacts();
     displayContactsInForm();
 });
 
 
-
-async function getCurrentUserData(){
-    let response = await fetch(BASE_URL + "/allUsers/currentUser.json")
-    let responseToJson = await response.json();
-    let userData = Object.values(responseToJson)[0];
-    currentUser = userData.name;
-}
-
-
-function displayUserInitials(){
-    let initialsButton = document.getElementById("user-initials");
-    let currentUserInitials;
-
-    if (currentUser) {
-        let currentUserName = currentUser.trim().split(/\s+/);
-
-        if (currentUserName.length === 1) {
-            currentUserInitials = currentUserName[0];
-        } else if (currentUserName.length === 2) {
-            currentUserInitials = currentUserName[0][0] + currentUserName[1][0];
-        } else if (currentUserName.length > 2) {
-            currentUserInitials = currentUserName[0][0] + currentUserName[currentUserName.length - 1][0];
-        }
-    
-        initialsButton.innerHTML = currentUserInitials.toUpperCase();
-    } else {
-        initialsButton.innerHTML = "G";
-    }
-}
-
-
+/**
+ * This function activates the link to the 'Add Task' page in the menu on the left side, so that it is clear to the user, that he or she already is on the 'Add Task' page.
+ */
 function activateLink(){
     let addTaskDivs = document.querySelectorAll(".add-task-div");
     
@@ -59,89 +34,53 @@ function activateLink(){
 
 
 
-async function loadContacts(){
-    let contactsResponse = await getAllContacts("/allContacts/" + currentUser);
-    if(contactsResponse){
-        contacts = Object.values(contactsResponse);
-        displayContactsInForm();
-    } 
-}
-
-
-async function getAllContacts(path){
-    let response = await fetch(BASE_URL + path + ".json");
-    return responseToJson = await response.json();
-}
-
-
-function displayContactsInForm(){
-    let contactsList = document.getElementById("assigned");
-    
-    for (let i = 0; i < contacts.length; i++) {
-        const contact = contacts[i];
-        contactsList.innerHTML += `<option value="${contact.name}">${contact.name}</option>`;
-    }
-}
-
-
-
+/**
+ * This function clears the add-task-form.
+ */
 function clearForm(){
     const form = document.getElementById("add-task-form");
     form.reset();
 }
 
 
-function addSubtask(){
+/**
+ * This function adds a subtask to the add-task-form.
+ */
+function addSubtask() {
     let input = document.getElementById("subtasks").value;
     let subtasksList = document.getElementById("subtasks-list");
-
-    subtasksList.innerHTML += `
-        <li>
-            <img class="bullet-point" src="assets/img/circle-solid.svg">
-            <input type="text" class="subtask-input" name="subtask-input" value="${input}" disabled spellcheck="false">
-            <div class="subtask-icons">
-                <img class="subtask-icon" onclick="editSubtask(this)" src="assets/img/edit.png">
-                <img class="subtask-icon" onclick="deleteSubtask(this)" src="assets/img/delete.png">
-             </div>
-        </li>             
-    `;
-
+    subtasksList.innerHTML += createSubtaskHTML(input);
     document.getElementById("subtasks").value = '';
 }
 
-
+/**
+ * This function deletes the subtask from the add-task-form.
+ * 
+ * @param {HTMLElement} element - It takes in the html element the user clicked on as a parameter.
+ */
 function deleteSubtask(element){
     let subtask = element.closest('li');
     subtask.remove();
 }
 
 
+/**
+ * This function enables the input-element every subtask-element consists of, so that it can be edited.
+ * 
+ * @param {HTMLElement} element - It takes in the html element the user clicked on as a parameter.
+ */
 function editSubtask(element) {
     let listElement = element.closest('li');
     let subtaskInput = listElement.querySelector('input');
     subtaskInput.removeAttribute('disabled');
     subtaskInput.focus();
 }
+ 
 
 
-async function uploadNewTask(event){  
-    let form = document.getElementById("add-task-form");
-    event.preventDefault();
-    let newTask = createNewTask();
-    if (newTask){
-        await postData("/allTasks/" + currentUser.trim(), newTask);
-        form.reset();
-        document.getElementById("subtasks-list").innerHTML = '';
-    } else {
-        console.log("Failed to create a new task. Please check the form inputs.");
-    }
-}     
-
-
-
-
-
-
+/**
+ * This function hide the 'required'-labels for the required input-elements.
+ */
 function hideRequiredLabels(){
     document.querySelectorAll(".required-label").forEach(label => {
         label.style.opacity = 0;
@@ -149,12 +88,22 @@ function hideRequiredLabels(){
 }
 
 
+/**
+ * This function retrieves the selected priority for the task from the form.
+ * 
+ * @returns - It returns the selected priority.
+ */
 function getSelectedPriority() {
     let selectedPriority = document.querySelector('input[name="prio"]:checked').value;
     return selectedPriority;
 }
 
 
+/**
+ * This function retrieves the subtask-names from the form.
+ * 
+ * @returns - It returns the values of the subtask-input-elements.
+ */
 function getSubtaskValues(){
     let subtaskValues = {};
     let subtasks = document.querySelectorAll(".subtask-input");
@@ -167,13 +116,3 @@ function getSubtaskValues(){
 }
 
 
-async function postData(path="", data={}){
-    let response = await fetch(BASE_URL + path + ".json", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data)
-    });
-    return await response.json();
-}
