@@ -51,6 +51,10 @@ function returnToPreviousPage(){
 }
 
 
+/**
+ * This function logs the current user out and deletes his or her data from the local storage. 
+ * It redirects the user to the index-page.
+ */
 async function logOut(){
     localStorage.removeItem("currentUser");
     localStorage.removeItem("rememberedUser");
@@ -58,6 +62,9 @@ async function logOut(){
 }
 
 
+/**
+ * This function loads the data of the current user from the local storage and converts it into JSON-format.
+ */
 function getCurrentUserData(){
     let currentUserLocalStorage = localStorage.getItem("currentUser");
     if (currentUserLocalStorage) {
@@ -69,7 +76,9 @@ function getCurrentUserData(){
 }
 
 
-
+/**
+ * This function loads all contacts from the api-server and stores them into the local contacts-array.
+ */
 async function loadContacts(){
     let response = await fetch(BASE_URL + "/allContacts/.json");
     let responseToJson = await response.json();
@@ -79,6 +88,9 @@ async function loadContacts(){
 }
 
 
+/**
+ * This function displays all saved contacts in the add-task-form so they can be assigned to the newly created task.
+ */
 function displayContactsInForm(){
     let contactsLists = document.querySelectorAll(".select-contacts");
     
@@ -92,13 +104,18 @@ function displayContactsInForm(){
 }
 
 
+/**
+ * This function clears all input fields of the add-task-form.
+ */
 function clearForm(){
         const form = document.getElementById("add-task-form");
         form.reset();
 }
 
 
-
+/**
+ * This function displays the initials of the current user in the top menu bar. If no current user exists, it displays a 'G' for guest.
+ */
 function displayUserInitials(){
     let initialsButton = document.getElementById("user-initials");
     let currentUserInitials;
@@ -121,6 +138,12 @@ function displayUserInitials(){
 }
 
 
+/**
+ * This function handles the key-down-event for the subtask input field, so that when clicking 'enter' another subtask gets added to the task.
+ * 
+ * @param {event} event - It takes in the key-down-event as a parameter, so that it can prevent the default behaviour, meaning the whole taks
+ * does not get added when 'enter' is pressed inside the subtask input field, only the subtask.
+ */
 function handleKeyDownSubtask(event){
     if (event.key === "Enter") {
         event.preventDefault(); 
@@ -129,32 +152,34 @@ function handleKeyDownSubtask(event){
 }
 
 
-
-function addSubtask(){
+/**
+ * This function adds a new subtask to the currently created task and displays it inside the add-task-form.
+ */
+function addSubtask() {
     let input = document.getElementById("subtasks").value;
     let subtasksList = document.getElementById("subtasks-list");
 
-    subtasksList.innerHTML += `
-        <li>
-            <img class="bullet-point" src="assets/img/circle-solid.svg">
-            <input type="text" class="subtask-input" name="subtask-input" value="${input}" disabled spellcheck="false">
-            <div class="subtask-icons">
-                <img class="subtask-icon" onclick="editSubtask(this)" src="assets/img/edit.png">
-                <img class="subtask-icon" onclick="deleteSubtask(this)" src="assets/img/delete.png">
-             </div>
-        </li>             
-    `;
-
+    subtasksList.innerHTML += getSubtaskTemplate(input);
     document.getElementById("subtasks").value = '';
 }
 
 
+/**
+ * This function deletes the subtask from add-task-form.
+ * 
+ * @param {HTMLElement} element - It takes in the html-element that contains the clicked on icon as a parameter.
+ */
 function deleteSubtask(element){
     let subtask = element.closest('li');
     subtask.remove();
 }
 
 
+/**
+ * This function makes it possible to edit an added subtask in that it enables the input field of the subtask.
+ * 
+ * @param {HTMLElement} element - It takes in the html-element that contains the clicked on icon as a parameter.
+ */
 function editSubtask(element) {
     let listElement = element.closest('li');
     let subtaskInput = listElement.querySelector('input');
@@ -163,9 +188,10 @@ function editSubtask(element) {
 }
   
 
-
 /**
- * This function calls all the necessary functions to create a new task and then upload it to the server.
+ * This function calls all the necessary functions to create a new task and then upload it to the server. If the new task is created on the board-
+ * page, it will also call some other functions so that the add-task-modal gets hidden again and the newly created task gets directly displayed
+ * on the board.
  * 
  * @param {Event} event - It takes in the click/submit-event as a parameter to prevent the default form-behaviour.
  */
@@ -186,14 +212,15 @@ async function uploadNewTask(event){
             displayTasksInBoard();
         }
     } 
-
-    
 } 
 
 
-
-
-
+/**
+ * This function creates a new task from the values of the relevant input-fields. It also performs the form validation and displays 'required-labels'
+ * if the titel, date or category input fields are left empty.
+ * 
+ * @returns - It returns the newly create task-object.
+ */
 function createNewTask(){
     let date = document.getElementById("date");
     let category = document.getElementById("category");
@@ -235,21 +262,34 @@ function createNewTask(){
 }
 
 
+/**
+ * This function checks the value of the addTaskStatus-variable. 
+ * 
+ * @returns If addTaskStatus is null or undefined it returns the status 'todo', else it returns the addTaskStatus.
+ */
 function getAddTaskStatus(){
     if (!addTaskStatus){
         return 'todo'
     } else {
-        console.log("Das Script sagt der Status ist:", addTaskStatus)
         return addTaskStatus;
     } 
 }
 
 
+/**
+ * This function generates a random ID for the task that is being created.
+ * 
+ * @returns - It returns the ID in string format.
+ */
 function generateRandomID(){
     const randomID = Math.floor(10000000 + Math.random() * 90000000);
     return randomID.toString();
 }
 
+
+/**
+ * This function hides the required labels in the add-task-form.
+ */
 function hideRequiredLabels(){
     document.querySelectorAll(".required-label").forEach(label => {
         label.style.opacity = 0;
@@ -257,18 +297,33 @@ function hideRequiredLabels(){
 }
 
 
+/**
+ * This function checks the selected priority for the task in the add-task-form.
+ * 
+ * @returns - It returns the selected priority.
+ */
 function getSelectedPriority() {
     let selectedPriority = document.querySelector('input[name="prio"]:checked').value;
     return selectedPriority;
 }
 
 
+/**
+ * This functions checks the new selected priority if the priority gets edited in the edit-task-form.
+ * 
+ * @returns - It returns the edited priority.
+ */
 function getEditedPriority(){
     let editedPriority = document.querySelector('input[name="prio-edit"]:checked').value;
     return editedPriority;
 }
 
 
+/**
+ * This function creates a new subtask object.
+ * 
+ * @returns - It returns the newly created subtask-object.
+ */
 function getSubtaskValues(){
     let subtaskValues = {};
 
@@ -287,6 +342,13 @@ function getSubtaskValues(){
 }
 
 
+/**
+ * This function loads data to the api-server.
+ * 
+ * @param {string} path - It takes in an addition to the BASE_URL as a parameter.
+ * @param {Object} data - It also takes in the object that is to be loaded onto the server as a parameter.
+ * @returns 
+ */
 async function postData(path="", data={}){
     let response = await fetch(BASE_URL + path + ".json", {
         method: "POST",

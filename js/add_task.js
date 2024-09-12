@@ -33,7 +33,6 @@ function activateLink(){
 }
 
 
-
 /**
  * This function clears the add-task-form.
  */
@@ -42,16 +41,6 @@ function clearForm(){
     form.reset();
 }
 
-
-/**
- * This function adds a subtask to the add-task-form.
- */
-function addSubtask() {
-    let input = document.getElementById("subtasks").value;
-    let subtasksList = document.getElementById("subtasks-list");
-    subtasksList.innerHTML += createSubtaskHTML(input);
-    document.getElementById("subtasks").value = '';
-}
 
 /**
  * This function deletes the subtask from the add-task-form.

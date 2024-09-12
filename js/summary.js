@@ -71,8 +71,8 @@ function displayTaskInfos(){
         task.status === "await feedback"
     ).length;
     let numberOfTasksDone = Object.values(allTasks).filter(task => task.status === "done").length;
-    let numberOfTasksInProgress = Object.values(allTasks).filter(task => task.status === "inprogress").length;
-    let numberOfTasksAwaitingFeedback = Object.values(allTasks).filter(task => task.status === "awaiting").length;
+    let numberOfTasksInProgress = Object.values(allTasks).filter(task => task.status === "in progress").length;
+    let numberOfTasksAwaitingFeedback = Object.values(allTasks).filter(task => task.status === "await feedback").length;
 
     document.getElementById("tasks-in-board").innerHTML = numberOfTasks;
     document.getElementById("tasks-urgent").innerHTML = numberOfUrgentTasks;

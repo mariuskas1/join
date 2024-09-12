@@ -2,8 +2,14 @@ let users = [];
 let rememberedUser;
 let currentUser;
 const BASE_URL = "https://join-4544d-default-rtdb.europe-west1.firebasedatabase.app";
+const urlParams = new URLSearchParams(window.location.search);
+const msg = urlParams.get("msg");
 
 
+/**
+ * This function calls the loadUserData-function, when the DOMContent is loaded and starts the logo animation for the desktop version.
+ * It also saves the user data into the local array 'users'.
+ */
 document.addEventListener("DOMContentLoaded", async function() {
     users = await loadUserData("/allUsers/");
     let screenWidth = window.innerWidth;
@@ -20,6 +26,10 @@ document.addEventListener("DOMContentLoaded", async function() {
 });
 
 
+/**
+ * This function checks if the last user wanted the app to remember his or her log in. If theh checkbox in the log in form is checked, an object with the
+ * user data gets stored in the local storage.
+ */
 function checkForRememberedUser(){
     rememberedUser = JSON.parse(localStorage.getItem("rememberedUser"));
     if(rememberedUser){
@@ -30,7 +40,10 @@ function checkForRememberedUser(){
 }
     
 
-
+/**
+ * This function starts the logo animation which consists of a bigger logo moving from the center of the screen to the top left corner and shrinking
+ * at the same time.
+ */
 function startLogoAnimation(){
     let largeLogo =  document.getElementById("initial-index-logo");
     let headerLogo = document.getElementById("index-header-logo");
@@ -44,6 +57,9 @@ function startLogoAnimation(){
 }
 
 
+/**
+ * This function hide the initial index logo after the animation is done.
+ */
 function hideInitialIndexLogo(){
     setTimeout(() => {
         document.getElementById("main-content").classList.remove("hidden");
@@ -51,18 +67,29 @@ function hideInitialIndexLogo(){
     }, 2000);
 }
 
-
+/**
+ * This function loads all user data which is save on the server in json-format and then converts it into an array of user objects.
+ * 
+ * @param {string} path - It takes in an adition to the BASE_URL as a parameter, which is the string '/allUsers'.
+ * @returns - It returns the array of user objects.
+ */
 async function loadUserData(path=""){
     let response = await fetch(BASE_URL + path + ".json");
     let data = await response.json();
 
     if(data){
-         // Convert the JSON object to an array of user objects
         return Object.keys(data).map(key => ({ email: key, ...data[key] }));
     }   
 }
 
 
+/**
+ * This function is called when clicking on the log in button. It checks the value of the relevant input fields and searches for matching
+ * user-objects in the user-array, using the find-method. If a matching user object is found, it gets saved to the currentUser-variable
+ * which then gets saved to the local storage, so that it can be used on the other pages of the application as well. If the remember-me-checkbox
+ * is checked, the user object also gets saved to the rememberedUser-variable which also gets saved to the local storage. 
+ * After the succesful log-in the function redirects the user to the summary page.
+ */
 async function checkUserData(){
     let mail = document.getElementById("mail");
     let password = document.getElementById("password");
@@ -72,11 +99,9 @@ async function checkUserData(){
     if(user){
         currentUser = user;
         saveCurrentUserToLocalStorage();
-
         if (rememberMeCheckbox.checked){
             saveRememberedUserToLocalStorage(user);
         }
-
         window.location.href = "summary.html";
     } else {
         alert ("Password or username incorrect!")
@@ -84,12 +109,21 @@ async function checkUserData(){
 }
 
 
+/**
+ * This function handles the click-event on the guest-log-in button so that a user without an account can log in and test the application.
+ * Just like the checkUserData-function it redirects the user to the summary page.
+ */
 function guestLogIn(){
     localStorage.removeItem("currentUser");
     window.location.href = "summary.html";
 }
 
 
+/**
+ * This function saves the rememberedUser-variable to the local storage after it has cconverted the object into a string.
+ * 
+ * @param {Object} user - It takes in the user object as a parameter.
+ */
 function saveRememberedUserToLocalStorage(user){
     localStorage.removeItem("rememberedUser");
     rememberedUser = user;
@@ -97,17 +131,18 @@ function saveRememberedUserToLocalStorage(user){
 }
 
 
+/**
+ * This function saves the currentUser-variable to the local storage after it has converted the object into a string.
+ */
 function saveCurrentUserToLocalStorage(){
     localStorage.removeItem("currentUser");
     localStorage.setItem("currentUser", JSON.stringify(currentUser));
 }
 
 
-
-const urlParams = new URLSearchParams(window.location.search);
-const msg = urlParams.get("msg");
-
-
+/**
+ * This function displays a message on the log in page that the user has succesfully registered.
+ */
 function displayRegisteredMessage(){
     let headerDiv = document.getElementById("signed-up-div"); 
     let msgBox = document.getElementById("msg-div");
