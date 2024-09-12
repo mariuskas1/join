@@ -1,3 +1,8 @@
+
+
+/**
+ * This function calls all the necessary functions after the DOMContent is loaded.
+ */
 document.addEventListener("DOMContentLoaded", async function(){
     setTimeout(deactivateLink, 100);
     await getCurrentUserData();
@@ -5,6 +10,9 @@ document.addEventListener("DOMContentLoaded", async function(){
 });
 
 
+/**
+ * This function remoes the active-link class from all menu-options on the sidebar, when the user is on one of the info-pages.
+ */
 function deactivateLink(){
     let sidebarMenuDiv = document.querySelectorAll(".sidebar-menu-div");
     

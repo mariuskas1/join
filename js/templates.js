@@ -270,9 +270,13 @@ function getContactItemTemplate(contact) {
 
 
 
+
+
 //Templates for the add-task-page:
 
-function createSubtaskHTML(input) {
+
+
+function getSubtaskTemplate(input) {
     return `
         <li>
             <img class="bullet-point" src="assets/img/circle-solid.svg">
@@ -280,7 +284,7 @@ function createSubtaskHTML(input) {
             <div class="subtask-icons">
                 <img class="subtask-icon" onclick="editSubtask(this)" src="assets/img/edit.png">
                 <img class="subtask-icon" onclick="deleteSubtask(this)" src="assets/img/delete.png">
-            </div>
+             </div>
         </li>
     `;
 }
