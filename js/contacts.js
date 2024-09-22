@@ -15,7 +15,7 @@ let colorIndex = 0;
 document.addEventListener("DOMContentLoaded", async function(){
     setTimeout(activateLink, 100);
     await getCurrentUserData();
-    setTimeout(displayUserInitials, 60);
+    setTimeout(displayUserInitials, 200);
     await loadContacts();
     displayContacts();
     saveCurrentUserAsContact();
@@ -90,9 +90,14 @@ function displayActiveContact() {
     }
 
     let scdDiv = document.getElementById("single-contact-display-div");
-    scdDiv.innerHTML = '';
+    scdDiv.classList.remove("show");
+    
+   
     if (activeContact) {
-        scdDiv.innerHTML += getActiveContactTemplate(activeContact);
+        scdDiv.innerHTML = getActiveContactTemplate(activeContact);
+        setTimeout(() => {
+            scdDiv.classList.add("show");
+        }, 100);
     }
 }
 
@@ -122,8 +127,9 @@ function displayActiveContactMobile(){
     const addContactBtnMobile = document.getElementById('addContactBtnMobile');
 
     contactsAllDiv.style.display = 'none';
-    addContactBtnMobile.style.display = 'none';
+    addContactBtnMobile.onclick = openScdOptionsMobile;
     singleContactDisplay.style.display = 'block';
+    document.getElementById("mobileContactOptionsBtn").src =  "assets/img/three_dots.png";
 }
 
 
@@ -136,8 +142,11 @@ function hideSingleContactDisplay(){
     const addContactBtnMobile = document.getElementById('addContactBtnMobile');
 
     contactsAllDiv.style.display = 'block';
-    addContactBtnMobile.style.display = 'block';
+    // addContactBtnMobile.style.display = 'block';
     singleContactDisplay.style.display = 'none';
+    document.getElementById("mobileContactOptionsBtn").src = "assets/img/person_add.png";
+    addContactBtnMobile.onclick = displayAddContactModal;
+
 
     document.querySelectorAll(".contacts-display-small").forEach(function(contact){
         contact.classList.remove("active-contact-sm");
@@ -159,7 +168,15 @@ function displayAddContactModal(){
     document.getElementById("cancel-or-delete-btn").innerHTML = "Cancel" + `<img class="btn-icon" src="assets/img/close.png"></img>`;
     document.getElementById("cancel-or-delete-btn").onclick = clearForm;
     document.getElementById("create-or-save-btn").innerHTML = "Create contact" + `<img class="btn-icon" src="assets/img/check_white.png">`;
-    document.getElementById("create-or-save-btn").type = "submit";
+    document.getElementById("add-contact-form").onsubmit = function(event) {
+        uploadNewContact();
+        return false; 
+    };
+
+    setTimeout(() => {
+        document.getElementById("inner-add-contact-modal").classList.add("show");
+    }, 10);
+    
 }
 
 
@@ -167,7 +184,12 @@ function displayAddContactModal(){
  * This function hides the add-contact-modal.
  */
 function hideAddContactModal(){
-    document.getElementById("add-contact-modal").classList.add("display-none");
+    document.getElementById("inner-add-contact-modal").classList.remove("show");
+   
+    setTimeout(() => {
+        document.getElementById("add-contact-modal").classList.add("display-none");
+    }, 200);
+   
 }
 
 
@@ -194,15 +216,13 @@ async function uploadNewContact(){
         displayConfirmationMessage();
         await loadContacts();
         displayContacts();
-    } else {
-        console.log("Failed to create a new contact. Please check the form inputs.");
-    }
+    } 
 }  
 
 
 
 /**
- * This function creates a new contact-object.
+ * This function creates a new contact-object. It also prevents that the user can add the same contact twice.
  * 
  * @returns - It returns the newly created contact-object.
  */
@@ -211,19 +231,25 @@ function createNewContact(){
     let mail = document.getElementById("new-contact-mail");
     let phone = document.getElementById("new-contact-phone");
 
-    if (name.value && mail.value && phone.value){
-        const contactColor = colors[colorIndex];
-        colorIndex = (colorIndex + 1) % colors.length;
+    let contactExists = contacts.some(contact => contact.name === name.value);
 
-        let newContact = {
-            "name": name.value,
-            "mail": mail.value,
-            "phone": phone.value,
-            "initials": getContactInitials(name.value),
-            "info": "Contact Information",
-            "color": contactColor
-        };
-        return newContact;
+    if (name.value && mail.value && phone.value){
+        if(contactExists){
+            alert("Contact already exists.");
+        } else {
+            const contactColor = colors[colorIndex];
+            colorIndex = (colorIndex + 1) % colors.length;
+    
+            let newContact = {
+                "name": name.value,
+                "mail": mail.value,
+                "phone": phone.value,
+                "initials": getContactInitials(name.value),
+                "info": "Contact Information",
+                "color": contactColor
+            };
+            return newContact;
+        }
     }
 }
 
@@ -244,26 +270,15 @@ function getContactInitials(name){
  * This function displays a confirmation message, when a new contact is succesfully created.
  */
 function displayConfirmationMessage(){
-    let addContactBtn = document.getElementById("add-contact-btn");
-
-    addContactBtn.innerHTML = "Contact succesfully created";
-    setTimeout(function(){
-        addContactBtn.innerHTML = `Add new contact <img src="assets/img/person_add.png" class="add-contact-icon">`;
+    let confirmationDiv = document.getElementById("contact-added-confirmation");
+    
+    setTimeout(() => {
+        confirmationDiv.classList.add("show");
+    }, 500);
+   
+    setTimeout(() => {
+        confirmationDiv.classList.remove("show");
     }, 2000);
-}
-
-
-/**
- * This function loads all contacts that are saved in the current users account from the server and saves them into the local contacts-array.
- */
-async function loadContacts(){
-    let response = await fetch(BASE_URL + "/allContacts/" + ".json");
-    let responseToJson = await response.json();
-    if( !responseToJson) {
-        console.log("No existing contacts yet")
-    } else {
-        contacts = Object.values(responseToJson);
-    }
 }
 
 
@@ -308,6 +323,10 @@ function sortContacts(){
  */
 function displayEditContactModal(){
     document.getElementById("add-contact-modal").classList.remove("display-none");
+    setTimeout(function() {
+        document.getElementById("inner-add-contact-modal").classList.add("show");
+    }, 50);
+   
     document.getElementById("add-contact-modal-title").innerHTML = "Edit Contact";
     document.getElementById("add-contact-team").innerHTML = "";
     document.getElementById("new-contact-name").value = activeContact.name;
@@ -316,8 +335,11 @@ function displayEditContactModal(){
     document.getElementById("cancel-or-delete-btn").innerHTML = "Delete";
     document.getElementById("cancel-or-delete-btn").onclick = deleteContact;
     document.getElementById("create-or-save-btn").innerHTML = "Save" + `<img class="btn-icon" src="assets/img/check_white.png">`;
-    document.getElementById("create-or-save-btn").type = "button";
-    document.getElementById("create-or-save-btn").onclick = editContact;
+    document.getElementById("add-contact-form").onsubmit = function(event) {
+        editContact();
+        return false; 
+    };
+    
  }
 
 
@@ -350,9 +372,11 @@ function editContactLocally(){
 
 
 /**
- * This function delete a contact from the local contacts-array and from the server.
+ * This function deletes a contact from the local contacts-array and from the server.
  */
 async function deleteContact(){
+    document.getElementById("single-contact-display-div").classList.remove("show");
+
     deleteContactLocally();
     changeActiveContact();
     await deleteContactsOnServer();

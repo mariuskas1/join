@@ -1,6 +1,6 @@
 <div class="sidebar">
     <img class="sidebar-logo" src="assets/img/logo_light.png">
-    <div class="sidebar-menu">
+    <div class="sidebar-menu" id="sidebar-menu">
         <a href="summary.html" class="sidebar-menu-div summary-div">
             <img class="sidebar-icon" src="assets/img/vector1.png" data-original-src="assets/img/vector1.png" >
             <span>Summary</span>
@@ -21,8 +21,8 @@
 
     <div class="sidebar-menu-2">
         <div class="sidebar-2-div">
-            <a href="privacy_policy.html">Privacy Policy</a>
-            <a href="legal_notice.html">Legal notices</a>
+            <a href="privacy_policy.html" target="_blank" onclick="saveCurrentPage()">Privacy Policy</a>
+            <a href="legal_notice.html" target="_blank" onclick="saveCurrentPage()">Legal notices</a>
         </div>
     </div>
 </div>
@@ -39,14 +39,14 @@
 
 <div class="user-menu-bg d-none" id="user-menu" onclick="closeUserMenu()">
     <div class="user-menu">
-        <a href="legal_notice.html">Legal Notice</a>
-        <a href="privacy_policy.html">Privacy Policy</a>
-        <a href="index.html" onclick="logOut()">Log out</a>
+        <a href="legal_notice.html" target="_blank" onclick="saveCurrentPage()">Legal Notice</a>
+        <a href="privacy_policy.html" target="_blank" onclick="saveCurrentPage()">Privacy Policy</a>
+        <a href="index.html" onclick="logOut()" id="user-menu-log-out">Log out</a>
     </div>
 </div>
 
 
-<div class="mobile-menu">
+<div class="mobile-menu" id="mobile-menu">
     <a href="summary.html" class="mobile-menu-div summary-div">
         <img class="mobile-menu-icon" src="assets/img/vector1.png" data-original-src="assets/img/perm_contact_calendar.png">
         <span>Summary</span>

@@ -28,9 +28,23 @@ async function signUp(){
         signUpBtn.disabled = true;
         let newUser = createNewUser();
         await postUserData("/allUsers", newUser);
-
-        window.location.href = "index.html?msg=You signed up successfully";
+        displaySignedUpModal();
+        setTimeout(function() {
+            window.location.href = "index.html?msg=You signed up successfully";
+        }, 2000);
     }
+}
+
+
+/**
+ * This function displays the "signed up successfully"-mesage.
+ */
+function displaySignedUpModal(){
+    let modalBG = document.getElementById("sign-up-modal-bg");
+    let modal = document.getElementById("sign-up-modal");
+
+    modalBG.classList.remove("d-none");
+    modal.classList.add("show");
 }
 
 

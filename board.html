@@ -77,7 +77,7 @@
     </main>
 
     <div class="add-task-modal-bg display-none" id="add-task-modal" onclick="hideAddTaskModal()">
-        <div class="add-task-modal" onclick="event.stopPropagation()">
+        <div class="add-task-modal" onclick="event.stopPropagation()" id="inner-add-task-modal">
             <div class="add-task-modal-header">
                 <h1>Add Task</h1>
                 <img src="assets/img/close.png" class="close-task-form-icon" onclick="hideAddTaskModal()">
@@ -90,6 +90,6 @@
     <div class="task-display-modal-bg display-none" id="task-display-modal" onclick="hideTaskDisplayModal()">
     
     </div>
-
+    <div class="task-added-modal " id="task-added-modal">Task added to board <img src="assets/img/board1.png" id="task-added-msg-img"></div>
 </body>
 </html>

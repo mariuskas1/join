@@ -45,12 +45,14 @@
                 </div>
             </div>
 
-            <button class="add-contact-btn-mobile" id="addContactBtnMobile" onclick="displayAddContactModal()"><img src="assets/img/person_add.png"></button>
+            <button class="add-contact-btn-mobile" id="addContactBtnMobile" onclick="displayAddContactModal()"><img src="assets/img/person_add.png" id="mobileContactOptionsBtn"></button>
             
         </div>
 
+        <div id="contact-added-confirmation">Contact successfully created</div>
+
         <div class="add-contact-modal-bg display-none" id="add-contact-modal" onclick="hideAddContactModal()">
-            <div class="add-contact-modal" onclick="event.stopPropagation()">
+            <div class="add-contact-modal" onclick="event.stopPropagation()" id="inner-add-contact-modal">
                 <div class="add-contact-modal-left">
                     <img src="assets/img/Capa 2.png" class="add-contact-modal-logo">
                     <div class="add-contact-modal-lh"><img src="assets/img/Close_white.png" onclick="hideAddContactModal()" class="close-contact-modal-icon"></div>
@@ -65,15 +67,15 @@
                         <form onsubmit="uploadNewContact(); return false" class="add-contact-form" id="add-contact-form">
                             <div class="index-input-container add-contact-input-container">
                                 <img src="assets/img/person2.png" class="index-input-icon add-contact-icon" >
-                                <input type="text" placeholder="Name" id="new-contact-name"  class="index-input add-contact-input" required>
+                                <input type="text" placeholder="Name" id="new-contact-name"  class="index-input add-contact-input" required minlength="5">
                             </div>
                             <div class="index-input-container">
                                 <img src="assets/img/mail.png" class="index-input-icon add-contact-icon" id="mail-icon">
-                                <input type="text" placeholder="Email" id="new-contact-mail"  class="index-input add-contact-input" required>
+                                <input type="email" placeholder="Email" id="new-contact-mail"  class="index-input add-contact-input" required>
                             </div>
                             <div class="index-input-container">
                                 <img src="assets/img/call.png" class="index-input-icon add-contact-icon">
-                                <input type="text" placeholder="Phone" id="new-contact-phone"  class="index-input add-contact-input" required>
+                                <input type="tel" placeholder="Phone" id="new-contact-phone"  class="index-input add-contact-input" required minlength="7" pattern="^(\+|0)[0-9 ]*$" title="+49 1234 56789 / 0123456789">
                             </div>
 
                             <div class="add-contact-form-btns">
@@ -88,6 +90,7 @@
             </div>
         </div>
        
+        
         
 
 

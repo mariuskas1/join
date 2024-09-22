@@ -10,9 +10,9 @@ let addTaskStatus;
 document.addEventListener("DOMContentLoaded", async function(){
     setTimeout(activateLink, 100);
     await getCurrentUserData();
-    setTimeout(displayUserInitials, 60);
+    setTimeout(displayUserInitials, 200);
     await loadContacts();
-    displayContactsInForm();
+    setTimeout(displayContactsInForm, 300);
 });
 
 
