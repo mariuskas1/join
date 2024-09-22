@@ -872,14 +872,14 @@ h2{
 .index-header-logo{
     height: 121.97px;
     width: 100.03px;
-    transition: all 2s ease;
+    transition: all 1s ease;
 }
 
 .index-header-logo-size{
     height: 121.97px;
     width: 100.03px;
     position: absolute;
-    transition: all 2s ease;
+    transition: all 1s ease;
 }
 
 .index-header-div{
@@ -1057,6 +1057,7 @@ input[type=checkbox] {
     font-size: 16px;
     margin-left: 32px;
     opacity: 0;
+    display: none;
 }
 
 .index-link-div{
@@ -1136,7 +1137,7 @@ input[type=checkbox] {
     font-size: 21px;
     border: unset;
     transition: all 125ms ease;
-    margin-top: 32px;
+    margin-top: 24px;
 }
 
 .sign-up-btn-2:hover{
@@ -1144,8 +1145,12 @@ input[type=checkbox] {
     background-color: rgba(41, 171, 226, 1);
 }
 
+.sign-up-btn-2:disabled{
+    background-color: rgba(42, 54, 71, 0.8);
+}
+
 .sign-up-btn-2:disabled:hover {
-    background-color: rgba(42, 54, 71, 1); 
+    
     cursor: default; 
 }
 
@@ -1189,6 +1194,20 @@ input[type=checkbox] {
     justify-content: center;
     align-items: center;
     opacity: 0;
+}
+
+.index-header-logo-800{
+    height: 100px;
+    width: 80px;
+    transition: all 1s ease;
+    position: absolute;
+}
+
+.index-header-logo-600{
+    width: 64px;
+    height: 78px;
+    transition: all 1s ease;
+    position: absolute;
 }
 
 
@@ -1377,7 +1396,7 @@ input[type=checkbox] {
     #sign-up-div-mobile{
         display: block;
         margin-top: 32px;
-    }
+        }
     .index-header-logo{
         width:64px;
         height: 78px;
@@ -1400,6 +1419,7 @@ input[type=checkbox] {
     .log-in-buttons-div{
         width: 75%;
     }
+  
 
     .info-main{
         position: fixed;
@@ -1457,6 +1477,10 @@ input[type=checkbox] {
     .index-header-text{
         font-size: 16px;
     }
+    #sign-up-div-mobile{
+     
+        margin-top: 16px;
+    }
    
 }
 
@@ -1491,7 +1515,7 @@ input[type=checkbox] {
     transform: translate(-50%, -50%);
     width: 274px;
     height: 334px;
-    transition: all 2s ease;
+    transition: all 100ms ease;
 }
 
 @media(max-width:480px){
@@ -1712,17 +1736,18 @@ input[type=checkbox] {
 .summary-greeting-mobile{
     opacity: 0;
     position: fixed;
-    top: 96px;
-    left: 232px;
-    height: calc(100vh - 96px);
-    width: calc(100vw - 232px);
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 10;
+    z-index: -5;
     background-color: rgb(246, 247, 248);
     transition: all 1s ease;
+    
 }
 
 .summary-header-bar-mobile{
@@ -1800,6 +1825,7 @@ input[type=checkbox] {
     }
     .summary-greeting-mobile{
         opacity: 1;
+        z-index: 5;
     }
 }
 
@@ -2082,6 +2108,12 @@ input[type=checkbox] {
     height: 592px;
     width: 1212px;
     display: flex;
+    transform: translateX(200%);
+    transition: all 400ms ease;
+}
+
+.add-contact-modal.show{
+    transform: translateX(0);
 }
 
 .add-contact-modal-left{
@@ -2221,7 +2253,15 @@ input[type=checkbox] {
     flex-direction: column;
     margin-left: 80px;
     margin-top: 32px;
+    transform: translateX(200%);
+    transition: transform 200ms ease;
 }
+
+.contact-display-body.show{
+    transform: translateX(0);
+    transition: transform 200ms ease; 
+}
+
 
 .single-contact-display-header{
     display: flex;
@@ -2314,7 +2354,7 @@ input[type=checkbox] {
 }
 
 .scd-options-mobile-div{
-    opacity: 0;
+    /* opacity: 0; */
     height: 56px;
     width: 56px;
     position: fixed;
@@ -2326,6 +2366,8 @@ input[type=checkbox] {
     align-items: center;
     border-radius: 50%;
     transition: all 125ms ease;
+    z-index: 10;
+    
 }
 
 .scd-options-mobile-div:hover{
@@ -2529,9 +2571,9 @@ input[type=checkbox] {
     .contacts-display-div{
         width: 100vw;
     }
-    .scd-options-mobile-div{
+    /* .scd-options-mobile-div{
         opacity: 1;
-    }
+    } */
     .scd-options-div{
         display: none;
     }
@@ -2730,8 +2772,8 @@ input[type=checkbox] {
 
 .board-column-body{
     margin-top: 16px;
-    padding-bottom: 64px;
-    min-height: 500px;
+    padding-bottom: 100px;
+    min-height: 550px;
     transition: all 125ms ease;
 }
 
@@ -2771,7 +2813,15 @@ input[type=checkbox] {
     border-radius: 30px;
     background-color: white;
     padding: 64px;
+    transition: transform 300ms ease;
+    transform: translateX(200%);
 }
+
+.add-task-modal.show{
+    transform: translateX(0);
+}
+
+
 
 .display-none{
     display: none;
@@ -2813,7 +2863,9 @@ input[type=checkbox] {
 }
 
 .drag-area-highlight{
-    background-color: #f2f2f2;
+    background-color: #e9e9e9da;
+    transform: scaleX(1.03);
+    transition: transform 125ms ease;
 }
 
 .board-task-category-div{
@@ -2964,13 +3016,34 @@ input[type=checkbox] {
     flex-direction: column;
     box-sizing: border-box;
     padding: 32px;
+    overflow-y: auto;
 }
+
+#tdl-modal{
+    transform: translateX(200%);
+    transition: transform 150ms ease;
+}
+
+#edit-task-modal{
+    transform: translateX(200%);
+    transition: transform 150ms ease;
+}
+
+#edit-task-modal.show{
+    transform: translateX(0);
+}
+
+#tdl-modal.show{
+    transform: translateX(0);
+}
+
+
 
 .edit-task-content{
     padding-right: 24px;
     overflow: auto;
-    height: 80%;
-    
+    height: 75vh;
+    max-height: 700px;
 }
 
 
@@ -3019,7 +3092,7 @@ input[type=checkbox] {
 }
 
 .large-task-info-table {
-    width: 60%; 
+    width: 70%; 
     border-collapse: collapse; 
     margin-bottom: 4px;
 }
@@ -3031,18 +3104,19 @@ input[type=checkbox] {
 .large-task-info-description{
     font-size: 20px;
     color: rgba(66, 82, 110, 1);
+    width: 50%;
     
 }
 
 .large-task-info-content{
     font-size: 19px;
     color: rgba(0, 0, 0, 1);
+    width: 50%;
 }
 
 .large-task-contacts-display{
     margin-top: 12px;
     margin-bottom: 12px;
-    
 }
 
 .large-task-contact-div{
@@ -3507,6 +3581,25 @@ input[type=checkbox] {
     .add-task-modal .addTaskColumn{
         width: 100%;
     }
+    .large-task-title{
+        font-size: 32px;
+        line-height: 40px;
+    }
+    .scd-initials{
+        height: 50px;
+        width: 50px;
+        font-size: 16px;
+        margin-right: 8px;
+    }
+    .contact-display{
+        margin-right: 8px;
+    }
+    .scd-name{
+        font-size: 24px;
+    }
+    .contacts-display-header{
+        margin-top: 60px;
+    }
 }
 
 @media(max-width: 1300px){
@@ -3540,3 +3633,180 @@ input[type=checkbox] {
     }
 }
 
+
+
+#contact-added-confirmation{
+    background: rgba(42, 54, 71, 1);
+    border: none;
+    color: white;
+    height: 74px;
+    width: 326px;
+    font-weight: 400;
+    font-size: 21px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 50%;
+    right: -400px; 
+    transform: translateY(-50%);
+    transition: right 0.5s ease; 
+}
+
+#contact-added-confirmation.show {
+    right: 35%; 
+    transform: translate(50%, -50%);
+}   
+
+#log-in-msg{
+    background: rgba(42, 54, 71, 1);
+    border: none;
+    color: white;
+    height: 64px;
+    width: 370px;
+    font-weight: 400;
+    font-size: 21px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: -300px;
+    left: 50%; 
+    transform: translateX(-50%);
+    transition: top 0.5s ease; 
+}
+
+#log-in-msg.show{
+    top: 80px;
+}
+
+.sign-up-modal-bg{
+    background-color: rgba(0, 0, 0, 0.05);
+    z-index: 20;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sign-up-modal{
+    width: 312px;
+    height: 74px;
+    background: rgba(42, 54, 71, 1);
+    border: none;
+    color: white;
+    height: 74px;
+    width: 326px;
+    font-weight: 400;
+    font-size: 21px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: -200px;
+    right: 50%;
+    transform: translateX(50%);
+    transition: bottom 500ms ease; 
+}
+
+.sign-up-modal.show{
+    bottom: 50%;
+    transform: translateX(50%);
+}
+
+.d-none{
+    display: none;
+}
+
+.task-added-modal{
+    width: 312px;
+    height: 74px;
+    background: rgba(42, 54, 71, 1);
+    border: none;
+    color: white;
+    height: 74px;
+    width: 326px;
+    font-weight: 400;
+    font-size: 21px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: -200px;
+    right: 50%;
+    transform: translateX(50%);
+    transition: bottom 500ms ease; 
+}
+
+.task-added-modal.show{
+    bottom: 50%;
+    transform: translateX(50%);
+}
+
+#task-added-msg-img{
+    margin-left: 8px;
+}
+
+.summary-info-row div{
+    transition: all 100ms ease;
+}
+
+.summary-info-row div:hover{
+    /* background-color: rgba(42, 54, 71, 1);
+    color: white; */
+    cursor: pointer;
+    scale: 1.1;
+}
+
+.summary-info-box-row-1:hover img {
+    color: white;
+    /* filter: invert(100%) hue-rotate(180deg) saturate(100%); */
+}
+
+
+@media(max-height: 700px){
+    .log-in input, button{
+        height: 40px;
+    }
+    .log-in{
+        height: 410px;
+    }
+    .sign-up-btn-2{
+        margin-top: 8px;
+    }
+    .sign-up{
+        height: 480px;
+
+    }
+}
+
+
+.task-display-large .input-container .radio-tile label {
+   margin-bottom: 16px;
+}
+
+
+@media (max-width: 500px) and (max-height: 750px) {
+    .task-display-large{
+        height: 100vh;
+        border-radius: 0;
+    }
+    
+    .contacts-display-header{
+        margin-top: 40px;
+    }
+    .large-task-display-footer{
+        margin-top: 0;
+    }
+    .task-display-large{
+        padding-bottom: 8px;
+    }
+}

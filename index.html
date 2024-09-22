@@ -25,7 +25,7 @@
                 <span class="index-header-text">Not a Join user?</span>
                 <button class="sign-up-btn" onclick="redirectTo('sign_up.html')">Sign up</button>
             </div>
-            <div id="msg-div">You signed up successfully</div>
+            
         </div>
 
         <div class="log-in">
@@ -34,8 +34,8 @@
             <form onsubmit="checkUserData(); return false">
                 <div class="index-input-container">
                     <img src="assets/img/mail.png" class="index-input-icon" id="mail-icon">
-                    <input type="text" placeholder="Email" id="mail"  class="index-input" required>
-                </div>
+                    <input type="email" placeholder="Email" id="mail"  class="index-input" required>
+                </div> 
                 <div class="index-input-container">
                     <img src="assets/img/lock.png" class="index-input-icon" id="lock-icon">
                     <input type="password" placeholder="Password" id="password" class="index-input" required>
@@ -46,15 +46,12 @@
                         <input type="checkbox" id="remember" name="remember" class="remember-checkbox">
                         <label for="remember" class="checkbox-label">Remember me</label>
                     </div>
-                    <button class="forgot-btn">I forgot my password</button>
-
                 </div>
-            
+                
                 <div class="log-in-buttons-div" >
                     <button type="submit" class="log-in-btn">Log in</button>
                     <button type="button" onclick="guestLogIn()" class="guest-log-in-btn">Guest Log in</button>
                 </div>
-                
             </form>
         </div>
 
@@ -64,10 +61,11 @@
         </div>
     
         <div class="index-link-div">
-            <a href="privacy_policy.html">Privacy Policy</a>
-            <a href="legal_notice.html">Legal notices</a>
+            <a href="privacy_policy.html" target="_blank" onclick="saveCurrentPage()">Privacy Policy</a>
+            <a href="legal_notice.html" target="_blank" onclick="saveCurrentPage()">Legal notices</a>
         </div>
     </div>
 
+        <div id="log-in-msg">Email or password are incorrect!</div>
 </body>
 </html>

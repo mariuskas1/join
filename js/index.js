@@ -16,10 +16,9 @@ document.addEventListener("DOMContentLoaded", async function() {
 
     if (screenWidth < 480){
         document.getElementById("initial-index-logo").src = "assets/img/logo_light.png";
-        hideInitialIndexLogo();
+        setTimeout(startLogoAnimation, 400);
     } else {
-        setTimeout(startLogoAnimation, 2000);
-        displayRegisteredMessage();
+        setTimeout(startLogoAnimation, 400);
     }
     
     setTimeout(checkForRememberedUser, 3500);
@@ -45,14 +44,22 @@ function checkForRememberedUser(){
  * at the same time.
  */
 function startLogoAnimation(){
+    let screenWidth = window.innerWidth;
     let largeLogo =  document.getElementById("initial-index-logo");
     let headerLogo = document.getElementById("index-header-logo");
     let headerLogoPosition = headerLogo.getBoundingClientRect();
    
     largeLogo.style.top = headerLogoPosition.top + 'px';
     largeLogo.style.left = headerLogoPosition.left + 'px';
-    largeLogo.className = "index-header-logo-size";
-
+    
+    if (screenWidth < 800){
+        largeLogo.className = "index-header-logo-800";
+    } else if(screenWidth < 600) {
+        largeLogo.className = "index-header-logo-600";
+    } else {
+        largeLogo.className = "index-header-logo-size";
+    }
+    
     hideInitialIndexLogo();
 }
 
@@ -64,7 +71,7 @@ function hideInitialIndexLogo(){
     setTimeout(() => {
         document.getElementById("main-content").classList.remove("hidden");
         document.getElementById("initial-logo-div").style.display = "none";
-    }, 2000);
+    }, 1000);
 }
 
 /**
@@ -102,10 +109,19 @@ async function checkUserData(){
         if (rememberMeCheckbox.checked){
             saveRememberedUserToLocalStorage(user);
         }
+        localStorage.setItem("logged in?", "yes");
         window.location.href = "summary.html";
     } else {
-        alert ("Password or username incorrect!")
+        displayFailedLoginMessage();
     }
+}
+
+
+function displayFailedLoginMessage(){
+    document.getElementById("log-in-msg").classList.add("show");
+    setTimeout(function() {
+        document.getElementById("log-in-msg").classList.remove("show");
+    }, 2000); 
 }
 
 
@@ -115,6 +131,7 @@ async function checkUserData(){
  */
 function guestLogIn(){
     localStorage.removeItem("currentUser");
+    localStorage.setItem("logged in?", "yes");
     window.location.href = "summary.html";
 }
 
@@ -139,18 +156,3 @@ function saveCurrentUserToLocalStorage(){
     localStorage.setItem("currentUser", JSON.stringify(currentUser));
 }
 
-
-/**
- * This function displays a message on the log in page that the user has succesfully registered.
- */
-function displayRegisteredMessage(){
-    let headerDiv = document.getElementById("signed-up-div"); 
-    let msgBox = document.getElementById("msg-div");
-
-    if(msg){
-        headerDiv.style.display = "none";
-        msgBox.style.opacity = 1;
-    } else {
-        msgBox.style.display = 'none';
-    }
-}

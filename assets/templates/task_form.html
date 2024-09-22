@@ -1,8 +1,8 @@
-<form class="add-task-form" id="add-task-form">
+<form class="add-task-form" id="add-task-form" onsubmit="uploadNewTask(event)">
     <div class="addTaskColumn">
         <div class="input">
             <label for="title">Title<span class="red">*</span></label>
-            <input type="text" id="title" placeholder="Enter a title" spellcheck="false">
+            <input type="text" id="title" placeholder="Enter a title" spellcheck="false" minlength="4" required>
             <span class="required-label" id="title-label-2">This field is required</span>
         </div>
         <div class="input">
@@ -24,7 +24,7 @@
     <div class="addTaskColumn">
         <div class="input">
             <label for="date">Due date<span class="red">*</span></label>
-            <input type="date" id="date">
+            <input type="date" id="date" required min="2010-01-01" max="2100-12-31">
             <span class="required-label" id="date-label-2">This field is required</span>
         </div>
         <div class="input">
@@ -56,7 +56,7 @@
         </div>
         <div class="input custom-select" id="category-input">
             <label for="category">Category<span class="red">*</span></label>
-            <select id="category">
+            <select id="category" required>
                 <option value="" disabled selected>Select task category</option>
                 <option value="Technical Task">Technical Task</option>
                 <option value="User Story">User Story</option>
@@ -80,7 +80,7 @@
         <span><span class="red">*</span>This field is required</span>
         <div class="form-btns-div">
             <button class="clear-btn" onclick="clearForm()">Clear<img class="btn-icon" src="assets/img/close.png"></button>
-            <button class="create-task-btn" onclick="uploadNewTask(event)" id="create-task-btn">Create Task <img class="btn-icon" src="assets/img/check_white.png"></button>
+            <button class="create-task-btn" type="submit" id="create-task-btn">Create Task <img class="btn-icon" src="assets/img/check_white.png"></button>
         </div>
 
     </div>

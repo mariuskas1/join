@@ -47,8 +47,13 @@ function closeUserMenu(){
  * This function redirects the user back to the previous page.
  */
 function returnToPreviousPage(){
-    window.history.back();
+    const previousPage = localStorage.getItem('previousPage');
+    
+    if (previousPage) {
+        window.location.href = previousPage;
+    } 
 }
+
 
 
 /**
@@ -58,6 +63,7 @@ function returnToPreviousPage(){
 async function logOut(){
     localStorage.removeItem("currentUser");
     localStorage.removeItem("rememberedUser");
+    localStorage.removeItem("logged in?");
     window.location.href = "index.html";
 }
 
@@ -77,16 +83,17 @@ function getCurrentUserData(){
 
 
 /**
- * This function loads all contacts from the api-server and stores them into the local contacts-array.
+ * This function loads all contacts that are saved in the current users account from the server and saves them into the local contacts-array.
  */
 async function loadContacts(){
-    let response = await fetch(BASE_URL + "/allContacts/.json");
+    let response = await fetch(BASE_URL + "/allContacts/" + ".json");
     let responseToJson = await response.json();
-    if(responseToJson) {
+    if( !responseToJson) {
+        console.log("No existing contacts yet")
+    } else {
         contacts = Object.values(responseToJson);
     }
 }
-
 
 /**
  * This function displays all saved contacts in the add-task-form so they can be assigned to the newly created task.
@@ -201,6 +208,7 @@ async function uploadNewTask(event){
     let newTask = createNewTask();
     if (newTask){
         await postData("/allTasks/", newTask);
+        displayAddedConfirmationMessage();
         form.reset();
         document.getElementById("subtasks-list").innerHTML = '';
         addTaskStatus = null;
@@ -213,6 +221,19 @@ async function uploadNewTask(event){
         }
     } 
 } 
+
+
+/**
+ * This function displays a confirmation message when a task is added.
+ */
+function displayAddedConfirmationMessage(){
+    let modal = document.getElementById("task-added-modal");
+    modal.classList.add("show");
+
+    setTimeout(function() {
+        modal.classList.remove("show");
+    }, 2000); 
+}
 
 
 /**
@@ -360,3 +381,10 @@ async function postData(path="", data={}){
     return await response.json();
 }
 
+
+/**
+ * This function stores the current page URL before opening the new tab, so that it can be used in the returnToPreviousPage-function.
+ */
+function saveCurrentPage() {
+    localStorage.setItem('previousPage', window.location.href);
+}

@@ -19,7 +19,7 @@ let addTaskStatus;
 document.addEventListener("DOMContentLoaded", async function(){
     setTimeout(activateLink, 100);
     await getCurrentUserData();
-    setTimeout(displayUserInitials, 60);
+    setTimeout(displayUserInitials, 200);
     await loadContacts();
     await getAllTasks();
 });
@@ -47,14 +47,23 @@ function activateLink(){
 /**This function opens the add-task-modal */
 function openAddTaskModal(){
     document.getElementById('add-task-modal').classList.remove('display-none');
-    displayContactsInForm();
+    setTimeout(() => {
+        document.getElementById('inner-add-task-modal').classList.add('show');
+        displayContactsInForm();
+    }, 100);
+    
+    
 }
 
 
 /**This function hides the add-task-modal and clears the form so that it is empty when opened again.*/
 function hideAddTaskModal(){
     clearForm();
-    document.getElementById('add-task-modal').classList.add('display-none');
+    document.getElementById('inner-add-task-modal').classList.remove('show');
+    setTimeout(() => {
+        document.getElementById('add-task-modal').classList.add('display-none');
+    }, 200);
+   
 }
 
 
@@ -352,16 +361,53 @@ function openTaskDisplayModal(id){
     taskDisplayModal.classList.remove('display-none');
     taskDisplayModal.innerHTML = getLargeTaskTemplate(openedTask);
     renderLargeTaskSubtasksDisplay(openedTask.subtasks);
+    
+    setTimeout(() => {
+        document.getElementById("tdl-modal").classList.add("show");
+    }, 20);
+   
 }
 
 
 /**This function hides the task display modal again and calls the updateTask-function, in case any changes were made. */
 function hideTaskDisplayModal(){
-    document.getElementById('task-display-modal').classList.add('display-none');
+    let taskDisplayBG = document.getElementById("task-display-modal");
+    let taskBeingEdited = taskDisplayBG.querySelector("#edit-task-modal");
+
+    if(taskBeingEdited){
+        editTask(openedTask.id);
+    } else {
+        document.getElementById("tdl-modal").classList.remove("show");
+    
+        setTimeout(() => {
+            document.getElementById('task-display-modal').classList.add('display-none');
+        }, 200);
+    }
+    }
+    
+    
+    
+
+
+/**
+ * This function hides the edit task modal and updates the task on the board.
+ */
+function hideEditTaskModal(){
     updateTasks();
+    document.getElementById('edit-task-modal').classList.remove('show');
+
+    setTimeout(function() {
+        document.getElementById('task-display-modal').classList.add('display-none');
+    }, 50);    
 }
 
 
+/**
+ * This function renders the category display for the large task modal.
+ * 
+ * @param {string} category - It take in the category as a parameter.
+ * @returns - It returns the html-template to display the task category.
+ */
 function renderLargeTaskCategoryDisplay(category){
     if (category === "User Story"){
         return `<div class="large-task-category" id="board-task-category-us">User Story</div>`
@@ -405,7 +451,7 @@ function renderLargeTaskSubtasksDisplay(subtasks){
     if (subtasks) {
         let subtasksArray = Object.values(subtasks);
         subtasksArray.forEach(subtask => {
-            largeTaskSubtaskDisplay.innerHTML += getSubtaskTemplate(subtask);
+            largeTaskSubtaskDisplay.innerHTML += getSubtaskTemplateBoard(subtask);
         });
     } else {
         largeTaskSubtaskDisplay.innerHTML = "";
@@ -501,11 +547,24 @@ async function deleteTask(id){
 function displayEditTaskModal(){
     let taskDisplayModal = document.getElementById('task-display-modal');
     taskDisplayModal.innerHTML = getEditTaskTemplate(openedTask);
+    document.getElementById('edit-task-modal').classList.add('show');
 
     displayContactsInEditTaskForm();
     displayContactsInEditTaskModal(openedTask.assignedTo);
+    selectAssignedContact(openedTask.assignedTo);
     displayTaskPriority(openedTask.prio);
     displaySubtasksInEditTaskModal(openedTask.subtasks);
+}
+
+
+function selectAssignedContact(contact){
+    let selectElement = document.getElementById("edit-assigned");
+    for (let i = 0; i < selectElement.options.length; i++) {
+        if(selectElement.options[i].value === contact){
+            selectElement.options[i].selected = true;
+            break;
+        }
+    }
 }
 
 
@@ -525,13 +584,17 @@ function displayTaskPriority(prio){
  * 
  * @param {number} id - It takes in the id of the opened task as parameter.
  */
-function editTask(id){
+function editTask(id, event){
+    if(event){
+        event.preventDefault();
+    }
+   
     let openedTaskIndex = allTasks.findIndex(task => task.id === id.toString());
     let editedTask = createEditedTask(openedTask);
     
     allTasks[openedTaskIndex] = editedTask;
     clearTaskArrays();
-    hideTaskDisplayModal();
+    hideEditTaskModal();
 }
 
 

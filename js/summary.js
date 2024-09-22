@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async function(){
     await getCurrentUserData(); 
     await getAllTasks();
     displayGreeting();
-    setTimeout(displayUserInitials, 60);
+    setTimeout(displayUserInitials, 200);
     setTimeout(activateLink, 100);
     setTimeout(hideGreeting, 2000);
 });
@@ -65,11 +65,7 @@ function displayZeroTasks(){
 function displayTaskInfos(){
     let numberOfTasks = Object.keys(allTasks).length;
     let numberOfUrgentTasks = Object.values(allTasks).filter(task => task.prio === "urgent").length;
-    let numberOfTasksTodo = Object.values(allTasks).filter(task => 
-        task.status === "todo" || 
-        task.status === "in progress" || 
-        task.status === "await feedback"
-    ).length;
+    let numberOfTasksTodo = Object.values(allTasks).filter(task => task.status === "todo").length;
     let numberOfTasksDone = Object.values(allTasks).filter(task => task.status === "done").length;
     let numberOfTasksInProgress = Object.values(allTasks).filter(task => task.status === "in progress").length;
     let numberOfTasksAwaitingFeedback = Object.values(allTasks).filter(task => task.status === "await feedback").length;
@@ -139,12 +135,14 @@ function displayUserName(){
     let greetingName = document.getElementById("greeting-name");
     let greetingNameMobile = document.getElementById("greeting-name-mobile");
     let greetingTime = document.getElementById("greeting-daytime");
+    let greetingTimeMobile = document.getElementById("greeting-daytime-mobile");
 
     if(currentUser) {
         greetingName.innerHTML = currentUser;
         greetingNameMobile.innerHTML = currentUser;
     } else {
         greetingTime.innerHTML = greetingTime.innerHTML.slice(0, -1) + `!`;
+        greetingTimeMobile.innerHTML = greetingTime.innerHTML.slice(0, -1) + `!`;
     }
 }
 
@@ -170,5 +168,5 @@ function activateLink(){
  * This function hides the greeting.
  */
 function hideGreeting(){
-    document.getElementById("mobile-summary-greeting").style.opacity = 0;
+    document.getElementById("mobile-summary-greeting").style.display = "none";
 }

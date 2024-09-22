@@ -30,7 +30,7 @@ function getLargeTaskTemplate(task) {
     const taskPrioHTML = renderLargeTaskPrioDisplay(task.prio);
 
     return `
-        <div class="task-display-large" onclick="event.stopPropagation()">
+        <div class="task-display-large" onclick="event.stopPropagation()" id="tdl-modal">
             <div class="large-task-display-header">
                 ${taskCategoryHTML}
                 <img src="assets/img/close.png" class="large-task-close-icon" onclick="hideTaskDisplayModal()">
@@ -72,16 +72,16 @@ function getLargeTaskTemplate(task) {
 
 function getEditTaskTemplate(openedTask){
     return `
-         <div class="task-display-large" onclick="event.stopPropagation()">
+         <div class="task-display-large" onclick="event.stopPropagation()" id="edit-task-modal" >
          <div class="edit-task-display-header">
                     <img src="assets/img/close.png" class="large-task-close-icon" onclick="hideTaskDisplayModal()">
                 </div>
             <div class="edit-task-content">
-                
+              <form id="edit-task-form" onsubmit="editTask(${openedTask.id}, event)">
                 <div class="edit-task-modal-body">
                     <div class="input">
                         <label for="title">Title</label>
-                        <input type="text" class="edit-task-input" id="edit-title" value="${openedTask.title}" spellcheck="false">
+                        <input type="text" class="edit-task-input" id="edit-title" value="${openedTask.title}" spellcheck="false" required>
                     </div>
                     <div class="input">
                         <label for="description">Description</label>
@@ -89,7 +89,7 @@ function getEditTaskTemplate(openedTask){
                     </div>
                     <div class="input">
                         <label for="date">Due date</label>
-                        <input type="date" class="edit-task-input" id="edit-date" value="${openedTask.date}">
+                        <input type="date" class="edit-task-input" id="edit-date" value="${openedTask.date}" required min="2010-01-01" max="2100-12-31">
                     </div>
                     <div class="input">
                         <span>Prio</span>
@@ -134,8 +134,9 @@ function getEditTaskTemplate(openedTask){
                         </div>                   
                 </div>
                 <div class="edit-task-modal-footer">
-                    <button class="edit-task-btn" onclick="editTask(${openedTask.id})">Ok <img src="assets/img/check_white.png"></button>
+                    <button class="edit-task-btn" type="submit" >Ok <img src="assets/img/check_white.png"></button>
                 </div>
+              </form>
             </div>
         </div>
     `;
@@ -173,7 +174,7 @@ function getContactDisplayTemplate(contactData) {
 }
 
 
-function getSubtaskTemplate(subtask) {
+function getSubtaskTemplateBoard(subtask) {
     const checkboxImage = subtask.status === "done" ? "assets/img/checked.png" : "assets/img/notchecked.png";
     return `
         <div class="large-task-subtask-div">
@@ -218,6 +219,9 @@ function getNewSubtaskTemplate(input) {
 
 function getActiveContactTemplate(contact) {
     return `
+
+     
+
         <div class="single-contact-display-header">
             <div class="scd-initials" style="background-color: ${contact.color};">${contact.initials}</div>
             <div class="scd-name-div">
@@ -235,9 +239,8 @@ function getActiveContactTemplate(contact) {
             <span class="scd-info-title">Phone</span>
             <span class="contact-phone">${contact.phone}</span>
         </div>
-        <div class="scd-options-mobile-div" onclick="openScdOptionsMobile();">
-            <img src="/assets/img/three_dots.png" class="scd-options-mobile-img">
-        </div>
+      
+
     `;
 }
 
