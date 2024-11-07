@@ -1,7 +1,7 @@
 let users = [];
 let rememberedUser;
 let currentUser;
-const BASE_URL = "https://join-4544d-default-rtdb.europe-west1.firebasedatabase.app";
+const BASE_URL = "https://join1-29d52-default-rtdb.europe-west1.firebasedatabase.app";
 const urlParams = new URLSearchParams(window.location.search);
 const msg = urlParams.get("msg");
 
