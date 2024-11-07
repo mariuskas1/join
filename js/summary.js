@@ -1,6 +1,6 @@
 let currentUser;
 let allTasks;
-const BASE_URL = "https://join-4544d-default-rtdb.europe-west1.firebasedatabase.app";
+const BASE_URL = "https://join1-29d52-default-rtdb.europe-west1.firebasedatabase.app";
 
 
 /**
