@@ -149,7 +149,7 @@ header{
 
 .help-icon:hover{
     cursor: pointer;
-    transform: scale(1.2);
+    transform: scale(1.1);
 }
 
 .user-initials{
@@ -599,7 +599,7 @@ label{
   }
 
   .subtask-icon:hover{
-    transform: scale(1.2);
+    transform: scale(1.1);
   }
 
   .form-bottom{
@@ -3763,7 +3763,7 @@ input[type=checkbox] {
     /* background-color: rgba(42, 54, 71, 1);
     color: white; */
     cursor: pointer;
-    scale: 1.1;
+    scale: 1.05;
 }
 
 .summary-info-box-row-1:hover img {
