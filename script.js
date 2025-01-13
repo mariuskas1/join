@@ -74,7 +74,7 @@ async function logOut(){
 function getCurrentUserData(){
     let currentUserLocalStorage = localStorage.getItem("currentUser");
     if (currentUserLocalStorage) {
-        currentUserData = JSON.parse(currentUserLocalStorage);
+        const currentUserData = JSON.parse(currentUserLocalStorage);
         currentUser = currentUserData.name;
     } else {
         currentUser = null; 

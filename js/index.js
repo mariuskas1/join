@@ -116,7 +116,7 @@ async function postUserData(){
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({username: mail, password: password, username: mail}),
+            body: JSON.stringify({username: mail, password: password, email: mail}),
         })
         checkLogInResponse(response);
         
@@ -135,7 +135,7 @@ async function checkLogInResponse(response){
         return;
     } else {
         let data = await response.json();
-        currentUser = { token: data.token, username: data.username, email: data.email };
+        currentUser = { token: data.token, username: data.username, email: data.email, name: data.name };
         saveCurrentUserToLocalStorage();
         if (rememberMeCheckbox.checked) {
             saveRememberedUserToLocalStorage(currentUser);

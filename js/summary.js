@@ -7,7 +7,7 @@ const BASE_URL = "https://join1-29d52-default-rtdb.europe-west1.firebasedatabase
  * This function is used to call several other functions after the DOM-content is loaded.
  */
 document.addEventListener("DOMContentLoaded", async function(){
-    await getCurrentUserData(); 
+    getCurrentUserData(); 
     await getAllTasks();
     displayGreeting();
     setTimeout(displayUserInitials, 200);

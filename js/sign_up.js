@@ -22,6 +22,7 @@ async function signUp(){
     let passwordOne = document.getElementById("password").value;
     let passwordTwo = document.getElementById("password2").value;
     let email = document.getElementById("email").value;
+    let name = document.getElementById("name").value;
 
     signUpBtn.disabled = true;
 
@@ -34,6 +35,7 @@ async function signUp(){
             body: JSON.stringify({
                 email: email,
                 username: email,
+                first_name: name,
                 password: passwordOne,
                 repeated_password: passwordTwo,
             }),
