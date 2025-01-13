@@ -1,4 +1,5 @@
-const BASE_URL = "https://join1-29d52-default-rtdb.europe-west1.firebasedatabase.app";
+// const BASE_URL = "https://join1-29d52-default-rtdb.europe-west1.firebasedatabase.app";
+const BASE_URL = "http://127.0.0.1:8000/api/contacts/";
 let currentUser;
 let currentUserData;
 let contacts = [];
@@ -14,7 +15,7 @@ let colorIndex = 0;
  */
 document.addEventListener("DOMContentLoaded", async function(){
     setTimeout(activateLink, 100);
-    await getCurrentUserData();
+    getCurrentUserData();
     setTimeout(displayUserInitials, 200);
     await loadContacts();
     displayContacts();
@@ -44,19 +45,19 @@ function activateLink(){
  */
 async function saveCurrentUserAsContact(){
     if (currentUser){
-        const trimmedUserName = currentUserData.name.trim().toLowerCase();
+        const trimmedUserName = currentUser.name.trim().toLowerCase();
         const contactExists = contacts.some(contact => contact.name.trim().toLowerCase() === trimmedUserName);
 
         if(!contactExists){
             newUserContact = {
-                "name": currentUserData.name,
-                "mail": currentUserData.email,
-                "phone": "",
-                "initials": getContactInitials(currentUserData.name),
+                "name": currentUser.name,
+                "mail": currentUser.email,
+                "phone": " ",
+                "initials": getContactInitials(currentUser.name),
                 "info": "Contact Information",
                 "color": "#29ABE2"
             }
-            await postData("/allContacts/", newUserContact);
+            await postData("contacts/", newUserContact);
         }
     }
 }
@@ -210,7 +211,7 @@ async function uploadNewContact(){
     let form = document.getElementById("add-contact-form");
     let newContact = createNewContact();
     if (newContact){
-        await postData("/allContacts/", newContact);
+        await postData("contacts/", newContact);
         form.reset();
         hideAddContactModal();
         displayConfirmationMessage();
@@ -435,7 +436,7 @@ async function uploadContactsOnServer(){
             "info": "Contact Information",
             "color": contact.color
         }
-        await postData("/allContacts/", existingContact);
+        await postData("contacts/", existingContact);
     }
 }
 

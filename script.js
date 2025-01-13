@@ -1,3 +1,5 @@
+const BASE_URL1 = "http://127.0.0.1:8000/api/" ;
+
 
 /**
  * This function includes the html-elements for the menu-template on the page.
@@ -74,8 +76,7 @@ async function logOut(){
 function getCurrentUserData(){
     let currentUserLocalStorage = localStorage.getItem("currentUser");
     if (currentUserLocalStorage) {
-        const currentUserData = JSON.parse(currentUserLocalStorage);
-        currentUser = currentUserData.name;
+        currentUser = JSON.parse(currentUserLocalStorage);
     } else {
         currentUser = null; 
     }
@@ -86,12 +87,19 @@ function getCurrentUserData(){
  * This function loads all contacts that are saved in the current users account from the server and saves them into the local contacts-array.
  */
 async function loadContacts(){
-    let response = await fetch(BASE_URL + "/allContacts/" + ".json");
-    let responseToJson = await response.json();
-    if( !responseToJson) {
-        console.log("No existing contacts yet")
-    } else {
-        contacts = Object.values(responseToJson);
+    try {
+        const response = await fetch(BASE_URL1 + "contacts/",{
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
+        if(response){
+            contacts = await response.json();
+        }
+    } catch (error) {
+        console.error(error)
     }
 }
 
@@ -128,7 +136,7 @@ function displayUserInitials(){
     let currentUserInitials;
 
     if (currentUser) {
-        let currentUserName = currentUser.trim().split(/\s+/);
+        let currentUserName = currentUser.name.trim().split(/\s+/);
 
         if (currentUserName.length === 1) {
             currentUserInitials = currentUserName[0];
@@ -370,8 +378,9 @@ function getSubtaskValues(){
  * @param {Object} data - It also takes in the object that is to be loaded onto the server as a parameter.
  * @returns 
  */
-async function postData(path="", data={}){
-    let response = await fetch(BASE_URL + path + ".json", {
+async function postData(url, data={}){
+
+    let response = await fetch(BASE_URL1 + url, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
