@@ -1,6 +1,7 @@
 let currentUser;
 let allTasks;
-const BASE_URL = "https://join1-29d52-default-rtdb.europe-west1.firebasedatabase.app";
+// const BASE_URL = "https://join1-29d52-default-rtdb.europe-west1.firebasedatabase.app";
+const BASE_URL = "http://127.0.0.1:8000/api/tasks/";
 
 
 /**
@@ -23,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async function(){
  */
 async function getAllTasks(){
     try {
-        let response = await fetch(BASE_URL + "/allTasks/" + ".json")
+        let response = await fetch(BASE_URL)
         if (!response.ok) {
             throw new Error("Network response was not ok")
         }
