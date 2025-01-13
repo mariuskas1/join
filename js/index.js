@@ -116,7 +116,7 @@ async function postUserData(){
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({username: mail, password: password}),
+            body: JSON.stringify({username: mail, password: password, username: mail}),
         })
         checkLogInResponse(response);
         
@@ -141,6 +141,7 @@ async function checkLogInResponse(response){
             saveRememberedUserToLocalStorage(currentUser);
         }
         localStorage.setItem("logged in?", "yes");
+
         window.location.href = "summary.html";
     }
 }

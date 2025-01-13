@@ -33,6 +33,7 @@ async function signUp(){
             },
             body: JSON.stringify({
                 email: email,
+                username: email,
                 password: passwordOne,
                 repeated_password: passwordTwo,
             }),
