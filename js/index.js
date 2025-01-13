@@ -1,8 +1,7 @@
-let users = [];
 let rememberedUser;
 let currentUser;
 // const BASE_URL = "https://join1-29d52-default-rtdb.europe-west1.firebasedatabase.app";
-const BASE_URL = "http://127.0.0.1:8000/api/login";
+const BASE_URL = "http://127.0.0.1:8000/api/login/";
 const urlParams = new URLSearchParams(window.location.search);
 const msg = urlParams.get("msg");
 
@@ -12,7 +11,6 @@ const msg = urlParams.get("msg");
  * It also saves the user data into the local array 'users'.
  */
 document.addEventListener("DOMContentLoaded", async function() {
-    users = await loadUserData("/allUsers/");
     let screenWidth = window.innerWidth;
 
     if (screenWidth < 480){
@@ -75,20 +73,6 @@ function hideInitialIndexLogo(){
     }, 1000);
 }
 
-/**
- * This function loads all user data which is save on the server in json-format and then converts it into an array of user objects.
- * 
- * @param {string} path - It takes in an adition to the BASE_URL as a parameter, which is the string '/allUsers'.
- * @returns - It returns the array of user objects.
- */
-async function loadUserData(path=""){
-    let response = await fetch(BASE_URL + path + ".json");
-    let data = await response.json();
-
-    if(data){
-        return Object.keys(data).map(key => ({ email: key, ...data[key] }));
-    }   
-}
 
 
 /**
@@ -119,13 +103,13 @@ async function loadUserData(path=""){
 // }
 
 
-let rememberMeCheckbox = document.getElementById("remember");
+
 
 
 async function postUserData(){
     let mail = document.getElementById("mail").value;
     let password = document.getElementById("password").value;
-    
+   
     try {
         let response = await fetch(BASE_URL, {
             method: "POST",
@@ -144,6 +128,8 @@ async function postUserData(){
 
 
 async function checkLogInResponse(response){
+    let rememberMeCheckbox = document.getElementById("remember");
+    
     if(!response.ok){
         displayFailedLoginMessage();
         return;
