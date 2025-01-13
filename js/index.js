@@ -1,7 +1,8 @@
 let users = [];
 let rememberedUser;
 let currentUser;
-const BASE_URL = "https://join1-29d52-default-rtdb.europe-west1.firebasedatabase.app";
+// const BASE_URL = "https://join1-29d52-default-rtdb.europe-west1.firebasedatabase.app";
+const BASE_URL = "http://127.0.0.1:8000/api/login";
 const urlParams = new URLSearchParams(window.location.search);
 const msg = urlParams.get("msg");
 
@@ -97,22 +98,64 @@ async function loadUserData(path=""){
  * is checked, the user object also gets saved to the rememberedUser-variable which also gets saved to the local storage. 
  * After the succesful log-in the function redirects the user to the summary page.
  */
-async function checkUserData(){
-    let mail = document.getElementById("mail");
-    let password = document.getElementById("password");
-    let rememberMeCheckbox = document.getElementById("remember");
-    let user = users.find(u => u.email == mail.value && u.password == password.value);
 
-    if(user){
-        currentUser = user;
+// async function checkUserData(){
+//     let mail = document.getElementById("mail");
+//     let password = document.getElementById("password");
+//     let rememberMeCheckbox = document.getElementById("remember");
+//     let user = users.find(u => u.email == mail.value && u.password == password.value);
+
+//     if(user){
+//         currentUser = user;
+//         saveCurrentUserToLocalStorage();
+//         if (rememberMeCheckbox.checked){
+//             saveRememberedUserToLocalStorage(user);
+//         }
+//         localStorage.setItem("logged in?", "yes");
+//         window.location.href = "summary.html";
+//     } else {
+//         displayFailedLoginMessage();
+//     }
+// }
+
+
+let rememberMeCheckbox = document.getElementById("remember");
+
+
+async function postUserData(){
+    let mail = document.getElementById("mail").value;
+    let password = document.getElementById("password").value;
+    
+    try {
+        let response = await fetch(BASE_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({username: mail, password: password}),
+        })
+        checkLogInResponse(response);
+        
+    } catch (error) {
+        console.error(error);
+        displayFailedLoginMessage();
+    }
+}
+
+
+async function checkLogInResponse(response){
+    if(!response.ok){
+        displayFailedLoginMessage();
+        return;
+    } else {
+        let data = await response.json();
+        currentUser = { token: data.token, username: data.username, email: data.email };
         saveCurrentUserToLocalStorage();
-        if (rememberMeCheckbox.checked){
-            saveRememberedUserToLocalStorage(user);
+        if (rememberMeCheckbox.checked) {
+            saveRememberedUserToLocalStorage(currentUser);
         }
         localStorage.setItem("logged in?", "yes");
         window.location.href = "summary.html";
-    } else {
-        displayFailedLoginMessage();
     }
 }
 
