@@ -1,4 +1,3 @@
-// const BASE_URL = "https://join1-29d52-default-rtdb.europe-west1.firebasedatabase.app";
 const BASE_URL = "http://127.0.0.1:8000/api/register/";
 
 
@@ -19,25 +18,6 @@ checkbox.addEventListener("change", function(){
  * This function handles the click event on the sign-up button. It checks if the entered data is correct and if yes, calls the other
  * necessary function to create a new user-object and load it to the api-server.
  */
-
-
-// async function signUp(){
-//     let passwordOne = document.getElementById("password").value;
-//     let passwordTwo = document.getElementById("password2").value;
-
-//     if (passwordOne !== passwordTwo) {
-//         alert("Passwords do not match!");
-//     } else {
-//         signUpBtn.disabled = true;
-//         let newUser = createNewUser();
-//         await postUserData("/allUsers", newUser);
-//         displaySignedUpModal();
-//         setTimeout(function() {
-//             window.location.href = "index.html?msg=You signed up successfully";
-//         }, 2000);
-//     }
-// }
-
 async function signUp(){
     let passwordOne = document.getElementById("password").value;
     let passwordTwo = document.getElementById("password2").value;
@@ -67,6 +47,12 @@ async function signUp(){
 }
 
 
+/**
+ * This function checks the sign-up response from the backend. If the response is ok it displays a sign-up modal and redirects the user to the login page.
+ * 
+ * @param {*} response - It takes in the response from the server as a parameter.
+ * @returns 
+ */
 async function checkSignUpResponse(response){
     if (!response.ok) {
         let errorData = await response.json();
