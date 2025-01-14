@@ -216,7 +216,8 @@ async function uploadNewTask(event){
     let newTask = createNewTask();
     console.log(newTask)
     if (newTask){
-        await postData("tasks/", newTask);
+        const createdTask = await postData("tasks/", newTask);
+        await uploadSubtasks(createdTask.id);
         displayAddedConfirmationMessage();
         form.reset();
         document.getElementById("subtasks-list").innerHTML = '';
@@ -230,6 +231,21 @@ async function uploadNewTask(event){
         }
     } 
 } 
+
+
+async function uploadSubtasks(taskId){
+    let subtasks = document.querySelectorAll(".subtask-input");
+    if (subtasks.length > 0) {
+        for (const input of subtasks) {
+            let newSubtask = {
+                title: input.value,
+                status: "todo",
+                task: taskId 
+            };
+            await postData("subtasks/", newSubtask);
+        }
+    }
+}
 
 
 /**
@@ -249,7 +265,7 @@ function displayAddedConfirmationMessage(){
  * This function creates a new task from the values of the relevant input-fields. It also performs the form validation and displays 'required-labels'
  * if the titel, date or category input fields are left empty.
  * 
- * @returns - It returns the newly create task-object.
+ * @returns - It returns the newly created task-object.
  */
 function createNewTask(){
     let date = document.getElementById("date");
@@ -258,10 +274,8 @@ function createNewTask(){
     let assignedTo = document.getElementById("assigned");
     let title = document.getElementById("title");
     let status = getAddTaskStatus();
-    let id = generateRandomID ();
-    
     let selectedPriority = getSelectedPriority();
-    let subtaskValues = getSubtaskValues();
+
     let newTask = null;
 
     if (title.value && date.value && category.value) {
@@ -272,22 +286,25 @@ function createNewTask(){
             "prio": selectedPriority,
             "description": description.value,
             "assignedTo": assignedTo.value,
-            "subtasks": subtaskValues,
             "status" : status,
-            "id": id
         }
         hideRequiredLabels();
         return newTask;
     } else {
-        if (!title.value) {
-            document.getElementById("title-label-2").style.opacity = 1;
-        }
-        if (!date.value) {
-            document.getElementById("date-label-2").style.opacity = 1;
-        }
-        if (!category.value) {
-            document.getElementById("category-label-2").style.opacity = 1;
-        }
+        displayValidationMsg(title.value, date.value, category.value);
+    }
+}
+
+
+function displayValidationMsg(title, date, category){
+    if (!title) {
+        document.getElementById("title-label-2").style.opacity = 1;
+    }
+    if (!date) {
+        document.getElementById("date-label-2").style.opacity = 1;
+    }
+    if (!category) {
+        document.getElementById("category-label-2").style.opacity = 1;
     }
 }
 

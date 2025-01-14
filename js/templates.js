@@ -29,6 +29,8 @@ function getLargeTaskTemplate(task) {
     const taskContactsHTML = renderLargeTaskContactsDisplay(task.assignedTo);
     const taskPrioHTML = renderLargeTaskPrioDisplay(task.prio);
 
+    
+
     return `
         <div class="task-display-large" onclick="event.stopPropagation()" id="tdl-modal">
             <div class="large-task-display-header">
@@ -77,7 +79,7 @@ function getEditTaskTemplate(openedTask){
                     <img src="assets/img/close.png" class="large-task-close-icon" onclick="hideTaskDisplayModal()">
                 </div>
             <div class="edit-task-content">
-              <form id="edit-task-form" onsubmit="editTask(${openedTask.id}, event)">
+              <form id="edit-task-form" onsubmit="editTask(event)">
                 <div class="edit-task-modal-body">
                     <div class="input">
                         <label for="title">Title</label>
@@ -219,8 +221,6 @@ function getNewSubtaskTemplate(input) {
 
 function getActiveContactTemplate(contact) {
     return `
-
-     
 
         <div class="single-contact-display-header">
             <div class="scd-initials" style="background-color: ${contact.color};">${contact.initials}</div>

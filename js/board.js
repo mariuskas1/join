@@ -91,13 +91,12 @@ async function getAllTasks(){
     } catch (error) {
         console.error("Failed to fetch tasks:", error);
     }
-    console.log(allTasks)
 }
 
 
 /**
  * This function sorts all tasks in the currenUserTasks-array according to their status. To achieve this, it goes over every task-object, checks its
- * status and then pushes it into the respective globally defined array.
+ * status and then pushes it into the respective globally defined array.      
  */
 function sortTasks(){
     clearTaskArrays();
@@ -237,7 +236,7 @@ function renderTaskCategoryDisplay(category){
  * @returns - It returns the subtask-progress-template.
  */
 function renderSubtaskDisplay(subtasks){ 
-    if(subtasks){
+    if(subtasks.length > 0){
         let subtasksArray = Object.values(subtasks);
         let allSubtasks = subtasksArray.length;
         let subtasksDone = subtasksArray.filter(subtask => subtask.status === "done").length;
@@ -318,39 +317,9 @@ function removeHighlightClassAll(){
 /**This function updates the task on the server and on the board, whenever changes are made locally. */
 async function updateTasks(){
     clearTaskArrays();
-    await deleteTasksOnServer();
-    await uploadTasksOnServer();
     await getAllTasks();
 }
 
-
-/**This function deletes all tasks on the server. */
-async function deleteTasksOnServer(){
-    let response = await fetch(BASE_URL + "/allTasks/" + ".json",{
-        method: "DELETE",
-    });
-    return responseToJson = await response.json();
-}
-
-
-/**This function uploads all locally saved tasks onto the server. */
-async function uploadTasksOnServer(){
-    for (let i = 0; i < allTasks.length; i++) {
-        const task = allTasks[i];
-        let existingTask = {
-           "title": task.title,
-            "date": task.date,
-            "category": task.category,
-            "prio": task.prio,
-            "description": task.description,
-            "assignedTo": task.assignedTo,
-            "subtasks": task.subtasks,
-            "status" : task.status,
-            "id": task.id
-        }
-        await postData("/allTasks/", existingTask);
-    }
-}
 
 
 /**
@@ -359,7 +328,7 @@ async function uploadTasksOnServer(){
  * @param {number} id - It takes in the id of the clicked task as a parameter.
  */
 function openTaskDisplayModal(id){
-    openedTask = allTasks.find(task => task.id === id.toString());
+    openedTask = allTasks.find(task => task.id === id);
     let taskDisplayModal = document.getElementById('task-display-modal');
 
     taskDisplayModal.classList.remove('display-none');
@@ -452,7 +421,7 @@ function renderLargeTaskSubtasksDisplay(subtasks){
     let largeTaskSubtaskDisplay = document.getElementById("large-task-subtasks-display");
     largeTaskSubtaskDisplay.innerHTML = ''; 
 
-    if (subtasks) {
+    if (subtasks.length > 0) {
         let subtasksArray = Object.values(subtasks);
         subtasksArray.forEach(subtask => {
             largeTaskSubtaskDisplay.innerHTML += getSubtaskTemplateBoard(subtask);
@@ -537,9 +506,17 @@ function switchSubtaskCheckbox(element){
  * @param {number} id - It takes in the id of the opened task as a parameter.
  */
 async function deleteTask(id){
-    const taskIndex = allTasks.findIndex(task => task.id === id.toString());
-    allTasks.splice(taskIndex, 1);
-    clearTaskArrays();
+    try {
+        await fetch (BASE_URL + id + '/', {
+            method:'DELETE',
+            headers: {
+                'Content-Type': 'application/json', 
+            }
+        })
+    } catch (error) {
+        console.error(error)
+    }
+
     await updateTasks();
     hideTaskDisplayModal();
 }
@@ -588,16 +565,24 @@ function displayTaskPriority(prio){
  * 
  * @param {number} id - It takes in the id of the opened task as parameter.
  */
-function editTask(id, event){
-    if(event){
-        event.preventDefault();
-    }
-   
-    let openedTaskIndex = allTasks.findIndex(task => task.id === id.toString());
+async function editTask(event){
+    event.preventDefault();
     let editedTask = createEditedTask(openedTask);
-    
-    allTasks[openedTaskIndex] = editedTask;
-    clearTaskArrays();
+
+    console.log(editedTask)
+
+    try {
+        await fetch(BASE_URL + editedTask.id + '/', {
+            method:'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(editedTask)
+        });
+    } catch (error) {
+        console.error(error)
+    }
+
     hideEditTaskModal();
 }
 
