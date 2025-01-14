@@ -214,7 +214,6 @@ async function uploadNewTask(event){
     let form = document.getElementById("add-task-form");
     event.preventDefault();
     let newTask = createNewTask();
-    console.log(newTask)
     if (newTask){
         const createdTask = await postData("tasks/", newTask);
         await uploadSubtasks(createdTask.id);

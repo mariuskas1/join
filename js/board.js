@@ -459,7 +459,7 @@ function renderLargeTaskPrioDisplay(prio){
  * @param {number} subtaskID - It takes in the id of the subtask the user clicked on as a parameter.
  */
 function switchSubtaskStatus(subtaskID) {
-    let openedTaskIndex = allTasks.findIndex(task => task.id === openedTask.id.toString());
+    let openedTaskIndex = allTasks.findIndex(task => task.id === openedTask.id);
     let editedTask = createNewTaskWithEditedSubtaskStatus(subtaskID);
     allTasks[openedTaskIndex] = editedTask;
     updateTasks();
@@ -568,11 +568,9 @@ function displayTaskPriority(prio){
 async function editTask(event){
     event.preventDefault();
     let editedTask = createEditedTask(openedTask);
-
-    console.log(editedTask)
-
+    
     try {
-        await fetch(BASE_URL + editedTask.id + '/', {
+        await fetch(BASE_URL + openedTask.id + '/', {
             method:'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -599,7 +597,7 @@ function createEditedTask(openedTask){
     let assignedTo = document.getElementById("edit-assigned");
     let title = document.getElementById("edit-title");
     let selectedPriority = getEditedPriority();
-    let subtaskValues = getSubtaskValues();
+    // let subtaskValues = getSubtaskValues();
     let editedTask = null;
 
     if (title.value && date.value){
@@ -610,7 +608,7 @@ function createEditedTask(openedTask){
             "prio": selectedPriority || "",  
             "description": description ? description.value : "", 
             "assignedTo": assignedTo ? assignedTo.value : "",  
-            "subtasks": subtaskValues || [],  
+            // "subtasks": subtaskValues || [],  
             "status": openedTask.status,
             "id": openedTask.id
         };
