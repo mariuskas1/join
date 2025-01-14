@@ -351,8 +351,7 @@ async function editContact(){
     editContactLocally();
     displayContacts();
     displayActiveContact();
-    await deleteContactsOnServer();
-    await uploadContactsOnServer();
+    await editContactOnServer();
     hideAddContactModal();
 }
 
@@ -372,6 +371,19 @@ function editContactLocally(){
 }
 
 
+async function editContactOnServer(){
+    try {
+        await fetch(BASE_URL + activeContact.id + '/', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(activeContact),
+        })
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+
 /**
  * This function deletes a contact from the local contacts-array and from the server.
  */
@@ -379,9 +391,8 @@ async function deleteContact(){
     document.getElementById("single-contact-display-div").classList.remove("show");
 
     deleteContactLocally();
+    await deleteContactOnServer();
     changeActiveContact();
-    await deleteContactsOnServer();
-    await uploadContactsOnServer();
     displayActiveContact();
     displayContacts();
     changeActiveContactDisplaySmall();
@@ -408,35 +419,14 @@ function deleteContactLocally(){
 }
 
 
-/**
- * This function deletes all contacts of the current user from the server.
- * 
- * @returns - It returns the response converted to json-format.
- */
-async function deleteContactsOnServer(){
-    let response = await fetch(BASE_URL + "/allContacts/" + ".json",{
-        method: "DELETE",
-    });
-    return responseToJson = await response.json();
-}
-
-
-/**
- * This function uploads every contact from the contacts-array to the server. To achieve this it loops over every contact within the array
- * and then creates a new contact-object, which then gets uploaded to the server.
- */
-async function uploadContactsOnServer(){
-    for (let i = 0; i < contacts.length; i++) {
-        const contact = contacts[i];
-        let existingContact = {
-            "name": contact.name,
-            "mail": contact.mail,
-            "phone": contact.phone,
-            "initials": getContactInitials(contact.name),
-            "info": "Contact Information",
-            "color": contact.color
-        }
-        await postData("contacts/", existingContact);
+async function deleteContactOnServer(){
+    try {
+        await fetch(BASE_URL + activeContact.id + '/', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+        })
+    } catch (error) {
+        console.error(error)
     }
 }
 
