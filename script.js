@@ -355,18 +355,18 @@ function getEditedPriority(){
  * @returns - It returns the newly created subtask-object.
  */
 function getSubtaskValues(){
-    let subtaskValues = {};
+    let subtaskValues = [];
 
     let subtasks = document.querySelectorAll(".subtask-input");
     if (subtasks.length > 0) {
         subtasks.forEach((input, index) => {
             let subtaskID = generateRandomID();
-            subtaskValues[`subtask${index}`] = {
-                name: input.value,
+            subtaskValues.push({
+                title: input.value,
                 id: subtaskID,
                 status: "todo"
-                };
             });
+        });
     }
     return subtaskValues;
 }

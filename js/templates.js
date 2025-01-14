@@ -179,7 +179,7 @@ function getSubtaskTemplateBoard(subtask) {
     return `
         <div class="large-task-subtask-div">
             <img src="${checkboxImage}" class="subtask-checkbox" onclick="switchSubtaskStatus(${subtask.id}); switchSubtaskCheckbox(this);">
-            <span class="large-task-subtaks-name">${subtask.name}</span>
+            <span class="large-task-subtaks-name">${subtask.title}</span>
         </div>
     `;
 }
@@ -189,7 +189,7 @@ function getSubtaskListItemTemplate(subtask) {
     return `
         <li>
             <img class="bullet-point" src="assets/img/circle-solid.svg">
-            <input type="text" class="subtask-input bg-white" name="subtask-input" value="${subtask.name}" disabled spellcheck="false">
+            <input type="text" class="subtask-input bg-white" name="subtask-input" value="${subtask.title}" disabled spellcheck="false">
             <div class="subtask-icons">
                 <img class="subtask-icon" onclick="editSubtask(this)" src="assets/img/edit.png">
                 <img class="subtask-icon" onclick="deleteSubtask(this)" src="assets/img/delete.png">

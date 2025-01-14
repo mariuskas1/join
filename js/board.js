@@ -91,6 +91,7 @@ async function getAllTasks(){
     } catch (error) {
         console.error("Failed to fetch tasks:", error);
     }
+    console.log(allTasks)
 }
 
 
