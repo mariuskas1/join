@@ -1,4 +1,6 @@
 // const BASE_URL = "https://join1-29d52-default-rtdb.europe-west1.firebasedatabase.app";
+const BASE_URL = "http://127.0.0.1:8000/api/tasks/";
+
 
 let currentUser;
 let currentUserData;
@@ -71,7 +73,7 @@ function hideAddTaskModal(){
 /**This function loads all tasks for the current user from the API server and calls the necessary functions to display the tasks on the board page */
 async function getAllTasks(){
     try {
-        let response = await fetch(BASE_URL + "/allTasks/" + ".json")
+        let response = await fetch(BASE_URL)
 
         if (!response.ok) {
             throw new Error("Network response was not ok")
