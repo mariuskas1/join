@@ -375,13 +375,8 @@ function getSubtaskValues(){
 
     let subtasks = document.querySelectorAll(".subtask-input");
     if (subtasks.length > 0) {
-        subtasks.forEach((input, index) => {
-            let subtaskID = generateRandomID();
-            subtaskValues.push({
-                title: input.value,
-                id: subtaskID,
-                status: "todo"
-            });
+        subtasks.forEach((input) => {
+            subtaskValues.push(input.value);
         });
     }
     return subtaskValues;

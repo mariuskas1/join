@@ -59,12 +59,12 @@ function deleteSubtask(element){
  * 
  * @param {HTMLElement} element - It takes in the html element the user clicked on as a parameter.
  */
-function editSubtask(element) {
-    let listElement = element.closest('li');
-    let subtaskInput = listElement.querySelector('input');
-    subtaskInput.removeAttribute('disabled');
-    subtaskInput.focus();
-}
+// function editSubtask(element) {
+//     let listElement = element.closest('li');
+//     let subtaskInput = listElement.querySelector('input');
+//     subtaskInput.removeAttribute('disabled');
+//     subtaskInput.focus();
+// }
  
 
 
@@ -94,15 +94,15 @@ function getSelectedPriority() {
  * 
  * @returns - It returns the values of the subtask-input-elements.
  */
-function getSubtaskValues(){
-    let subtaskValues = {};
-    let subtasks = document.querySelectorAll(".subtask-input");
-    if (subtasks.length > 0) {
-        subtasks.forEach((input, index) => {
-            subtaskValues[`input${index}`] = input.value;
-        });
-    }
-    return subtaskValues;
-}
+// function getSubtaskValues(){
+//     let subtaskValues = {};
+//     let subtasks = document.querySelectorAll(".subtask-input");
+//     if (subtasks.length > 0) {
+//         subtasks.forEach((input, index) => {
+//             subtaskValues[`input${index}`] = input.value;
+//         });
+//     }
+//     return subtaskValues;
+// }
 
 

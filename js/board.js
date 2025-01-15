@@ -564,8 +564,12 @@ function displayTaskPriority(prio){
  * @param {number} id - It takes in the id of the opened task as parameter.
  */
 async function editTask(event){
-    event.preventDefault();
+    if(event){
+        event.preventDefault();
+    }
+   
     let editedTask = createEditedTask(openedTask);
+    await editSubtasks();
     
     try {
         await fetch(BASE_URL + openedTask.id + '/', {
@@ -582,6 +586,33 @@ async function editTask(event){
     hideEditTaskModal();
 }
 
+
+async function editSubtasks(){
+    await deleteAllSubtasksForOpenedTask();
+    await uploadSubtasks(openedTask.id)
+}
+
+
+async function deleteAllSubtasksForOpenedTask(){
+    for (const subtask of openedTask.subtasks) {
+        await deleteSubtaskOnEditing(subtask);
+    }
+}
+
+
+
+async function deleteSubtaskOnEditing(subtask){
+    try {
+        await fetch(ST_URL + subtask.id + '/', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+    } catch (error) {
+        console.error(error)
+    }
+}
 
 /**
  * This function creates a new task according to the changes made to the opened task in the edit-task-modal.
