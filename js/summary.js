@@ -68,8 +68,8 @@ function displayTaskInfos(){
     let numberOfUrgentTasks = Object.values(allTasks).filter(task => task.prio === "urgent").length;
     let numberOfTasksTodo = Object.values(allTasks).filter(task => task.status === "todo").length;
     let numberOfTasksDone = Object.values(allTasks).filter(task => task.status === "done").length;
-    let numberOfTasksInProgress = Object.values(allTasks).filter(task => task.status === "in progress").length;
-    let numberOfTasksAwaitingFeedback = Object.values(allTasks).filter(task => task.status === "await feedback").length;
+    let numberOfTasksInProgress = Object.values(allTasks).filter(task => task.status === "in_progress").length;
+    let numberOfTasksAwaitingFeedback = Object.values(allTasks).filter(task => task.status === "await_feedback").length;
 
     document.getElementById("tasks-in-board").innerHTML = numberOfTasks;
     document.getElementById("tasks-urgent").innerHTML = numberOfUrgentTasks;
@@ -139,8 +139,8 @@ function displayUserName(){
     let greetingTimeMobile = document.getElementById("greeting-daytime-mobile");
 
     if(currentUser) {
-        greetingName.innerHTML = currentUser;
-        greetingNameMobile.innerHTML = currentUser;
+        greetingName.innerHTML = currentUser.name;
+        greetingNameMobile.innerHTML = currentUser.name;
     } else {
         greetingTime.innerHTML = greetingTime.innerHTML.slice(0, -1) + `!`;
         greetingTimeMobile.innerHTML = greetingTime.innerHTML.slice(0, -1) + `!`;

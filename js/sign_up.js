@@ -81,7 +81,7 @@ async function checkSignUpResponse(response){
 
         setTimeout(function () {
             window.location.href = "index.html?msg=You signed up successfully";
-        }, 2000);
+        }, 1000);
     }
     
 }

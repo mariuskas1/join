@@ -790,10 +790,10 @@ function sortSearchedTasks(tasks){
                 case 'todo':
                     tasksToDo.push(task);
                     break;
-                case 'in progress':
+                case 'in_progress':
                     tasksInProgress.push(task);
                     break;
-                case 'await feedback':
+                case 'await_feedback':
                     tasksAwaiting.push(task);
                     break;
                 case 'done':
