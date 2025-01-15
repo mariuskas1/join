@@ -1,5 +1,6 @@
 // const BASE_URL = "https://join1-29d52-default-rtdb.europe-west1.firebasedatabase.app";
 const BASE_URL = "http://127.0.0.1:8000/api/tasks/";
+const ST_URL = "http://127.0.0.1:8000/api/subtasks/";
 
 
 let currentUser;
@@ -456,33 +457,30 @@ function renderLargeTaskPrioDisplay(prio){
  * This function changes the status of a subtask from 'done' to 'todo' and vice versa. First it gets the index of the opened task, so that it can then be exchanged by a newly created task,
  * that is an exact copy of the opened task, only with an edited subtask-object, where the status of the clicked on subtask is changed.
  * 
- * @param {number} subtaskID - It takes in the id of the subtask the user clicked on as a parameter.
+ * @param {number} subtaskId - It takes in the id of the subtask the user clicked on as a parameter.
  */
-function switchSubtaskStatus(subtaskID) {
-    let openedTaskIndex = allTasks.findIndex(task => task.id === openedTask.id);
-    let editedTask = createNewTaskWithEditedSubtaskStatus(subtaskID);
-    allTasks[openedTaskIndex] = editedTask;
+async function switchSubtaskStatus(subtaskId) {
+    let subtask = allTasks.find(task => task.subtasks.some(st => st.id === subtaskId)).subtasks.find(st => st.id === subtaskId);
+    subtask.status = subtask.status === "todo" ? "done" : "todo";
+
+    uploadEditedSubtask(subtask);
     updateTasks();
 }
 
 
-/**
- * This function creates a new task, that is an exact copy of the currently opened task, only with a new subtask-status.
- * 
- * @param {number} subtaskID - It takes in the id of the subtask the user clicked on as a parameter.
- * @returns - It returns the new task-object.
- */
-function createNewTaskWithEditedSubtaskStatus(subtaskID){
-    let newTask = JSON.parse(JSON.stringify(openedTask)); 
-    for(let key in newTask.subtasks){
-        let subtask = newTask.subtasks[key];
-        
-        if(subtask.id === subtaskID.toString()){
-            subtask.status = subtask.status === "todo" ? "done" : "todo";
-            break;
-        } 
+
+async function uploadEditedSubtask(subtask){
+    try {
+        await fetch(ST_URL + subtask.id + '/', {
+            method: 'PUT',
+            headers:{
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(subtask)
+        })
+    } catch (error) {
+        console.error(error)
     }
-    return newTask;
 }
 
 
