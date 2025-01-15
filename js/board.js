@@ -107,10 +107,10 @@ function sortTasks(){
                 case 'todo':
                     tasksToDo.push(task);
                     break;
-                case 'in progress':
+                case 'in_progress':
                     tasksInProgress.push(task);
                     break;
-                case 'await feedback':
+                case 'await_feedback':
                     tasksAwaiting.push(task);
                     break;
                 case 'done':
@@ -276,11 +276,32 @@ function allowDrop(ev) {
  * @param {string} status - It takes in the status of the column the task gets moved to as a parameter.
  */
 async function moveTo(status){
-    const task = allTasks.find(task => task.id === currentDraggedElement.toString());
+    const task = allTasks.find(task => task.id === currentDraggedElement);
     task.status = status;
+    if (task.subtasks) {
+        delete task.subtasks;
+    }
+
+    await editTaskOnMoving(task)
     removeHighlightClassAll();
     await updateTasks();
 }
+
+
+async function editTaskOnMoving(task){
+    try {
+        await fetch(BASE_URL + task.id + '/', {
+            method:'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(task)
+        });
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 
 
 /**
