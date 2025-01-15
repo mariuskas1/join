@@ -26,27 +26,39 @@ async function signUp(){
 
     signUpBtn.disabled = true;
 
-    try {
-        let response = await fetch(BASE_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                email: email,
-                username: email,
-                first_name: name,
-                password: passwordOne,
-                repeated_password: passwordTwo,
-            }),
-        });
-
-        await checkSignUpResponse(response);
-    } catch (error) {
-        console.error(error);
-        alert("An error occurred while signing up. Please try again later.");
+    if(passwordOne !== passwordTwo){
+        displayFailedSignUpMessage();
         signUpBtn.disabled = false;
+    } else {
+        try {
+            let response = await fetch(BASE_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: email,
+                    username: email,
+                    first_name: name,
+                    password: passwordOne,
+                    repeated_password: passwordTwo,
+                }),
+            });
+    
+            await checkSignUpResponse(response);
+        } catch (error) {
+            console.error(error);
+            signUpBtn.disabled = false;
+        }
     }
+}
+
+
+function displayFailedSignUpMessage(){
+    document.getElementById("log-in-msg").classList.add("show");
+    setTimeout(function() {
+        document.getElementById("log-in-msg").classList.remove("show");
+    }, 2000); 
 }
 
 
