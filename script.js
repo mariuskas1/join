@@ -180,7 +180,7 @@ function displayUserInitials(){
     let initialsButton = document.getElementById("user-initials");
     let currentUserInitials;
 
-    if (currentUser) {
+    if (!currentUser.isGuest) {
         let currentUserName = currentUser.name.trim().split(/\s+/);
 
         if (currentUserName.length === 1) {
