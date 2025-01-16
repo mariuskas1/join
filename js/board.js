@@ -12,6 +12,7 @@ let tasksAwaiting = [];
 let tasksDone = [];
 let contacts = [];
 let openedTask;
+let cachedSubtasks;
 
 let currentDraggedElement;
 let addTaskStatus;
@@ -484,7 +485,7 @@ async function switchSubtaskStatus(subtaskId) {
     let subtask = allTasks.find(task => task.subtasks.some(st => st.id === subtaskId)).subtasks.find(st => st.id === subtaskId);
     subtask.status = subtask.status === "todo" ? "done" : "todo";
 
-    uploadEditedSubtask(subtask);
+    await uploadEditedSubtask(subtask);
     updateTasks();
 }
 
