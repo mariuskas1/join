@@ -610,9 +610,31 @@ async function editTask(event){
 
 
 async function editSubtasks(){
+    cachedSubtasks = openedTask.subtasks;
     await deleteAllSubtasksForOpenedTask();
-    await uploadSubtasks(openedTask.id)
+    await filterCachedSubtasks(openedTask.id);
 }
+
+
+async function filterCachedSubtasks(taskId){
+    let subtasks = document.querySelectorAll(".subtask-input");
+    if (subtasks.length > 0) {
+        for (const input of subtasks) {
+            let existingSubtask = cachedSubtasks.find((subtask) => subtask.title === input.value);
+            if(existingSubtask){
+                await postData("subtasks/", existingSubtask);
+            } else {
+                let newSubtask = {
+                    title: input.value,
+                    status: "todo",
+                    task: taskId 
+                };
+                await postData("subtasks/", newSubtask);
+            }
+        }
+    }
+}
+
 
 
 async function deleteAllSubtasksForOpenedTask(){
