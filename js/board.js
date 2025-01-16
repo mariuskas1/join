@@ -22,8 +22,8 @@ let addTaskStatus;
  * This function is used to call several other functions from the script.js-file, after the DOM-content is loaded.
  */
 document.addEventListener("DOMContentLoaded", async function(){
+    getCurrentUserData();
     setTimeout(activateLink, 100);
-    await getCurrentUserData();
     setTimeout(displayUserInitials, 200);
     await loadContacts();
     await getAllTasks();
@@ -75,7 +75,13 @@ function hideAddTaskModal(){
 /**This function loads all tasks for the current user from the API server and calls the necessary functions to display the tasks on the board page */
 async function getAllTasks(){
     try {
-        let response = await fetch(BASE_URL)
+        let response = await fetch(BASE_URL, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Token ${currentUser.token}`,
+            },
+        })
 
         if (!response.ok) {
             throw new Error("Network response was not ok")
@@ -294,7 +300,8 @@ async function editTaskOnMoving(task){
         await fetch(BASE_URL + task.id + '/', {
             method:'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Token ${currentUser.token}`,
             },
             body: JSON.stringify(task)
         });
@@ -497,6 +504,7 @@ async function uploadEditedSubtask(subtask){
             method: 'PUT',
             headers:{
                 'Content-Type': 'application/json',
+                Authorization: `Token ${currentUser.token}`,
             },
             body: JSON.stringify(subtask)
         })
@@ -531,6 +539,7 @@ async function deleteTask(id){
             method:'DELETE',
             headers: {
                 'Content-Type': 'application/json', 
+                Authorization: `Token ${currentUser.token}`,
             }
         })
     } catch (error) {
@@ -597,7 +606,8 @@ async function editTask(event){
         await fetch(BASE_URL + openedTask.id + '/', {
             method:'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Token ${currentUser.token}`,
             },
             body: JSON.stringify(editedTask)
         });
@@ -650,7 +660,8 @@ async function deleteSubtaskOnEditing(subtask){
         await fetch(ST_URL + subtask.id + '/', {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Token ${currentUser.token}`,
             },
         })
     } catch (error) {

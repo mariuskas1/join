@@ -375,7 +375,10 @@ async function editContactOnServer(){
     try {
         await fetch(BASE_URL + activeContact.id + '/', {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Token ${currentUser.token}`,
+            },
             body: JSON.stringify(activeContact),
         })
     } catch (error) {
@@ -423,7 +426,10 @@ async function deleteContactOnServer(){
     try {
         await fetch(BASE_URL + activeContact.id + '/', {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Token ${currentUser.token}`,
+            },
         })
     } catch (error) {
         console.error(error)

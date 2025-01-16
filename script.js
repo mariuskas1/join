@@ -80,6 +80,16 @@ function getCurrentUserData(){
     } else {
         currentUser = null; 
     }
+    checkUserAuthentication();
+}
+
+
+function checkUserAuthentication(){
+    if(!currentUser){
+        window.location.href = "index.html";
+    } else {
+        //valida current user object
+    }
 }
 
 
@@ -92,6 +102,7 @@ async function loadContacts(){
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Token ${currentUser.token}`,
             }
         });
 
@@ -396,6 +407,7 @@ async function postData(url, data={}){
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Token ${currentUser.token}`,
         },
         body: JSON.stringify(data)
     });

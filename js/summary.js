@@ -24,7 +24,12 @@ document.addEventListener("DOMContentLoaded", async function(){
  */
 async function getAllTasks(){
     try {
-        let response = await fetch(BASE_URL)
+        let response = await fetch(BASE_URL,{
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Token ${currentUser.token}`,
+            },
+        })
         if (!response.ok) {
             throw new Error("Network response was not ok")
         }
