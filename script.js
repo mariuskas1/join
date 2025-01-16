@@ -84,13 +84,47 @@ function getCurrentUserData(){
 }
 
 
-function checkUserAuthentication(){
+async function checkUserAuthentication(){
     if(!currentUser){
-        window.location.href = "index.html";
+        redirectTo("index.html");
     } else {
-        //valida current user object
+        const isUserTokenValid = await tryFetchWithAuthentication();
+        if (!isUserTokenValid){
+            localStorage.removeItem("currentUser"); 
+            redirectTo("index.html");
+        }
     }
 }
+
+
+async function tryFetchWithAuthentication() {
+    try {
+        const response = await testFetchForTokenValidaion();
+        if (response.ok) {
+            return true; 
+        } else {
+            console.error("Token validation failed:", response.status);
+            return false; 
+        }
+    } catch (error) {
+        console.error("Network error during token validation:", error);
+        return false;
+    }
+}
+
+
+async function testFetchForTokenValidaion(){
+    const response = await fetch(BASE_URL1 + "contacts/",{
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${currentUser.token}`,
+        }
+    });
+    return response;
+}
+
+
 
 
 /**
