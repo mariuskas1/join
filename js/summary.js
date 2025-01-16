@@ -143,7 +143,7 @@ function displayUserName(){
     let greetingTime = document.getElementById("greeting-daytime");
     let greetingTimeMobile = document.getElementById("greeting-daytime-mobile");
 
-    if(currentUser) {
+    if(!currentUser.isGuest) {
         greetingName.innerHTML = currentUser.name;
         greetingNameMobile.innerHTML = currentUser.name;
     } else {
