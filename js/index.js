@@ -2,6 +2,7 @@ let rememberedUser;
 let currentUser;
 // const BASE_URL = "https://join1-29d52-default-rtdb.europe-west1.firebasedatabase.app";
 const BASE_URL = "http://127.0.0.1:8000/api/login/";
+const GUEST_URL = "http://127.0.0.1:8000/api/guest-login/";
 const urlParams = new URLSearchParams(window.location.search);
 const msg = urlParams.get("msg");
 
@@ -159,10 +160,31 @@ function displayFailedLoginMessage(){
  * This function handles the click-event on the guest-log-in button so that a user without an account can log in and test the application.
  * Just like the checkUserData-function it redirects the user to the summary page.
  */
-function guestLogIn(){
-    localStorage.removeItem("currentUser");
-    localStorage.setItem("logged in?", "yes");
-    window.location.href = "summary.html";
+async function guestLogIn(){
+    try {
+        const response = await fetch(GUEST_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            const guestUser = {
+                token: data.token,
+                username: data.username,
+                isGuest: true,
+            };
+
+            localStorage.setItem("currentUser", JSON.stringify(guestUser));
+            window.location.href = "summary.html";
+        } else {
+            console.error("Failed to log in as guest:", response.status);
+        }
+    } catch (error) {
+        console.error("Error during guest login:", error);
+    }
 }
 
 
