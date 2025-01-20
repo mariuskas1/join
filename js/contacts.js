@@ -1,4 +1,3 @@
-// const BASE_URL = "https://join1-29d52-default-rtdb.europe-west1.firebasedatabase.app";
 const BASE_URL = "http://127.0.0.1:8000/api/contacts/";
 let currentUser;
 let currentUserData;
@@ -336,6 +335,7 @@ function displayEditContactModal(){
     document.getElementById("cancel-or-delete-btn").innerHTML = "Delete";
     document.getElementById("cancel-or-delete-btn").onclick = deleteContact;
     document.getElementById("create-or-save-btn").innerHTML = "Save" + `<img class="btn-icon" src="assets/img/check_white.png">`;
+    
     document.getElementById("add-contact-form").onsubmit = function(event) {
         editContact();
         return false; 
