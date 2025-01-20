@@ -1,4 +1,3 @@
-// const BASE_URL = "https://join1-29d52-default-rtdb.europe-west1.firebasedatabase.app/";
 const BASE_URL = "http://127.0.0.1:8000/api/tasks/";
 let currentUser;
 let contacts = [];
@@ -54,19 +53,6 @@ function deleteSubtask(element){
 }
 
 
-/**
- * This function enables the input-element every subtask-element consists of, so that it can be edited.
- * 
- * @param {HTMLElement} element - It takes in the html element the user clicked on as a parameter.
- */
-// function editSubtask(element) {
-//     let listElement = element.closest('li');
-//     let subtaskInput = listElement.querySelector('input');
-//     subtaskInput.removeAttribute('disabled');
-//     subtaskInput.focus();
-// }
- 
-
 
 /**
  * This function hide the 'required'-labels for the required input-elements.
@@ -87,22 +73,5 @@ function getSelectedPriority() {
     let selectedPriority = document.querySelector('input[name="prio"]:checked').value;
     return selectedPriority;
 }
-
-
-/**
- * This function retrieves the subtask-names from the form.
- * 
- * @returns - It returns the values of the subtask-input-elements.
- */
-// function getSubtaskValues(){
-//     let subtaskValues = {};
-//     let subtasks = document.querySelectorAll(".subtask-input");
-//     if (subtasks.length > 0) {
-//         subtasks.forEach((input, index) => {
-//             subtaskValues[`input${index}`] = input.value;
-//         });
-//     }
-//     return subtaskValues;
-// }
 
 
