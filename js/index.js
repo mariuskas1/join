@@ -1,6 +1,5 @@
 let rememberedUser;
 let currentUser;
-// const BASE_URL = "https://join1-29d52-default-rtdb.europe-west1.firebasedatabase.app";
 const BASE_URL = "http://127.0.0.1:8000/api/login/";
 const GUEST_URL = "http://127.0.0.1:8000/api/guest-login/";
 const urlParams = new URLSearchParams(window.location.search);
@@ -77,36 +76,8 @@ function hideInitialIndexLogo(){
 
 
 /**
- * This function is called when clicking on the log in button. It checks the value of the relevant input fields and searches for matching
- * user-objects in the user-array, using the find-method. If a matching user object is found, it gets saved to the currentUser-variable
- * which then gets saved to the local storage, so that it can be used on the other pages of the application as well. If the remember-me-checkbox
- * is checked, the user object also gets saved to the rememberedUser-variable which also gets saved to the local storage. 
- * After the succesful log-in the function redirects the user to the summary page.
+ * This function is called when a user logs in. It performs a post-fetch to the server with the user data and checks the response.
  */
-
-// async function checkUserData(){
-//     let mail = document.getElementById("mail");
-//     let password = document.getElementById("password");
-//     let rememberMeCheckbox = document.getElementById("remember");
-//     let user = users.find(u => u.email == mail.value && u.password == password.value);
-
-//     if(user){
-//         currentUser = user;
-//         saveCurrentUserToLocalStorage();
-//         if (rememberMeCheckbox.checked){
-//             saveRememberedUserToLocalStorage(user);
-//         }
-//         localStorage.setItem("logged in?", "yes");
-//         window.location.href = "summary.html";
-//     } else {
-//         displayFailedLoginMessage();
-//     }
-// }
-
-
-
-
-
 async function postUserData(){
     let mail = document.getElementById("mail").value;
     let password = document.getElementById("password").value;
@@ -128,6 +99,12 @@ async function postUserData(){
 }
 
 
+/**
+ * This function checks the login-response from the server. If the login was successful, it saves the user data plus token to the local storage.
+ * 
+ * @param {*} response - It takes in the response from the server as a parameter
+ * @returns 
+ */
 async function checkLogInResponse(response){
     let rememberMeCheckbox = document.getElementById("remember");
     
@@ -148,6 +125,9 @@ async function checkLogInResponse(response){
 }
 
 
+/**
+ * This function displays a message if the login failed.
+ */
 function displayFailedLoginMessage(){
     document.getElementById("log-in-msg").classList.add("show");
     setTimeout(function() {
