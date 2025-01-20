@@ -1,6 +1,5 @@
 let currentUser;
 let allTasks;
-// const BASE_URL = "https://join1-29d52-default-rtdb.europe-west1.firebasedatabase.app";
 const BASE_URL = "http://127.0.0.1:8000/api/tasks/";
 
 

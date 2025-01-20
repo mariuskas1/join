@@ -1,4 +1,3 @@
-// const BASE_URL = "https://join1-29d52-default-rtdb.europe-west1.firebasedatabase.app";
 const BASE_URL = "http://127.0.0.1:8000/api/tasks/";
 const ST_URL = "http://127.0.0.1:8000/api/subtasks/";
 
@@ -56,8 +55,6 @@ function openAddTaskModal(){
         document.getElementById('inner-add-task-modal').classList.add('show');
         displayContactsInForm();
     }, 100);
-    
-    
 }
 
 
@@ -130,6 +127,7 @@ function sortTasks(){
     }
     
 }
+
 
 /**This function clears the arrays, that are used to sort the tasks according to their current status. */
 function clearTaskArrays(){
@@ -295,6 +293,11 @@ async function moveTo(status){
 }
 
 
+/**
+ * This function changes the task-status when a task is moved on the board.
+ * 
+ * @param {Object} task - It takes in the moved task-object as a parameter.
+ */
 async function editTaskOnMoving(task){
     try {
         await fetch(BASE_URL + task.id + '/', {
@@ -389,8 +392,6 @@ function hideTaskDisplayModal(){
     }
     
     
-    
-
 
 /**
  * This function hides the edit task modal and updates the task on the board.
@@ -498,6 +499,11 @@ async function switchSubtaskStatus(subtaskId) {
 
 
 
+/**
+ * This function uploads/updates a subtask to the server.
+ * 
+ * @param {Object} subtask - It takes in the edited subtask-object as a parameter.
+ */
 async function uploadEditedSubtask(subtask){
     try {
         await fetch(ST_URL + subtask.id + '/', {
@@ -567,6 +573,11 @@ function displayEditTaskModal(){
 }
 
 
+/**
+ * This function selects the assigned-to-contact in the task-form.
+ * 
+ * @param {*} contact - It takes in the contact as a parameter.
+ */
 function selectAssignedContact(contact){
     let selectElement = document.getElementById("edit-assigned");
     for (let i = 0; i < selectElement.options.length; i++) {
@@ -619,6 +630,9 @@ async function editTask(event){
 }
 
 
+/**
+ * This function caches all subtask of the currently opened task, so that no information gets lost when editing the task.
+ */
 async function editSubtasks(){
     cachedSubtasks = openedTask.subtasks;
     await deleteAllSubtasksForOpenedTask();
@@ -626,6 +640,11 @@ async function editSubtasks(){
 }
 
 
+/**
+ * This function filters the cached subtasks to check if any of them got deleted when editing the task.
+ * 
+ * @param {*} taskId - It takes in the id of the opened task as a parameter.
+ */
 async function filterCachedSubtasks(taskId){
     let subtasks = document.querySelectorAll(".subtask-input");
     if (subtasks.length > 0) {
@@ -646,7 +665,9 @@ async function filterCachedSubtasks(taskId){
 }
 
 
-
+/**
+ * This function deletes all subtasks of the currenty opened task.
+ */
 async function deleteAllSubtasksForOpenedTask(){
     for (const subtask of openedTask.subtasks) {
         await deleteSubtaskOnEditing(subtask);
@@ -654,7 +675,11 @@ async function deleteAllSubtasksForOpenedTask(){
 }
 
 
-
+/**
+ * This function serves as a helper function for the deleteAllSubtasksForOpenedTasks-function above.
+ * 
+ * @param {*} subtask - It takes in the subtask to be deleted as a parameter.
+ */
 async function deleteSubtaskOnEditing(subtask){
     try {
         await fetch(ST_URL + subtask.id + '/', {
@@ -681,7 +706,6 @@ function createEditedTask(openedTask){
     let assignedTo = document.getElementById("edit-assigned");
     let title = document.getElementById("edit-title");
     let selectedPriority = getEditedPriority();
-    // let subtaskValues = getSubtaskValues();
     let editedTask = null;
 
     if (title.value && date.value){
@@ -692,7 +716,6 @@ function createEditedTask(openedTask){
             "prio": selectedPriority || "",  
             "description": description ? description.value : "", 
             "assignedTo": assignedTo ? assignedTo.value : "",  
-            // "subtasks": subtaskValues || [],  
             "status": openedTask.status,
             "id": openedTask.id
         };
