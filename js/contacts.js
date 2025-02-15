@@ -16,9 +16,9 @@ document.addEventListener("DOMContentLoaded", async function(){
     setTimeout(activateLink, 100);
     getCurrentUserData();
     setTimeout(displayUserInitials, 200);
+    await saveCurrentUserAsContact();
     await loadContacts();
     displayContacts();
-    saveCurrentUserAsContact();
 });
 
 
@@ -43,7 +43,7 @@ function activateLink(){
  * This function creates a newUserContact-object, so that the user can be displayed in the contacts-list and also can be assigned to a task.
  */
 async function saveCurrentUserAsContact(){
-    if (currentUser){
+    if (currentUser && !currentUser.isGuest){
         const trimmedUserName = currentUser.name.trim().toLowerCase();
         const contactExists = contacts.some(contact => contact.name.trim().toLowerCase() === trimmedUserName);
 
