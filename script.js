@@ -1,4 +1,4 @@
-const BASE_URL1 = "http://127.0.0.1:8000/api/" ;
+const BASE_URL1 = "https://marius-kasparek.developerakademie.org/join_server/api/";
 
 
 /**

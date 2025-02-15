@@ -1,7 +1,7 @@
 let rememberedUser;
 let currentUser;
-const BASE_URL = "http://127.0.0.1:8000/api/login/";
-const GUEST_URL = "http://127.0.0.1:8000/api/guest-login/";
+const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/login/";
+const GUEST_URL = "https://marius-kasparek.developerakademie.org/join_server/api/guest-login/";
 const urlParams = new URLSearchParams(window.location.search);
 const msg = urlParams.get("msg");
 

@@ -1,4 +1,4 @@
-const BASE_URL = "http://127.0.0.1:8000/api/tasks/";
+const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/tasks/";
 let currentUser;
 let contacts = [];
 let addTaskStatus;

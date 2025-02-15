@@ -1,4 +1,4 @@
-const BASE_URL = "http://127.0.0.1:8000/api/contacts/";
+const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/contacts/";
 let currentUser;
 let currentUserData;
 let contacts = [];

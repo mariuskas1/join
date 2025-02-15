@@ -1,5 +1,5 @@
-const BASE_URL = "http://127.0.0.1:8000/api/tasks/";
-const ST_URL = "http://127.0.0.1:8000/api/subtasks/";
+const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/tasks/";
+const ST_URL = "https://https://marius-kasparek.developerakademie.org/join_server/api/subtasks/";
 
 
 let currentUser;
