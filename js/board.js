@@ -1,5 +1,5 @@
 const BASE_URL = "https://marius-kasparek.developerakademie.org/join_server/api/tasks/";
-const ST_URL = "https://https://marius-kasparek.developerakademie.org/join_server/api/subtasks/";
+const ST_URL = "https://marius-kasparek.developerakademie.org/join_server/api/subtasks/";
 
 
 let currentUser;
