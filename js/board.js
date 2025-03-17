@@ -606,7 +606,7 @@ function displayTaskPriority(prio){
  * @param {number} id - It takes in the id of the opened task as parameter.
  */
 async function editTask(event){
-    if(event){
+    if(event && typeof event.preventDefault === "function"){
         event.preventDefault();
     }
    
