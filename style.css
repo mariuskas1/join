@@ -3020,12 +3020,12 @@ input[type=checkbox] {
 }
 
 #tdl-modal{
-    transform: translateX(200%);
+    transform: translateX(300%);
     transition: transform 150ms ease;
 }
 
 #edit-task-modal{
-    transform: translateX(200%);
+    transform: translateX(300%);
     transition: transform 150ms ease;
 }
 
