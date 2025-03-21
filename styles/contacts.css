@@ -686,3 +686,27 @@
     }
 }
 
+
+#contact-added-confirmation{
+    background: rgba(42, 54, 71, 1);
+    border: none;
+    color: white;
+    height: 74px;
+    width: 326px;
+    font-weight: 400;
+    font-size: 21px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 50%;
+    right: -400px; 
+    transform: translateY(-50%);
+    transition: right 0.5s ease; 
+}
+
+#contact-added-confirmation.show {
+    right: 35%; 
+    transform: translate(50%, -50%);
+}   

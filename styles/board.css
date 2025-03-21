@@ -1,4 +1,7 @@
 
+#board-main{
+    overflow-y: auto;
+}
 
 .board-main-header{
     display: flex;

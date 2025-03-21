@@ -375,3 +375,19 @@
         margin-right: 8px;
     }
 }
+
+.summary-info-row div{
+    transition: all 100ms ease;
+}
+
+.summary-info-row div:hover{
+    /* background-color: rgba(42, 54, 71, 1);
+    color: white; */
+    cursor: pointer;
+    scale: 1.05;
+}
+
+.summary-info-box-row-1:hover img {
+    color: white;
+    /* filter: invert(100%) hue-rotate(180deg) saturate(100%); */
+}

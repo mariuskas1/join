@@ -417,3 +417,123 @@ label{
     }
 
 }
+
+@media(max-width: 1250px){
+    .addTaskColumn{
+        width: 32%;
+    }
+    .form-bottom{
+        width: 67%;
+    }
+    .add-task-modal .addTaskColumn{
+        width: 44%;
+    }
+}
+
+@media(max-width: 850px) {
+    .add-task-form{
+        flex-direction: column;
+        margin-top: 16px;
+    }
+    .addTaskBorder{
+        display: none;
+    }
+    h1{
+        font-size: 47px;
+    }
+    #description{
+        height: 88px;
+        margin-top: 0px;
+        margin-bottom: 4px;
+    }
+    .addTaskColumn{
+        width: 60%;
+    }
+    .add-task-modal .addTaskColumn{
+        width: 80%;
+    }
+    main{
+        padding-left: 40px;
+    }
+    #category-input{
+        display: none;
+    }
+    #subtasks-input{
+        display: none;
+    }
+
+    main{
+        padding-top: 32px;
+    }
+    form input {
+        margin-top: 4px;
+    }
+    form select {
+        margin-top: 4px;
+    }
+    .input{
+        margin-bottom: 4px;
+    }
+    .prio-btns{
+        margin-top: 4px;
+    }
+    label {
+        margin-bottom: 4px;
+    }
+    .form-bottom{
+        width: 57%;
+        align-items: center;
+    }
+
+}
+
+@media(max-width: 750px){
+    .clear-btn{
+        display: none !important;
+    }
+    .create-task-btn{
+        width: 183px;
+    
+    }
+    .form-btns-div{
+        width: 183px;
+    }
+    .addTaskColumn{
+        width: 55%;
+    }
+    .form-bottom{
+        width: 51%;
+        
+    }
+}
+
+
+.task-added-modal{
+    width: 312px;
+    height: 74px;
+    background: rgba(42, 54, 71, 1);
+    border: none;
+    color: white;
+    height: 74px;
+    width: 326px;
+    font-weight: 400;
+    font-size: 21px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: -200px;
+    right: 50%;
+    transform: translateX(50%);
+    transition: bottom 500ms ease; 
+}
+
+.task-added-modal.show{
+    bottom: 50%;
+    transform: translateX(50%);
+}
+
+#task-added-msg-img{
+    margin-left: 8px;
+}
